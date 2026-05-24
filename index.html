@@ -439,9 +439,10 @@ footer strong{color:var(--amarelo)}
     </div>
 
     <div style="background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:8px 14px;font-size:.75rem;color:#1B5E20;font-weight:600;margin-bottom:16px">
-      ✅ Confirmado pelo PDF "Relação de Pagamento de Empenho — Mai/2026":<br>
-      &nbsp;&nbsp;• <strong>ENERGY (EDUCAÇÃO) NF 7/8 — Empenho 521:</strong> Pago em 06/05 e 18/05/2026 — R$ 138.873,33 quitado<br>
-      &nbsp;&nbsp;• <strong>ENERGY (PLANEJ.) NF 3/4 — Empenho 542:</strong> Pago em 05/05 e 19/05/2026 — R$ 69.438,60 quitado
+      ✅ Confirmado pelos PDFs "Relação de Pagamento de Empenho — Mai/2026" e "Relação de Pagamentos de Empenhos Jan–Mai/2026":<br>
+      &nbsp;&nbsp;• <strong>ENERGY (EDUCAÇÃO) NF 7/8 — Emp. 521:</strong> Pago em 06/05 e 18/05/2026 — R$ 138.873,33 quitado<br>
+      &nbsp;&nbsp;• <strong>ENERGY (PLANEJ.) NF 3/4 — Emp. 542:</strong> Pago em 05/05 e 19/05/2026 — R$ 69.438,60 quitado<br>
+      &nbsp;&nbsp;• <strong>MÉTODO NF 5350 — Emp. 345:</strong> Pago em 19/05/2026 (Pag. 8043105) — R$ 4.061,32 quitado
     </div>
 
     <div class="modal-section">
@@ -498,16 +499,8 @@ footer strong{color:var(--amarelo)}
     <div class="modal-section">
       <h3>⚠ Demais NFs com Inconsistência de Pagamento</h3>
 
-      <div class="modal-row warn" style="flex-direction:column;align-items:flex-start;gap:6px">
-        <div style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px">
-          <div class="mr-left"><span>MÉTODO · NF 5350 · Emp. 345</span><strong>Voz IP — Março/2026</strong></div>
-          <div style="font-size:.95rem;font-weight:700;font-family:var(--mono);color:var(--orange);white-space:nowrap">R$ 4.061,32</div>
-        </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:.7rem">
-          <span>Liquidado: <span class="b b-sim" style="font-size:.6rem"><span class="b-dot"></span>SIM</span></span>
-          <span>Pago: <span class="b b-nc" style="font-size:.6rem"><span class="b-dot"></span>NÃO CONSTA</span></span>
-          <span style="color:var(--txt-lite)">Protocolo: 29/04/2026</span>
-        </div>
+      <div style="background:#E8F5E9;border:1px solid #C8E6C9;border-radius:7px;padding:7px 12px;font-size:.73rem;color:#1B5E20;font-weight:600">
+        ✅ <strong>MÉTODO · NF 5350 · Emp. 345</strong> — Pago em 19/05/2026 (Pag. 8043105) · R$ 4.061,32
       </div>
 
       <div class="modal-row warn" style="flex-direction:column;align-items:flex-start;gap:6px">
@@ -536,8 +529,8 @@ footer strong{color:var(--amarelo)}
     </div>
 
     <div style="padding:10px 14px;background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-radius:8px;border:1px solid #FFE082;font-size:.76rem;color:#7A4F00;display:flex;align-items:center;justify-content:space-between;gap:12px">
-      <span>💰 <strong>Total a regularizar: R$ 607.057,02</strong> &nbsp;·&nbsp; BETHA R$ 375k · ENERGY (Soc+Saú) R$ 139k · outros R$ 13k</span>
-      <span class="delta up" style="font-size:.68rem;white-space:nowrap">▼ −R$ 208.311,93 vs. versão anterior</span>
+      <span>💰 <strong>Total a regularizar: R$ 602.995,70</strong> &nbsp;·&nbsp; BETHA R$ 375k · ENERGY (Soc+Saú) R$ 139k · PORTAL+AMPLA R$ 9k</span>
+      <span class="delta up" style="font-size:.68rem;white-space:nowrap">▼ −R$ 212.373,25 vs. versão anterior</span>
     </div>
   </div>
 </div></div>
@@ -590,8 +583,8 @@ footer strong{color:var(--amarelo)}
   <div class="kpi c-orange clickable" onclick="openModalNF()">
     <div class="kpi-icon">⏳</div>
     <div class="kpi-lbl">NFs Pendentes Pgto</div>
-    <div class="kpi-val">16</div>
-    <div class="kpi-sub"><span class="warn">R$ 607.057,02</span> em aberto <span class="delta down" style="font-size:.58rem">▲ +12 NFs</span></div>
+    <div class="kpi-val">15</div>
+    <div class="kpi-sub"><span class="warn">R$ 602.995,70</span> em aberto <span class="delta down" style="font-size:.58rem">▲ +11 NFs</span></div>
     <div class="kpi-hint">Ver detalhes →</div>
   </div>
   <div class="kpi c-red clickable" onclick="openModal()">
@@ -634,8 +627,8 @@ footer strong{color:var(--amarelo)}
     <div class="nf-stat-icon" style="background:#FFF3E0">⚠</div>
     <div>
       <div class="nf-stat-lbl">Pendentes Pagamento</div>
-      <div class="nf-stat-val" style="color:var(--red)">16 <span class="delta down" style="font-size:.6rem">▲ +12</span></div>
-      <div class="nf-stat-sub">R$ 607.057,02 aguardando</div>
+      <div class="nf-stat-val" style="color:var(--red)">15 <span class="delta down" style="font-size:.6rem">▲ +11</span></div>
+      <div class="nf-stat-sub">R$ 602.995,70 aguardando</div>
     </div>
   </div>
 </div>
@@ -1128,23 +1121,23 @@ footer strong{color:var(--amarelo)}
 const NF_DATA=[
   {f:'MÉTODO',                  nf:'2368',              em:'02/02/2026',mes:'JANEIRO',      val:17405.66,  prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'345'},
   {f:'MÉTODO',                  nf:'3397',              em:'03/03/2026',mes:'FEVEREIRO',    val:17405.66,  prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'345'},
-  {f:'MÉTODO',                  nf:'5350',              em:'17/04/2026',mes:'MARÇO',        val:4061.32,   prot:'29/04/2026',liq:'SIM', pago:'N.CONSTA',  emp:'345'},
+  {f:'MÉTODO',                  nf:'5350',              em:'17/04/2026',mes:'MARÇO',        val:4061.32,   prot:'29/04/2026',liq:'SIM', pago:'SIM',        emp:'345'},
   {f:'PORTAL SOLUÇÕES',         nf:'224/225/226/227',   em:'30/01/2026',mes:'JANEIRO',      val:8632.50,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'344'},
   {f:'PORTAL SOLUÇÕES',         nf:'326/327/328/329',   em:'27/02/2026',mes:'FEVEREIRO',    val:8632.50,   prot:'02/03/2026',liq:'SIM', pago:'SIM',       emp:'344'},
   {f:'PORTAL SOLUÇÕES',         nf:'438/439/440/441',   em:'30/03/2026',mes:'MARÇO',        val:8632.50,   prot:'31/03/2026',liq:'SIM', pago:'SIM',       emp:'344'},
   {f:'PORTAL SOLUÇÕES',         nf:'553/554/555/556',   em:'29/04/2026',mes:'ABRIL',        val:8632.50,   prot:'29/04/2026',liq:'N.CONSTA',pago:'N.CONSTA',emp:'344'},
-  {f:'TOP CENTER',              nf:'15788-15791',        em:'30/01/2026',mes:'JANEIRO',      val:58081.62,  prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'704'},
-  {f:'TOP CENTER',              nf:'15981-15984',        em:'26/02/2026',mes:'FEVEREIRO',    val:52134.60,  prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'704'},
-  {f:'TOP CENTER',              nf:'16405-16408',        em:'31/03/2026',mes:'MARÇO',        val:91808.55,  prot:'01/04/2026',liq:'SIM', pago:'SIM',       emp:'704'},
-  {f:'TOP CENTER',              nf:'16710-16713',        em:'29/04/2026',mes:'ABRIL',        val:62496.23,  prot:'30/04/2026',liq:'SIM', pago:'SIM',       emp:'704'},
+  {f:'TOP CENTER',              nf:'15788-15791',        em:'30/01/2026',mes:'JANEIRO',      val:58081.62,  prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'476'},
+  {f:'TOP CENTER',              nf:'15981-15984',        em:'26/02/2026',mes:'FEVEREIRO',    val:52134.60,  prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'476'},
+  {f:'TOP CENTER',              nf:'16405-16408',        em:'31/03/2026',mes:'MARÇO',        val:91808.55,  prot:'01/04/2026',liq:'SIM', pago:'SIM',       emp:'476'},
+  {f:'TOP CENTER',              nf:'16710-16713',        em:'29/04/2026',mes:'ABRIL',        val:62496.23,  prot:'30/04/2026',liq:'SIM', pago:'SIM',       emp:'476'},
   {f:'ACTCON',                  nf:'255',                em:'04/03/2026',mes:'PGTO ÚNICO',   val:6168.96,   prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'329'},
   {f:'EMBRAS',                  nf:'56',                 em:'30/01/2026',mes:'JANEIRO',      val:75000.00,  prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'315'},
   {f:'EMBRAS',                  nf:'137',                em:'12/02/2026',mes:'FEVEREIRO',    val:171814.20, prot:'13/02/2026',liq:'SIM', pago:'SIM',       emp:'697'},
   {f:'EMBRAS',                  nf:'222',                em:'27/02/2026',mes:'MARÇO',        val:137451.36, prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'697'},
-  {f:'EMBRAS - IPASI',          nf:'55',                 em:'30/01/2026',mes:'JANEIRO',      val:4700.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'314'},
+  {f:'EMBRAS - IPASI',          nf:'55',                 em:'30/01/2026',mes:'JANEIRO',      val:4700.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'313'},
   {f:'EMBRAS - IPASI',          nf:'139',                em:'12/02/2026',mes:'FEVEREIRO',    val:5011.64,   prot:'13/02/2026',liq:'SIM', pago:'SIM',       emp:'698'},
   {f:'EMBRAS - IPASI',          nf:'221',                em:'27/02/2026',mes:'MARÇO',        val:4009.31,   prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'698'},
-  {f:'EMBRAS - CÂMARA',         nf:'54',                 em:'30/01/2026',mes:'JANEIRO',      val:7200.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'—'},
+  {f:'EMBRAS - CÂMARA',         nf:'54',                 em:'30/01/2026',mes:'JANEIRO',      val:7200.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'314'},
   {f:'EMBRAS - CÂMARA',         nf:'138',                em:'12/02/2026',mes:'FEVEREIRO',    val:7731.92,   prot:'13/02/2026',liq:'SIM', pago:'SIM',       emp:'699'},
   {f:'EMBRAS - CÂMARA',         nf:'220',                em:'27/02/2026',mes:'MARÇO',        val:6185.53,   prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'699'},
   {f:'ENERGY (SOCIAL)',         nf:'40/43',              em:'12/03/2026',mes:'JANEIRO',      val:69438.66,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'90/91'},
@@ -1352,8 +1345,8 @@ let chartMensal,chartForn;
     data:{
       labels:['Liquidadas','Pagas','Pendentes'],
       datasets:[
-        {label:'Qtd NFs',data:[38,38,16],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
-        {label:'Valor (R$ k)',data:[1986.13,2190.24,607.06],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
+        {label:'Qtd NFs',data:[38,39,15],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
+        {label:'Valor (R$ k)',data:[1986.13,2194.30,602.99],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
       ]
     },
     options:{
