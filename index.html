@@ -422,27 +422,25 @@ footer strong{color:var(--amarelo)}
     <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
       <div style="flex:1;min-width:120px;background:#FFF8E1;border:1px solid #FFE082;border-radius:8px;padding:10px 14px;text-align:center">
         <div style="font-size:.62rem;font-weight:700;color:#7A4F00;text-transform:uppercase;letter-spacing:.6px">Total Pendente</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--orange);margin-top:3px">R$ 607.057,02</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--orange);margin-top:3px">R$ 533.557,04</div>
       </div>
       <div style="flex:1;min-width:120px;background:#FFEBEE;border:1px solid #FFCDD2;border-radius:8px;padding:10px 14px;text-align:center">
         <div style="font-size:.62rem;font-weight:700;color:#7A0000;text-transform:uppercase;letter-spacing:.6px">NFs Pendentes</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--red);margin-top:3px">16 notas</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--red);margin-top:3px">14 notas</div>
       </div>
       <div style="flex:1;min-width:120px;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:10px 14px;text-align:center">
         <div style="font-size:.62rem;font-weight:700;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px">Pagas (conf.)</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--verde);margin-top:3px">38 notas</div>
-      </div>
-      <div style="flex:1;min-width:120px;background:#E3F2FD;border:1px solid #BBDEFB;border-radius:8px;padding:10px 14px;text-align:center">
-        <div style="font-size:.62rem;font-weight:700;color:#0D47A1;text-transform:uppercase;letter-spacing:.6px">Pagas c/ Sistema</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--azul);margin-top:3px">+2 NFs</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--verde);margin-top:3px">40 notas</div>
       </div>
     </div>
 
-    <div style="background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:8px 14px;font-size:.75rem;color:#1B5E20;font-weight:600;margin-bottom:16px">
-      ✅ Confirmado pelo Sistema Contábil — Relação de Pagamentos de Empenhos:<br>
+    <!-- Banner de quitações confirmadas -->
+    <div style="background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:9px 14px;font-size:.74rem;color:#1B5E20;font-weight:600;margin-bottom:16px;line-height:1.6">
+      ✅ Confirmado pelo Sistema Contábil — Relação de Pagamentos Efetuados:<br>
       &nbsp;&nbsp;• <strong>ENERGY (EDUCAÇÃO) NF 7/8 — Emp. 521:</strong> Pago em 06/05 e 18/05/2026 — R$ 138.873,33 quitado<br>
       &nbsp;&nbsp;• <strong>ENERGY (PLANEJ.) NF 3/4 — Emp. 542:</strong> Pago em 05/05 e 19/05/2026 — R$ 69.438,60 quitado<br>
-      &nbsp;&nbsp;• <strong>MÉTODO NF 5350 — Emp. 345:</strong> Pago em 19/05/2026 (Pag. 8043105) — R$ 4.061,32 quitado
+      &nbsp;&nbsp;• <strong>MÉTODO NF 5350 — Emp. 345:</strong> Pago em 19/05/2026 — R$ 4.061,32 quitado<br>
+      &nbsp;&nbsp;• <strong>ENERGY (SAÚDE) NF 1/2 — Emp. 336:</strong> Pago em 15/05 e 19/05/2026 via Fundo Municipal de Saúde — R$ 69.438,66 quitado
     </div>
 
     <div class="modal-section">
@@ -471,10 +469,10 @@ footer strong{color:var(--amarelo)}
     </div>
 
     <div class="modal-section">
-      <h3>🔴 ENERGY SYSTEM — 2 NFs de Abril ainda abertas</h3>
+      <h3>🔴 ENERGY SYSTEM — 1 NF de Abril ainda aberta</h3>
       <div style="background:#FFF5F5;border:1px solid #FFCDD2;border-radius:8px;padding:8px 12px;font-size:.72rem;color:#B71C1C;margin-bottom:8px;font-weight:500">
-        Educação (Emp. 521) e Planejamento (Emp. 542) já foram pagos conforme o Sistema Contábil.<br>
-        Saúde e Social <strong>ainda pendentes</strong> — total: <strong>R$ 138.877,32</strong>
+        Saúde (Emp. 336), Educação (Emp. 521) e Planejamento (Emp. 542) já foram pagos.<br>
+        <strong>Social (Emp. 90/91) ainda pendente</strong> — não consta em nenhum documento do Sistema Contábil.
       </div>
       <div class="modal-row crit" style="flex-direction:column;gap:6px">
         <div style="display:flex;justify-content:space-between;width:100%;font-size:.78rem">
@@ -482,26 +480,13 @@ footer strong{color:var(--amarelo)}
           <span style="font-family:var(--mono);font-weight:700;color:var(--red)">R$ 69.438,66</span>
         </div>
         <div style="font-size:.7rem;color:#B71C1C;background:#FFEBEE;border-radius:5px;padding:4px 8px">
-          🔴 Não consta no Sistema Contábil — sem liquidação registrada
-        </div>
-      </div>
-      <div style="margin-top:6px" class="modal-row warn" style="flex-direction:column;gap:6px">
-        <div style="display:flex;justify-content:space-between;width:100%;font-size:.78rem">
-          <span><strong>NF 1/2</strong> · SAÚDE · Abril · Emp. 336</span>
-          <span style="font-family:var(--mono);font-weight:700;color:var(--orange)">R$ 69.438,66</span>
-        </div>
-        <div style="font-size:.7rem;color:#E65100;background:#FFF3E0;border-radius:5px;padding:4px 8px">
-          ⏳ Liquidado em 06/04 e 18/05 · R$ 69.585,85 liq. · Sem data de pagamento (Tesouraria)
+          🔴 Não consta no Sistema Contábil — sem liquidação nem pagamento registrados
         </div>
       </div>
     </div>
 
     <div class="modal-section">
       <h3>⚠ Demais NFs com Inconsistência de Pagamento</h3>
-
-      <div style="background:#E8F5E9;border:1px solid #C8E6C9;border-radius:7px;padding:7px 12px;font-size:.73rem;color:#1B5E20;font-weight:600">
-        ✅ <strong>MÉTODO · NF 5350 · Emp. 345</strong> — Pago em 19/05/2026 conforme Sistema Contábil · R$ 4.061,32
-      </div>
 
       <div class="modal-row warn" style="flex-direction:column;align-items:flex-start;gap:6px">
         <div style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px">
@@ -529,8 +514,8 @@ footer strong{color:var(--amarelo)}
     </div>
 
     <div style="padding:10px 14px;background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-radius:8px;border:1px solid #FFE082;font-size:.76rem;color:#7A4F00;display:flex;align-items:center;justify-content:space-between;gap:12px">
-      <span>💰 <strong>Total a regularizar: R$ 602.995,70</strong> &nbsp;·&nbsp; BETHA R$ 375k · ENERGY (Soc+Saú) R$ 139k · PORTAL+AMPLA R$ 9k</span>
-      <span class="delta up" style="font-size:.68rem;white-space:nowrap">▼ −R$ 212.373,25 vs. versão anterior</span>
+      <span>💰 <strong>Total a regularizar: R$ 533.557,04</strong> &nbsp;·&nbsp; BETHA R$ 375k · ENERGY (Social) R$ 69k · PORTAL+AMPLA R$ 9k</span>
+      <span class="delta up" style="font-size:.68rem;white-space:nowrap">▼ −R$ 69.438,66 vs. versão anterior</span>
     </div>
   </div>
 </div></div>
@@ -583,8 +568,8 @@ footer strong{color:var(--amarelo)}
   <div class="kpi c-orange clickable" onclick="openModalNF()">
     <div class="kpi-icon">⏳</div>
     <div class="kpi-lbl">NFs Pendentes Pgto</div>
-    <div class="kpi-val">15</div>
-    <div class="kpi-sub"><span class="warn">R$ 602.995,70</span> em aberto <span class="delta down" style="font-size:.58rem">▲ +11 NFs</span></div>
+    <div class="kpi-val">14</div>
+    <div class="kpi-sub"><span class="warn">R$ 533.557,04</span> em aberto <span class="delta down" style="font-size:.58rem">▲ +10 NFs</span></div>
     <div class="kpi-hint">Ver detalhes →</div>
   </div>
   <div class="kpi c-red clickable" onclick="openModal()">
@@ -627,8 +612,8 @@ footer strong{color:var(--amarelo)}
     <div class="nf-stat-icon" style="background:#FFF3E0">⚠</div>
     <div>
       <div class="nf-stat-lbl">Pendentes Pagamento</div>
-      <div class="nf-stat-val" style="color:var(--red)">15 <span class="delta down" style="font-size:.6rem">▲ +11</span></div>
-      <div class="nf-stat-sub">R$ 602.995,70 aguardando</div>
+      <div class="nf-stat-val" style="color:var(--red)">14 <span class="delta down" style="font-size:.6rem">▲ +10</span></div>
+      <div class="nf-stat-sub">R$ 533.557,04 aguardando</div>
     </div>
   </div>
 </div>
@@ -1147,7 +1132,7 @@ const NF_DATA=[
   {f:'ENERGY (SAÚDE)',          nf:'45/47',              em:'12/03/2026',mes:'JANEIRO',      val:69438.66,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'336'},
   {f:'ENERGY (SAÚDE)',          nf:'41/44',              em:'12/03/2026',mes:'FEVEREIRO',    val:69438.66,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'336'},
   {f:'ENERGY (SAÚDE)',          nf:'49/50',              em:'01/04/2026',mes:'MARÇO',        val:69438.66,  prot:'07/04/2026',liq:'SIM', pago:'SIM',       emp:'336'},
-  {f:'ENERGY (SAÚDE)',          nf:'1/2',                em:'15/05/2026',mes:'ABRIL',        val:69438.66,  prot:'19/05/2026',liq:'SIM', pago:'N.CONSTA',  emp:'336'},
+  {f:'ENERGY (SAÚDE)',          nf:'1/2',                em:'15/05/2026',mes:'ABRIL',        val:69438.66,  prot:'19/05/2026',liq:'SIM', pago:'SIM',        emp:'336'},
   {f:'ENERGY (EDUCAÇÃO)',       nf:'39/34',              em:'12/03/2026',mes:'JANEIRO',      val:138873.33, prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'521'},
   {f:'ENERGY (EDUCAÇÃO)',       nf:'41/44',              em:'12/03/2026',mes:'FEVEREIRO',    val:138873.33, prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'521'},
   {f:'ENERGY (EDUCAÇÃO)',       nf:'55/56',              em:'01/04/2026',mes:'MARÇO',        val:138873.33, prot:'07/04/2026',liq:'SIM', pago:'SIM',       emp:'521'},
@@ -1345,8 +1330,8 @@ let chartMensal,chartForn;
     data:{
       labels:['Liquidadas','Pagas','Pendentes'],
       datasets:[
-        {label:'Qtd NFs',data:[38,39,15],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
-        {label:'Valor (R$ k)',data:[1986.13,2194.30,602.99],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
+        {label:'Qtd NFs',data:[38,40,14],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
+        {label:'Valor (R$ k)',data:[1986.13,2263.74,533.56],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
       ]
     },
     options:{
