@@ -2,14 +2,15 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Gestão de Contratos & NFs — DTI Ibirité</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --azul:#002FA7;--azul-dk:#001A6E;--azul-md:#1A47C8;--azul-lt:#4A6FD4;
-  --amarelo:#F5A800;--amarelo2:#FFC940;--verde:#00A86B;--verde2:#00D48A;
+  --amarelo:#F5A800;--amarelo2:#FFC940;
+  --verde:#00A86B;--verde2:#00D48A;
   --cinza-bg:#EEF2FA;--card:#FFFFFF;--borda:#D8E0F5;
   --txt-dark:#0A1533;--txt-med:#344070;--txt-lite:#7080A8;
   --red:#D32F2F;--orange:#E65100;--purple:#6A1B9A;
@@ -18,133 +19,541 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--sans);background:var(--cinza-bg);color:var(--txt-dark);font-size:14px;line-height:1.5}
+
+/* ── HEADER */
 header{
   background:linear-gradient(135deg,var(--azul-dk) 0%,var(--azul) 60%,var(--azul-md) 100%);
   padding:16px 36px;display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:200;box-shadow:0 3px 20px rgba(0,0,0,.25)
 }
-.h-left{display:flex;align-items:center;gap:18px}
-.h-logo{width:62px;height:62px;border-radius:14px;background:linear-gradient(135deg,#fff,#DDE7FF);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.28);font-weight:800;color:var(--azul);font-family:var(--mono);letter-spacing:-1px}
+.h-left{display:flex;align-items:center;gap:20px}
+.h-logo{height:62px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3))}
 .h-sep{width:2px;height:46px;background:rgba(255,255,255,.2);border-radius:2px}
 .h-title h1{font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:1.15}
-.h-title p{font-size:.72rem;color:rgba(255,255,255,.68);margin-top:2px;text-transform:uppercase;letter-spacing:.6px}
-.h-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.h-title p{font-size:.72rem;color:rgba(255,255,255,.6);margin-top:2px;text-transform:uppercase;letter-spacing:.6px}
+.h-right{display:flex;align-items:center;gap:10px}
 .badge{padding:5px 13px;border-radius:20px;font-size:.7rem;font-weight:600;letter-spacing:.4px;text-transform:uppercase}
 .badge-dept{background:rgba(245,168,0,.18);border:1px solid var(--amarelo);color:var(--amarelo2)}
 .badge-dt{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);font-family:var(--mono);font-size:.68rem}
+
+/* ── MAIN */
 main{max-width:1700px;margin:0 auto;padding:24px 32px}
-.sec-label{font-size:.65rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:1.8px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+
+/* ── SECTION LABEL */
+.sec-label{
+  font-size:.65rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:1.8px;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px
+}
 .sec-label::before{content:'';display:block;width:20px;height:3px;background:var(--amarelo);border-radius:2px}
+
+/* ── KPI GRID */
 .kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px}
-.kpi{background:var(--card);border-radius:var(--r);padding:18px 18px 14px;box-shadow:var(--shadow);border:1px solid var(--borda);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:default}
+.kpi{
+  background:var(--card);border-radius:var(--r);padding:18px 18px 14px;
+  box-shadow:var(--shadow);border:1px solid var(--borda);position:relative;
+  overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:default
+}
 .kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
 .kpi.clickable{cursor:pointer}
+.kpi.clickable:hover .kpi-hint{opacity:1}
 .kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
-.kpi.c-azul::after{background:var(--azul)} .kpi.c-verde::after{background:var(--verde)} .kpi.c-amarelo::after{background:var(--amarelo)} .kpi.c-red::after{background:var(--red)} .kpi.c-orange::after{background:var(--orange)} .kpi.c-purple::after{background:var(--purple)}
+.kpi.c-azul::after{background:var(--azul)} .kpi.c-verde::after{background:var(--verde)}
+.kpi.c-amarelo::after{background:var(--amarelo)} .kpi.c-red::after{background:var(--red)}
+.kpi.c-orange::after{background:var(--orange)} .kpi.c-purple::after{background:var(--purple)}
 .kpi-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:10px}
-.c-azul .kpi-icon{background:rgba(0,47,167,.09)} .c-verde .kpi-icon{background:rgba(0,168,107,.1)} .c-amarelo .kpi-icon{background:rgba(245,168,0,.1)} .c-red .kpi-icon{background:rgba(211,47,47,.08)} .c-orange .kpi-icon{background:rgba(230,81,0,.09)} .c-purple .kpi-icon{background:rgba(106,27,154,.08)}
+.c-azul .kpi-icon{background:rgba(0,47,167,.09)} .c-verde .kpi-icon{background:rgba(0,168,107,.1)}
+.c-amarelo .kpi-icon{background:rgba(245,168,0,.1)} .c-red .kpi-icon{background:rgba(211,47,47,.08)}
+.c-orange .kpi-icon{background:rgba(230,81,0,.09)} .c-purple .kpi-icon{background:rgba(106,27,154,.08)}
 .kpi-lbl{font-size:.64rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
 .kpi-val{font-size:1.6rem;font-weight:700;font-family:var(--mono);color:var(--txt-dark);line-height:1}
-.kpi-val.sm{font-size:1.05rem}
+.kpi-val.sm{font-size:1.1rem}
 .kpi-sub{font-size:.68rem;color:var(--txt-lite);margin-top:5px}
-.kpi-sub .pos{color:var(--verde);font-weight:600} .kpi-sub .neg{color:var(--red);font-weight:600} .kpi-sub .warn{color:var(--orange);font-weight:600}
+.kpi-sub .pos{color:var(--verde);font-weight:600} .kpi-sub .neg{color:var(--red);font-weight:600}
+.kpi-sub .warn{color:var(--orange);font-weight:600}
 .kpi-hint{position:absolute;bottom:8px;right:10px;font-size:.62rem;color:var(--azul-lt);opacity:0;transition:opacity .2s;font-weight:600;letter-spacing:.3px}
-.kpi.clickable:hover .kpi-hint{opacity:1}
+
+/* ── NF STATUS BAR */
 .nf-status-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
 .nf-stat{background:var(--card);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow);border:1px solid var(--borda);display:flex;align-items:center;gap:14px}
 .nf-stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
 .nf-stat-lbl{font-size:.65rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.7px}
 .nf-stat-val{font-size:1.25rem;font-weight:700;font-family:var(--mono);color:var(--txt-dark)}
 .nf-stat-sub{font-size:.66rem;color:var(--txt-lite);margin-top:2px}
-.charts-2{display:grid;grid-template-columns:2.1fr 1fr;gap:16px;margin-bottom:22px}
-.charts-3{display:grid;grid-template-columns:1.45fr .9fr .85fr;gap:16px;margin-bottom:22px}
+
+/* ── CHARTS */
+.charts-2{display:grid;grid-template-columns:2.2fr 1fr;gap:16px;margin-bottom:22px}
+.charts-3{display:grid;grid-template-columns:1.4fr 1fr 0.7fr;gap:16px;margin-bottom:22px}
 .card{background:var(--card);border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow);border:1px solid var(--borda)}
-.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
 .card-header h3{font-size:.9rem;font-weight:700;color:var(--txt-dark)}
 .card-header p{font-size:.68rem;color:var(--txt-lite);margin-top:2px}
-.chart-wrap{position:relative} .chart-wrap.h220{height:220px} .chart-wrap.h260{height:260px} .chart-wrap.h300{height:300px} .chart-wrap.h340{height:340px}
+.chart-wrap{position:relative}
+.chart-wrap.h220{height:220px} .chart-wrap.h260{height:260px}
+.chart-wrap.h300{height:300px} .chart-wrap.h340{height:340px}
+
+/* ── FILTER BAR */
 #filter-bar{display:none;background:rgba(0,47,167,.06);border:1px solid rgba(0,47,167,.18);border-radius:var(--r-sm);padding:8px 14px;margin-bottom:14px;align-items:center;gap:10px;font-size:.78rem;color:var(--azul)}
 #filter-bar.active{display:flex}
 #filter-bar strong{font-weight:700}
 #clear-filter{margin-left:auto;padding:4px 12px;background:var(--azul);color:#fff;border:none;border-radius:5px;font-size:.7rem;font-weight:600;cursor:pointer;font-family:var(--sans);letter-spacing:.3px}
+
+/* ── TABLE */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.76rem}
 thead tr{background:linear-gradient(135deg,var(--azul-dk),var(--azul))}
 thead th{color:#fff;text-align:left;padding:9px 12px;font-weight:600;font-size:.66rem;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap}
+thead th:first-child{border-radius:var(--r-sm) 0 0 0} thead th:last-child{border-radius:0 var(--r-sm) 0 0}
 tbody tr{border-bottom:1px solid var(--borda);transition:background .12s}
 tbody tr:hover{background:#F5F8FF} tbody tr.hidden{display:none}
-tbody td{padding:8px 12px;color:var(--txt-med);white-space:nowrap;max-width:210px;overflow:hidden;text-overflow:ellipsis}
-td.mono{font-family:var(--mono);font-weight:600;color:var(--azul)} td.mono-sm{font-family:var(--mono);font-size:.72rem;color:var(--txt-med)}
-.b,.sb,.pb,.delta{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:9px;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
-.b-dot,.sb-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.b-sim{background:#E6F9F1;color:#00644A} .b-sim .b-dot{background:var(--verde)} .b-nao{background:#FFEBEE;color:#B71C1C} .b-nao .b-dot{background:var(--red)} .b-nc{background:#F3E5F5;color:var(--purple)} .b-nc .b-dot{background:var(--purple)} .b-pend{background:#FFF8E1;color:#E65100} .b-pend .b-dot{background:var(--orange)}
-.sb-ativo{background:#E6F9F1;color:#00644A} .sb-ativo .sb-dot{background:var(--verde)} .sb-inativo{background:#F5F5F5;color:#616161} .sb-inativo .sb-dot{background:#9E9E9E}
-.pb-venc{background:#EDE7F6;color:var(--purple)} .pb-crit{background:#FFEBEE;color:#B71C1C} .pb-atenc{background:#FFF3E0;color:#BF360C} .pb-ok{background:#E8F5E9;color:#1B5E20}
-.delta{font-family:var(--mono)} .delta.up{background:#E6F9F1;color:#00644A} .delta.down{background:#FFEBEE;color:#B71C1C} .delta.neu{background:#EEF2FF;color:var(--azul)}
+tbody td{padding:8px 12px;color:var(--txt-med);white-space:nowrap;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+td.mono{font-family:var(--mono);font-weight:600;color:var(--azul)}
+td.mono-sm{font-family:var(--mono);font-size:.72rem;color:var(--txt-med)}
+
+/* ── BADGES */
+.b{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:9px;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.b-dot{width:5px;height:5px;border-radius:50%}
+.b-sim{background:#E6F9F1;color:#00644A} .b-sim .b-dot{background:var(--verde)}
+.b-nao{background:#FFEBEE;color:#B71C1C} .b-nao .b-dot{background:var(--red)}
+.b-pend{background:#FFF8E1;color:#E65100} .b-pend .b-dot{background:var(--orange)}
+.b-nc{background:#F3E5F5;color:var(--purple)} .b-nc .b-dot{background:var(--purple)}
+.sb{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:9px;font-size:.64rem;font-weight:700;text-transform:uppercase}
+.sb-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sb-ativo{background:#E6F9F1;color:#00644A} .sb-ativo .sb-dot{background:var(--verde)}
+.sb-inativo{background:#F5F5F5;color:#616161} .sb-inativo .sb-dot{background:#9E9E9E}
+.pb{display:inline-block;padding:2px 9px;border-radius:9px;font-size:.64rem;font-weight:700}
+.pb-venc{background:#EDE7F6;color:var(--purple)} .pb-crit{background:#FFEBEE;color:#B71C1C}
+.pb-atenc{background:#FFF3E0;color:#BF360C} .pb-hoje{background:#FFEBEE;color:#B71C1C;animation:pulse 1.5s infinite}
+.pb-ok{background:#E8F5E9;color:#1B5E20}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ── DELTA CHIP (novidade) */
+.delta{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:8px;font-size:.63rem;font-weight:700;font-family:var(--mono)}
+.delta.up{background:#E6F9F1;color:#00644A} .delta.down{background:#FFEBEE;color:#B71C1C}
+.delta.neu{background:#EEF2FF;color:var(--azul)}
+
+/* ── VENCIMENTO MONITOR */
 .venc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px}
 .venc-item{border-radius:var(--r-sm);padding:11px 13px;border-left:3px solid;position:relative;transition:transform .15s}
 .venc-item:hover{transform:translateX(3px)}
-.v-exp{background:#F3E5F5;border-color:var(--purple)} .v-crit{background:#FFEBEE;border-color:var(--red)} .v-warn{background:#FFF8E1;border-color:var(--orange)} .v-ok{background:#E8F5E9;border-color:var(--verde)}
+.venc-item.v-exp{background:#F3E5F5;border-color:var(--purple)}
+.venc-item.v-crit{background:#FFEBEE;border-color:var(--red)}
+.venc-item.v-warn{background:#FFF8E1;border-color:var(--orange)}
+.venc-item.v-ok{background:#E8F5E9;border-color:var(--verde)}
 .venc-ct{font-size:.62rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.4px}
 .venc-nm{font-size:.78rem;font-weight:600;color:var(--txt-dark);margin:3px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .venc-dt{font-size:.68rem;color:var(--txt-med);font-family:var(--mono)}
-.venc-val{font-size:.68rem;font-family:var(--mono);color:var(--txt-lite);margin-top:2px}
 .venc-tag{position:absolute;top:9px;right:10px;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:8px}
-.v-exp .venc-tag{background:var(--purple);color:#fff} .v-crit .venc-tag{background:var(--red);color:#fff} .v-warn .venc-tag{background:var(--orange);color:#fff} .v-ok .venc-tag{background:var(--verde);color:#fff}
+.v-exp .venc-tag{background:var(--purple);color:#fff} .v-crit .venc-tag{background:var(--red);color:#fff}
+.v-warn .venc-tag{background:var(--orange);color:#fff} .v-ok .venc-tag{background:var(--verde);color:#fff}
+.venc-val{font-size:.68rem;font-family:var(--mono);color:var(--txt-lite);margin-top:2px}
+
+/* ── MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,10,40,.55);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
 .modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:16px;padding:28px;max-width:980px;width:95%;max-height:86vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal{background:#fff;border-radius:16px;padding:28px;max-width:820px;width:95%;max-height:86vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--borda)}
 .modal-header h2{font-size:1.05rem;font-weight:700;color:var(--txt-dark)}
-.modal-close{width:30px;height:30px;border-radius:50%;background:var(--cinza-bg);border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--txt-med)}
-.modal-section{margin-bottom:18px} .modal-section h3{font-size:.72rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.modal-close{width:30px;height:30px;border-radius:50%;background:var(--cinza-bg);border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--txt-med);transition:background .15s}
+.modal-close:hover{background:var(--borda)}
+.modal-section{margin-bottom:18px}
+.modal-section h3{font-size:.72rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
 .modal-row{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-radius:8px;border:1px solid var(--borda);margin-bottom:6px;font-size:.8rem;gap:12px}
-.modal-row.exp{background:#F9F3FF;border-color:#D1C4E9} .modal-row.crit{background:#FFF5F5;border-color:#FFCDD2} .modal-row.warn{background:#FFF9F0;border-color:#FFE0B2} .modal-row.ok{background:#F4FBF7;border-color:#C8E6C9}
-.mr-left{flex:1} .mr-left span{display:block;font-size:.62rem;color:var(--txt-lite);font-weight:700;text-transform:uppercase} .mr-left strong{font-size:.83rem;color:var(--txt-dark)}
-.mr-mid{font-size:.74rem;color:var(--txt-med);white-space:nowrap} .mr-right{font-size:.72rem;font-family:var(--mono);color:var(--txt-med);white-space:nowrap;text-align:right}
-footer{background:var(--azul-dk);color:rgba(255,255,255,.5);text-align:center;padding:14px;font-size:.68rem;letter-spacing:.4px} footer strong{color:var(--amarelo)}
-@media(max-width:1024px){main{padding:16px 18px}.kpi-row{grid-template-columns:repeat(3,1fr)}.nf-status-row{grid-template-columns:repeat(2,1fr)}.charts-2,.charts-3{grid-template-columns:1fr}.venc-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){header{padding:12px 16px;flex-wrap:wrap;position:relative}.h-logo{width:44px;height:44px;border-radius:10px}.h-sep{display:none}.h-title h1{font-size:1rem}.h-title p{font-size:.6rem}main{padding:12px 14px}.kpi-row{grid-template-columns:repeat(2,1fr);gap:10px}.kpi-val{font-size:1.25rem}.kpi-val.sm{font-size:.9rem}.nf-status-row{grid-template-columns:1fr}.chart-wrap.h220,.chart-wrap.h260,.chart-wrap.h300{height:220px}.venc-grid{grid-template-columns:1fr}table{font-size:.68rem;min-width:760px}.modal{padding:18px 16px}.modal-row{flex-direction:column;align-items:flex-start}#filter-bar{flex-wrap:wrap}#clear-filter{margin-left:0}}
-@media(max-width:480px){.kpi-row{grid-template-columns:1fr 1fr}.h-title p{display:none}.badge-dept{display:none}.kpi{padding:12px}.card{padding:12px}.chart-wrap.h220,.chart-wrap.h260,.chart-wrap.h300{height:200px}}
+.modal-row.exp{background:#F9F3FF;border-color:#D1C4E9} .modal-row.crit{background:#FFF5F5;border-color:#FFCDD2}
+.modal-row.warn{background:#FFF9F0;border-color:#FFE0B2} .modal-row.ok{background:#F4FBF7;border-color:#C8E6C9}
+.mr-left{flex:1} .mr-left span{display:block;font-size:.62rem;color:var(--txt-lite);font-weight:700;text-transform:uppercase}
+.mr-left strong{font-size:.83rem;color:var(--txt-dark)}
+.mr-mid{font-size:.74rem;color:var(--txt-med);white-space:nowrap}
+.mr-right{font-size:.72rem;font-family:var(--mono);color:var(--txt-med);white-space:nowrap;text-align:right}
+
+/* LRF layout classes */
+.grid-lrf-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+.grid-lrf-2col{display:grid;grid-template-columns:1fr 1.6fr;gap:16px;margin-bottom:22px}
+
+/* ── FOOTER */
+footer{background:var(--azul-dk);color:rgba(255,255,255,.45);text-align:center;padding:14px;font-size:.68rem;letter-spacing:.4px}
+footer strong{color:var(--amarelo)}
+
+/* ══════════════════════════════════════
+   RESPONSIVO — TABLET (≤ 1024px)
+══════════════════════════════════════ */
+@media(max-width:1024px){
+  main{padding:16px 18px}
+  .kpi-row{grid-template-columns:repeat(3,1fr)}
+  .nf-status-row{grid-template-columns:repeat(2,1fr)}
+  .charts-2{grid-template-columns:1fr}
+  .charts-3{grid-template-columns:1fr 1fr}
+  .charts-3 > .card:last-child{grid-column:1/-1}
+  .venc-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVO — MOBILE LANDSCAPE (≤ 768px)
+══════════════════════════════════════ */
+@media(max-width:768px){
+  /* Header */
+  header{padding:12px 16px;flex-wrap:wrap;gap:10px;position:relative}
+  .h-logo{height:44px}
+  .h-sep{display:none}
+  .h-title h1{font-size:1rem}
+  .h-title p{font-size:.6rem}
+  .h-right{flex-wrap:wrap;gap:6px}
+  .badge{font-size:.62rem;padding:4px 10px}
+
+  /* Main */
+  main{padding:12px 14px}
+
+  /* Section labels */
+  .sec-label{font-size:.6rem;letter-spacing:1.2px;margin-bottom:10px}
+
+  /* KPIs */
+  .kpi-row{grid-template-columns:repeat(2,1fr);gap:10px}
+  .kpi-val{font-size:1.3rem}
+  .kpi-val.sm{font-size:.95rem}
+  .kpi-icon{width:30px;height:30px;font-size:.85rem}
+
+  /* NF stats */
+  .nf-status-row{grid-template-columns:repeat(2,1fr);gap:10px}
+  .nf-stat-icon{width:36px;height:36px;font-size:1rem}
+  .nf-stat-val{font-size:1rem}
+
+  /* Charts */
+  .charts-2{grid-template-columns:1fr;gap:12px}
+  .charts-3{grid-template-columns:1fr;gap:12px}
+  .chart-wrap.h220{height:200px}
+  .chart-wrap.h260{height:220px}
+  .chart-wrap.h300{height:240px}
+  .chart-wrap.h340{height:260px}
+
+  /* Cards padding */
+  .card{padding:14px 14px}
+  .card-header h3{font-size:.82rem}
+  .card-header p{font-size:.62rem}
+  .card-header{flex-direction:column;gap:8px}
+  .card-header > div:last-child{flex-wrap:wrap}
+
+  /* Vencimento grid */
+  .venc-grid{grid-template-columns:1fr;gap:8px}
+  .venc-nm{font-size:.76rem}
+
+  /* LRF section — 3-col cards → 1-col */
+  .grid-lrf-3col{grid-template-columns:1fr}
+  .grid-lrf-2col{grid-template-columns:1fr}
+  [style*="grid-template-columns:1fr 1fr"]:not(.nf-stat):not(tbody){
+    grid-template-columns:1fr!important
+  }
+  .mr-mid,.mr-right{white-space:normal}
+
+  /* Tables */
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{font-size:.68rem;min-width:600px}
+  thead th{padding:7px 8px;font-size:.58rem}
+  tbody td{padding:6px 8px;font-size:.68rem}
+  td.mono{font-size:.68rem}
+  td.mono-sm{font-size:.62rem}
+
+  /* Filter bar */
+  #filter-bar{flex-wrap:wrap;gap:6px;font-size:.72rem}
+  #clear-filter{font-size:.64rem;padding:3px 10px}
+
+  /* Modal */
+  .modal{padding:18px 16px;max-height:90vh;border-radius:12px}
+  .modal-header h2{font-size:.9rem}
+  .modal-row{flex-direction:column;align-items:flex-start;gap:6px}
+  .mr-mid,.mr-right{font-size:.7rem}
+  .mr-left strong{font-size:.78rem}
+
+  /* KPI hint always visible on mobile */
+  .kpi-hint{opacity:1;font-size:.58rem}
+
+  /* Badges smaller */
+  .b,.sb,.pb,.delta{font-size:.58rem;padding:2px 7px}
+
+  /* Footer */
+  footer{font-size:.62rem;padding:12px 10px;line-height:1.6}
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVO — MOBILE PORTRAIT (≤ 480px)
+══════════════════════════════════════ */
+@media(max-width:480px){
+  header{padding:10px 12px}
+  .h-logo{height:38px}
+  .h-title h1{font-size:.88rem;line-height:1.2}
+  .h-title p{display:none}
+  .h-right .badge-dept{display:none}
+  .badge-dt{font-size:.6rem;padding:4px 8px}
+
+  main{padding:10px 10px}
+
+  /* KPIs: 2 columns, compact */
+  .kpi-row{grid-template-columns:repeat(2,1fr);gap:8px}
+  .kpi{padding:12px 12px 10px}
+  .kpi-val{font-size:1.15rem}
+  .kpi-val.sm{font-size:.85rem}
+  .kpi-lbl{font-size:.58rem}
+  .kpi-sub{font-size:.6rem}
+  .kpi-icon{margin-bottom:6px;width:28px;height:28px;font-size:.78rem}
+
+  /* NF stats: 1 column */
+  .nf-status-row{grid-template-columns:1fr}
+  .nf-stat{padding:12px 14px}
+
+  /* Charts: altura reduzida */
+  .chart-wrap.h220,.chart-wrap.h260{height:180px}
+  .chart-wrap.h300,.chart-wrap.h340{height:200px}
+
+  /* Cards */
+  .card{padding:12px 12px;border-radius:10px}
+  .card-header h3{font-size:.78rem}
+
+  /* Vencimentos: 1 coluna */
+  .venc-grid{grid-template-columns:1fr}
+  .venc-item{padding:9px 11px}
+  .venc-nm{font-size:.74rem}
+  .venc-val{font-size:.64rem}
+
+  /* Section labels */
+  .sec-label{font-size:.58rem;letter-spacing:1px;margin-bottom:8px}
+
+  /* NF status card */
+  .nf-stat-val{font-size:.95rem}
+  .nf-stat-sub{font-size:.62rem}
+
+  /* Modal */
+  .modal{padding:14px 12px;max-height:92vh;width:98%}
+  .modal-header{padding-bottom:10px;margin-bottom:14px}
+  .modal-header h2{font-size:.82rem;line-height:1.3}
+
+  /* Tables scroll */
+  table{font-size:.64rem;min-width:580px}
+  thead th{padding:6px 7px;font-size:.55rem}
+  tbody td{padding:5px 7px}
+}
+
+/* ══════════════════════════════════════
+   LANDSCAPE MOBILE — orientação deitada
+══════════════════════════════════════ */
+@media(max-width:812px) and (orientation:landscape){
+  header{padding:8px 20px}
+  .h-logo{height:36px}
+  .h-sep{display:none}
+  .h-title h1{font-size:.9rem}
+  .h-title p{font-size:.58rem}
+  main{padding:10px 16px}
+  .kpi-row{grid-template-columns:repeat(3,1fr);gap:8px}
+  .kpi{padding:10px 12px 8px}
+  .kpi-val{font-size:1.1rem}
+  .kpi-val.sm{font-size:.85rem}
+  .nf-status-row{grid-template-columns:repeat(2,1fr)}
+  .charts-2{grid-template-columns:1fr 1fr}
+  .charts-3{grid-template-columns:1fr 1fr}
+  .charts-3 > .card:last-child{grid-column:1/-1}
+  .chart-wrap.h220,.chart-wrap.h260{height:180px}
+  .chart-wrap.h300,.chart-wrap.h340{height:200px}
+  .venc-grid{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
 
+<!-- ══ MODAL ATENÇÃO IMEDIATA ══ -->
 <div class="modal-overlay" id="modal-venc">
   <div class="modal">
     <div class="modal-header">
-      <h2>🚨 Contratos — Painel de Atenção Imediata</h2>
-      <button class="modal-close" onclick="closeModal('modal-venc')">✕</button>
+      <h2>🚨 Contratos &amp; NFs — Painel de Atenção Imediata</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <div class="modal-section">
-      <h3>Contratos ativos vencidos ou vencendo em até 90 dias</h3>
-      <div id="modal-venc-body"></div>
-    </div>
-  </div>
-</div>
 
-<div class="modal-overlay" id="modal-nf-pend">
-  <div class="modal">
-    <div class="modal-header">
-      <h2>⏳ Notas Fiscais com Pagamento Pendente</h2>
-      <button class="modal-close" onclick="closeModal('modal-nf-pend')">✕</button>
-    </div>
-    <div id="modal-nf-summary"></div>
     <div class="modal-section">
-      <h3>Relação de NFs sem pagamento confirmado</h3>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Fornecedor</th><th>NF</th><th>Emissão</th><th>Mês</th><th>Valor</th><th>Protocolo</th><th>Liquidado</th><th>Empenho</th></tr></thead>
-          <tbody id="modal-nf-body"></tbody>
-        </table>
+      <h3>⚠ Contratos com Status Ativo e Prazo Vencido</h3>
+      <div class="modal-row exp"><div class="mr-left"><span>069/2021</span><strong>METODO Telecom — Voz IP</strong></div><div class="mr-mid">Vencido em 07/03/2026</div><div class="mr-right"><span class="pb pb-venc">−65 dias</span></div></div>
+      <div class="modal-row exp"><div class="mr-left"><span>070/2021</span><strong>METODO Telecom — Voz IP</strong></div><div class="mr-mid">Vencido em 07/03/2026</div><div class="mr-right"><span class="pb pb-venc">−65 dias</span></div></div>
+      <div class="modal-row exp"><div class="mr-left"><span>071/2021</span><strong>METODO Telecom — Voz IP</strong></div><div class="mr-mid">Vencido em 07/03/2026</div><div class="mr-right"><span class="pb pb-venc">−65 dias</span></div></div>
+    </div>
+
+    <div class="modal-section">
+      <h3>🔴 Vencendo em ≤ 90 dias</h3>
+      <div class="modal-row crit"><div class="mr-left"><span>042/2021</span><strong>ACTCON — E-mails Corporativos</strong></div><div class="mr-mid">Vence 11/05/2026</div><div class="mr-right"><span class="pb pb-hoje">HOJE</span></div></div>
+      <div class="modal-row warn"><div class="mr-left"><span>034/2025</span><strong>TOTALCAD — Upgrade ZWCAD em Rede</strong></div><div class="mr-mid">Vence 03/07/2026</div><div class="mr-right"><span class="pb pb-atenc">53 dias</span></div></div>
+      <div class="modal-row warn"><div class="mr-left"><span>072/2021</span><strong>METODO Telecom — Voz IP</strong></div><div class="mr-mid">Vence 08/07/2026</div><div class="mr-right"><span class="pb pb-atenc">58 dias</span></div></div>
+      <div class="modal-row warn"><div class="mr-left"><span>120/2022</span><strong>ENERGY SYSTEM — Serviços TI</strong></div><div class="mr-mid">Vence 16/07/2026</div><div class="mr-right"><span class="pb pb-atenc">66 dias</span></div></div>
+      <div class="modal-row warn"><div class="mr-left"><span>045/2025</span><strong>VB INFORMÁTICA — Tela Interativa 86"</strong></div><div class="mr-mid">Vence 17/07/2026</div><div class="mr-right"><span class="pb pb-atenc">67 dias</span></div></div>
+      <div class="modal-row warn"><div class="mr-left"><span>052/2025</span><strong>T&amp;R Soluções — SQL Server + CAL</strong></div><div class="mr-mid">Vence 05/08/2026</div><div class="mr-right"><span class="pb pb-atenc">86 dias</span></div></div>
+    </div>
+
+    <div class="modal-section">
+      <h3>📄 Notas Fiscais com Pagamento Pendente/Inconsistente</h3>
+      <div class="modal-row warn">
+        <div class="mr-left"><span>MÉTODO · NF 5350 · Março</span><strong>Solução de Voz IP</strong></div>
+        <div class="mr-mid">Liq: <span class="b b-sim" style="font-size:.62rem">SIM</span> &nbsp;Pago: <span class="b b-nc" style="font-size:.62rem">N.CONSTA</span></div>
+        <div class="mr-right">R$ 4.061,32</div>
+      </div>
+      <div class="modal-row warn">
+        <div class="mr-left"><span>PORTAL SOLUÇÕES · NF 553-556 · Abril</span><strong>Site da Prefeitura</strong></div>
+        <div class="mr-mid">Liq: <span class="b b-nc" style="font-size:.62rem">N.CONSTA</span> &nbsp;Pago: <span class="b b-nc" style="font-size:.62rem">N.CONSTA</span></div>
+        <div class="mr-right">R$ 8.632,50</div>
+      </div>
+      <div class="modal-row crit">
+        <div class="mr-left"><span>ENERGY SYSTEM (SAÚDE) · NF 49/50 · Março</span><strong>Serviços de TI</strong></div>
+        <div class="mr-mid">Liq: <span class="b b-sim" style="font-size:.62rem">SIM</span> &nbsp;Pago: <span class="b b-nao" style="font-size:.62rem">NÃO</span></div>
+        <div class="mr-right">R$ 69.438,66</div>
+      </div>
+      <div class="modal-row warn">
+        <div class="mr-left"><span>AMPLA SERVICES · NF 6474 · Abril</span><strong>Locação de Notebook</strong></div>
+        <div class="mr-mid">Liq: <span class="b b-sim" style="font-size:.62rem">SIM</span> &nbsp;Pago: <span class="b b-nc" style="font-size:.62rem">N.CONSTA</span></div>
+        <div class="mr-right">R$ 555,60</div>
+      </div>
+      <div style="margin-top:10px;padding:9px 13px;background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-radius:8px;border:1px solid #FFE082;font-size:.76rem;color:#7A4F00;font-weight:600;display:flex;align-items:center;justify-content:space-between">
+        <span>💰 Total pendente: <strong>R$ 82.688,08</strong> &nbsp;·&nbsp; 4 notas sem confirmação de pagamento</span>
+        <span class="delta down">▼ −R$ 85.782,91 vs. versão anterior</span>
       </div>
     </div>
   </div>
 </div>
 
+<!-- ══ MODAL NFs PENDENTES ══ -->
+<div class="modal-overlay" id="modal-nf-pend">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>⏳ Notas Fiscais com Pagamento Pendente ou Inconsistente</h2>
+      <button class="modal-close" onclick="closeModalNF()">✕</button>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:120px;background:#FFF8E1;border:1px solid #FFE082;border-radius:8px;padding:10px 14px;text-align:center">
+        <div style="font-size:.62rem;font-weight:700;color:#7A4F00;text-transform:uppercase;letter-spacing:.6px">Total Pendente</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--orange);margin-top:3px">R$ 457.161,28</div>
+      </div>
+      <div style="flex:1;min-width:120px;background:#FFEBEE;border:1px solid #FFCDD2;border-radius:8px;padding:10px 14px;text-align:center">
+        <div style="font-size:.62rem;font-weight:700;color:#7A0000;text-transform:uppercase;letter-spacing:.6px">NFs Pendentes</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--red);margin-top:3px">15 notas</div>
+      </div>
+      <div style="flex:1;min-width:120px;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:10px 14px;text-align:center">
+        <div style="font-size:.62rem;font-weight:700;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px">Pagas (conf.)</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--verde);margin-top:3px">42 notas</div>
+      </div>
+    </div>
+
+    <!-- Banner de quitações confirmadas -->
+    <div style="background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:9px 14px;font-size:.74rem;color:#1B5E20;font-weight:600;margin-bottom:16px;line-height:1.6">
+      ✅ Confirmado pelo Sistema Contábil — Relação de Pagamentos Efetuados:<br>
+      &nbsp;&nbsp;• <strong>ENERGY (EDUCAÇÃO) NF 7/8 — Emp. 521:</strong> Pago em 06/05 e 18/05/2026 — R$ 138.873,33 quitado<br>
+      &nbsp;&nbsp;• <strong>ENERGY (PLANEJ.) NF 3/4 — Emp. 542:</strong> Pago em 05/05 e 19/05/2026 — R$ 69.438,60 quitado<br>
+      &nbsp;&nbsp;• <strong>MÉTODO NF 5350 — Emp. 345:</strong> Pago em 19/05/2026 — R$ 4.061,32 quitado<br>
+      &nbsp;&nbsp;• <strong>ENERGY (SAÚDE) NF 1/2 — Emp. 336:</strong> Pago em 15/05 e 19/05/2026 via Fundo Municipal de Saúde — R$ 69.438,66 quitado<br>
+      &nbsp;&nbsp;• <strong>ENERGY (SOCIAL) NF 5/6 — Emp. 90/91:</strong> Pago em 26/05/2026 via Fundo Municipal de Assistência Social — R$ 69.438,66 quitado<br>
+      &nbsp;&nbsp;• <strong>ENERGY (SOCIAL) NF 5/6 — Emp. 90/91:</strong> Pago em 26/05/2026 (Pag. 370+371) via Fundo de Assistência Social — R$ 69.438,66 quitado
+    </div>
+
+    <div class="modal-section">
+      <h3>🟣 BETHA Sistemas — 11 NFs sem liquidação e sem pagamento</h3>
+      <div style="background:#F8F0FF;border:1px solid #CE93D8;border-radius:8px;padding:8px 12px;font-size:.72rem;color:#4A148C;margin-bottom:8px;font-weight:500">
+        ⚠ Contrato 105/2025 (GRP — R$ 2,8M). Protocolo Adm. 19/05/2026 · Empenho 413 · Total: <strong>R$ 375.254,98</strong><br>10 NFs <span style="color:#00A86B;font-weight:700">liquidadas</span> · NF 7905 ainda sem liquidação · Todas sem pagamento
+      </div>
+      <div class="modal-row" style="background:#F8F0FF;border-color:#CE93D8;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;width:100%;font-size:.78rem"><span><strong>NF 7905</strong> · Jan · Mensalidade</span><span style="font-family:var(--mono);font-weight:700;color:var(--purple)">R$ 79.675,30</span></div>
+        <div style="display:flex;justify-content:space-between;width:100%;font-size:.78rem"><span><strong>NF 3193</strong> · Fev · Mensalidade</span><span style="font-family:var(--mono);font-weight:700;color:var(--purple)">R$ 79.675,30</span></div>
+        <div style="display:flex;justify-content:space-between;width:100%;font-size:.78rem"><span><strong>NF 5445</strong> · Mar · Mensalidade</span><span style="font-family:var(--mono);font-weight:700;color:var(--purple)">R$ 101.470,09</span></div>
+        <div style="display:flex;justify-content:space-between;width:100%;font-size:.78rem"><span><strong>NF 7075</strong> · Abr · Mensalidade</span><span style="font-family:var(--mono);font-weight:700;color:var(--purple)">R$ 178.260,07</span></div>
+        <div style="border-top:1px dashed #CE93D8;padding-top:6px;margin-top:2px">
+          <div style="font-size:.68rem;color:#6A1B9A;font-weight:600;margin-bottom:4px">Implantação (7 NFs) · Emissão 07/05/2026</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:.7rem;background:#EDE7F6;border-radius:5px;padding:3px 8px;font-family:var(--mono)">7614 · R$ 5.236,00</span>
+            <span style="font-size:.7rem;background:#EDE7F6;border-radius:5px;padding:3px 8px;font-family:var(--mono)">7616 · R$ 1.904,00</span>
+            <span style="font-size:.7rem;background:#EDE7F6;border-radius:5px;padding:3px 8px;font-family:var(--mono)">7617 · R$ 773,98</span>
+            <span style="font-size:.7rem;background:#EDE7F6;border-radius:5px;padding:3px 8px;font-family:var(--mono)">7618 · R$ 129,00</span>
+            <span style="font-size:.7rem;background:#EDE7F6;border-radius:5px;padding:3px 8px;font-family:var(--mono)">7622 · R$ 2.192,93</span>
+            <span style="font-size:.7rem;background:#EDE7F6;border-radius:5px;padding:3px 8px;font-family:var(--mono)">7623 · R$ 5.030,84</span>
+            <span style="font-size:.7rem;background:#EDE7F6;border-radius:5px;padding:3px 8px;font-family:var(--mono)">7628 · R$ 582,77</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <h3>✅ ENERGY SYSTEM — Todas as 4 NFs de Abril quitadas</h3>
+      <div style="background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:8px 12px;font-size:.72rem;color:#1B5E20;margin-bottom:8px;font-weight:500">
+        Educação (Emp. 521) ✅ · Planejamento (Emp. 542) ✅ · Saúde (Emp. 336) ✅ · <strong>Social (Emp. 90/91) ✅ pago em 26/05/2026</strong> via Fundo Municipal de Assistência Social.<br>
+        Todas as 4 NFs de Abril da ENERGY SYSTEM estão quitadas.
+      </div>
+      <div class="modal-row ok" style="flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;width:100%;font-size:.78rem">
+          <span><strong>NF 5/6</strong> · SOCIAL · Abril · Emp. 90/91</span>
+          <span style="font-family:var(--mono);font-weight:700;color:var(--red)">R$ 69.438,66</span>
+        </div>
+        <div style="font-size:.7rem;color:#B71C1C;background:#FFEBEE;border-radius:5px;padding:4px 8px">
+          ✅ Pago em 26/05/2026 · Emp 370: R$ 62.078,65 + Emp 371: R$ 7.360,01 · Fundo Municipal de Assistência Social
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <h3>⚠ Demais NFs com Inconsistência de Pagamento</h3>
+
+      <div class="modal-row warn" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <div style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px">
+          <div class="mr-left"><span>PORTAL SOLUÇÕES · NF 553-556 · Emp. 344</span><strong>Site da Prefeitura — Abril/2026</strong></div>
+          <div style="font-size:.95rem;font-weight:700;font-family:var(--mono);color:var(--orange);white-space:nowrap">R$ 8.632,50</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:.7rem">
+          <span>Liquidado: <span class="b b-nc" style="font-size:.6rem"><span class="b-dot"></span>NÃO CONSTA</span></span>
+          <span>Pago: <span class="b b-nc" style="font-size:.6rem"><span class="b-dot"></span>NÃO CONSTA</span></span>
+          <span style="color:var(--txt-lite)">Protocolo: 29/04/2026</span>
+        </div>
+      </div>
+
+      <div class="modal-row warn" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <div style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px">
+          <div class="mr-left"><span>PORTAL SOLUÇÕES · NF 668-671 · Emp. 344</span><strong>Site da Prefeitura — Maio/2026</strong></div>
+          <div style="font-size:.95rem;font-weight:700;font-family:var(--mono);color:var(--orange);white-space:nowrap">R$ 8.632,50</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:.7rem">
+          <span>Liquidado: <span class="b b-sim" style="font-size:.6rem"><span class="b-dot"></span>SIM</span></span>
+          <span>Pago: <span class="b b-nc" style="font-size:.6rem"><span class="b-dot"></span>NÃO</span></span>
+          <span style="color:var(--txt-lite)">Protocolo: 29/05/2026</span>
+        </div>
+      </div>
+
+      <div class="modal-row warn" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <div style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px">
+          <div class="mr-left"><span>TOP CENTER · NF 17107-17110 · Emp. 476</span><strong>Impressoras — Maio/2026</strong></div>
+          <div style="font-size:.95rem;font-weight:700;font-family:var(--mono);color:var(--orange);white-space:nowrap">R$ 64.085,70</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:.7rem">
+          <span>Liquidado: <span class="b b-nao" style="font-size:.6rem"><span class="b-dot"></span>NÃO</span></span>
+          <span>Pago: <span class="b b-nao" style="font-size:.6rem"><span class="b-dot"></span>NÃO</span></span>
+          <span style="color:var(--txt-lite)">Protocolo: 29/05/2026</span>
+        </div>
+      </div>
+
+      <div class="modal-row warn" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <div style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px">
+          <div class="mr-left"><span>AMPLA SERVICES · NF 6636 · Emp. 333</span><strong>Locação Notebook — Maio/2026</strong></div>
+          <div style="font-size:.95rem;font-weight:700;font-family:var(--mono);color:var(--orange);white-space:nowrap">R$ 555,60</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:.7rem">
+          <span>Liquidado: <span class="b b-nao" style="font-size:.6rem"><span class="b-dot"></span>NÃO</span></span>
+          <span>Pago: <span class="b b-nao" style="font-size:.6rem"><span class="b-dot"></span>NÃO</span></span>
+          <span style="color:var(--txt-lite)">Protocolo: 29/05/2026</span>
+        </div>
+      </div>
+
+      <div style="background:#E8F5E9;border:1px solid #C8E6C9;border-radius:7px;padding:7px 12px;font-size:.73rem;color:#1B5E20;font-weight:600">
+        ✅ <strong>AMPLA SERVICES · NF 6474 · Emp. 333</strong> — Liq. 917 confirmada no Sistema Contábil (05/03/2026) · R$ 555,60 quitado
+      </div>
+    </div>
+
+    <div style="padding:10px 14px;background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-radius:8px;border:1px solid #FFE082;font-size:.76rem;color:#7A4F00;display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <span>💰 <strong>Total a regularizar: R$ 457.161,28</strong> &nbsp;·&nbsp; BETHA R$ 375k · PORTAL R$ 17k · TOP CENTER MAIO R$ 64k · AMPLA MAIO R$ 1k</span>
+      <span class="delta up" style="font-size:.68rem;white-space:nowrap">▼ −R$ 69.438,66 vs. versão anterior</span>
+    </div>
+  </div>
+</div></div>
+
+<!-- ══ HEADER ══ -->
 <header>
   <div class="h-left">
-    <div class="h-logo">PMI</div>
+    <img class="h-logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAERAhkDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDvIlXyk4H3R2p21fQflSRf6pP90U+gBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflRtX0H5U6igBu1fQflXite2V4nQB7TF/qk/3RT6ZF/qk/3RT6ACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK8Tr2yvE6APaYv9Un+6KfTIv8AVJ/uin0AFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAV4nXtleJ0Ae0xf6pP90U+mRf6pP8AdFPoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArxOvbK8ToA9pi/1Sf7op9Mi/1Sf7op9ABRRRQAUUUUAFFFFABRRRQAUUUUAFFNd1QZdgo96qyahCvC5c+3SsqlanT+N2KjCUtkXKKy5NRlb7iqv6mq0k8sn35GPtniuGpmdKPwps2jh5Pc2JLiGP70i59OtVn1KMH5EZvrxWbUsdtNJ92NvqeK5HmFeo7U1+pqqEI/EzWt51nj3Lx2IPapar2dubeMhjlmOTirFezRc3TTqbnJOyk+XYKKKK1JCiiigAooooAKKKKACiiigAooooAy9f1lNDsVuXhabfIIwqnHJBP9Kp2nijfqENlf6dc2Mk5xEZOVY+lVfiHn+w7fb1+1JjP+61OXRtZ1LVbK61mW0SKzfzEjtwcs3B5z9BXVCFP2alLzJ1uXtc186TdWttHZSXU1wDtVGx0o0jxFHqN9JYzWk9ndxruMco6j2/OsnxaLpvE2jCyaNbjD+WZc7QffFHh0zHxZfDWAP7UWIBCv3DHx90fl+tP2cPZc1tbX/EL6mrrPiBtM1G3sYbGW7nmQuqo2Omf8DVrSNRub8Sm506ay2Y2+ac7856fT+tc94jS7k8baWlhKkNyYG2O4yBw+ePpmuj0mLUoYHGqXMU8hbKtGm0AY6VE4xjTT6v1/4YfUyB4rnmubiKz0W5uVgkMbOjDqD9K09U1caZov8AaM1u+QqkxZwQWxwT7ZrldAOti81b+yRZlPtbb/tG7Ocnpitnxtv/AOERm83b5mY923pncM4rSVOCqRil2FfQn0/Xr29uYY30S5hik/5bM2VAxnPSrV7rCWesWWnGFma7zhweFx7VT0K31xDbPeX1vJaeWP3ax4bG3jnH0qprv/I6aF9HqOSDnbye1w6F3WtfuNJlk/4lM81vGoJnVsLz+FP0XW7jVZF36VPbQNHvWZ2yrdMdveneLf8AkWL/AP65/wBRU3h3/kXtO/690/8AQRU+77K9tdh9RLDWEvtVvrFYWRrMgFychs0HWEHiEaR5LbjD5vmZ4+mKyPD5C+MdeQnDEoQPUf5IoyH+JHynOyzw2O3+ciqdOPM15X/AVy9rHiFtN1KGwhsJbueaPeBG2OOf8DUmi+IItVuJrVrea1uoBl4pRzj1/l+dYniEXreONOGnNEt19mbYZs7f485x7ZqXwmXbXtV/tIH+1hgOcjaY+MbR+X6VTpw9le2tr/j+QX1NnxDrkWhWaTyRmVpH2qinBPGSavWV1He2UN1F9yZA49sjpXG+INTs5PF8cV8sklpZREMqLuy7D/Aj8qveAL4S6ZPYliTayHZuGDsbkcfXNKVG1JStr/mF9Tq6xtc17+ybm1t47OS6muc7VRsdMf41s1yviP8A5G3QP99/6VlRipSs/P8AIbLlh4nhnv0sLyzuLC6k+4sy8N9DVnX9aXRLaKU27ztLII1RTjnB/wAKx/GpV77RYoyPtRuQUx1AyOfzx+VO8fhzZaeIyA5u12k9jg1tGnCUoO2jFc09M1e9vbrybjR7i0TaT5kh4z6dK2KytJt9ahnc6pe288RXCrHHtIOevStWuepa+g0FFFFQMKKKKACiiigAooooAKKKKACvE69srxOgD2mL/VJ/uin0yL/VJ/uin0AFFFFABRRRQAUUUUAFFFFABVa7uhbrgcuegqzWJduXuZCexwPwrhx2IdGn7u7NqMFOWoySR5W3OxJptFFfNttu7O/YKKKKQy3aXSRYV41/3gOa00dZF3IwYe1YqW8skZdEJUelJHK8LZRipr1MPjZ0ElNe7/X3nNOipu6epu0VSt9QR8LL8jevargORkV7VKtCqrwdzklBxdmLRRRWpIUUUUAFFFFABRRRQAUUUUAFFFFAFDWNJt9ZtUt7lpFRJBIDGQDkZ9QfWr9FFO7asBQu9Jt7zUrS/kaQS2mdgUjac+vFJcaPb3Gr2+pl5EuIFKjYQAwOeDx7mtCinzy7gY+r+HbXV7uK6lnuYZol2q0DhTj8j6mp9I0iPSRKI7q7uPMxn7RJv24z04GOtaNFP2knHlvoKxQ0zSbfS3umgaRjcymV95BwT6cdKfqumwatYSWdyXWN8ElDgjBz3q5RS55c3NfUZhWHheCwuop49Q1GTyjwkkwKnjoRirt3pFvd6naahI0gltc7ApG059eK0KKbqSbu2KxW1Gyi1Gxms5iwjlXaxQ4I+lOs7ZLKzhtYixSFAilupAGOanoqbu1hmNqnhqy1O7F2XntrkDBlt32k/WpdH0Cy0dpJLfzJJpfvzStucj0rUoqvaT5eW+grFCbSbebWbfVGaTz4EMagEbSDnqMe570jaPbnW01ZXkS4WPy2VSNrj3GP69hWhRS55d/IZQ03SbfTZruaJpHku5PMkaQgnPoMDpyaSLSLeHWZtUjaQTTRhHTI2HGOcY68DvWhRRzy1d9wCsnWdAttZlglnmuIZIM7GhcKeceoPpWtRRGTi7oDG0zwzp+m3f2tTNcXIGBLO+5h9Ksa1o1vrdtHDcvKgjferRMAQcY7g+taNFP2knLmvqKxj6Z4fi0y7+0JfX852ldk8wZefbFbFFFKUnJ3YwoooqQCiiigAooooAKKKKACiiigArxOvbK8ToA9pi/1Sf7op9Mi/wBUn+6KfQAUUUUAFFFFABRRRQAUUUUAFYl2my6kHvn8626o6jAXQSqOV6/SvPzCk6lK63RvQlyy16mbRRRXzh3hRRU1pLHFITIm5SMdM4q4RUpJN2JbsroLe6kt+ByvdTVzFtfDj5JP1/8Ar02SzinXzLZgPbt/9aqLxvC+HBUiu9urh1y1FzQ/D5PoY2jN3joySe1kg5Iyv94UQXUkBwpyv909Kmgv2T5ZRvX171K9rDcrvt2Cn07f/WpRpKT58LLXt1/4IOVtKiLFvdJcDC8MOqmp6o2dm8MpeQjpgAVer2sNKpKmnVVmclRRUvdCiiiuggKKKKACqGt6rFo2myXkqF9uAqDjcT0FX65j4g/8i2f+uyf1rSlFSmosT2MQ/EW5zxp8WP8Arof8KvaN47+3ajDaXVmIhMwRXR84Y8DIrzyr2h/8h3T/APr5j/8AQhXrTwtLldkRzM9pqO4nitoHnncRxRjczHoBTyQoJJAA5JPavMfGPiU6rObO0ciyjPJH/LVvX6en515dCi6srLYtux1WheLo9a1eSyS2MaBS0chbJbB7jHFdLXl3w+/5GVf+uT/0r1GrxVONOdoii7oKKKK5igoopkxYQuV+8FOPrQBQvNYhtpDGqmVx1wcAfjS2erw3MgjZTG56ZOQfxrmySTk9aASDkHBFen9Vhy26nL7aVztaKZGWMSFvvEDP1p9eYdQUUUUAFUL3VYbR/LwZJB1A7fjV6uNlZmldn+8SSfrXTh6SqN36GVWbitDftdahnkCSIYieAc5FalcTXX2TM1lCz/eKDP5U8RRjCziKlNy0ZPRWRr/iG10GKNrhXkklJ2InU46k1hf8LFs/+fCf/voVnChUmrxRrdHaUVk6B4gtdehke3V43iIDo/UZ6H6cGtas5RcXZjCiiipAgvZ2trV5lTeV7Vjf29P/AM8o/wBa3yARg9Kw9T0jbma1XK9WQdvpXTQdN+7NGVTm3iM/t6f/AJ5R/rR/b0//ADyj/Wsqkrt9hT7HP7SXc6jTL/7cj7k2umMgdDmr1Yfhz71x9F/rW5XnVoqM2kdVNtxuwooorIsKKKKACiiigArxOvbK8ToA9pi/1Sf7op9Mi/1Sf7op9ABRRRQAUUUUAFFFFABRRRQAUlLRQBm3diVJkhGV7r6VRrXvr2OyiDOCxY4CjvVaBrfVI2dVMci9f8968jE5dzPmpfcb08XFS9nJ6lOJVeVVdtqk8mrU9g6DdEd6+neoZ7WSA/MMr/eHSiC7kg4B3L/dNedBU4Xp14tefVHU+Z+9BkccjwvlGKmr0d5FOvl3Kge/b/61OzbXw/uSfr/9eqk9pJByRuX+8K3UauHXNTfND8PmuhF4zdpaMmn08gb4DuX071UVnifKkqwp8FzJAflOV/unpWm8UV1EruuMjOe4pwowxPvUfdkun+TBzdPSeqG2V0ZwVcfMvcd6tVjy6hbWCtHbfvZD1OePzrLuL+5uf9ZKdv8AdXgV9FhMLWdNe1ep59WtBSfKdQ88KHDyop92ApUljkOEkRj7EGuMpQSDkHBrt+pruY+38jtaK5ux1aa3cLMxki755I+ldEjK6B1OVYZBHeuWrSlTeprCalsOrmPiD/yLZ/67J/WunrmPiD/yLZ/67J/WnQ/ix9SnseX1e0P/AJDun/8AXzH/AOhCqNXtD/5Dun/9fMf/AKEK92fwsyO4+ImpzWtlBZQsVFzuMhHUqMcfjn9K85ruPib/AK/T/wDdf+a1w9c+ESVJWKludN8Pv+RlX/rk/wDSvR7zUrKwGbu6hhz0DuAT+FeO6bqVxpdw09qwWUoUDEZ257j3qvLLJPK0s0jSSMcszHJP41FbC+1qczegKVkeuL4q0Nm2jUYs+4IH54rStru2vI/MtZ45k9Y2DD9K8OqW2up7OZZraV4pF6MhwazlgI291j5j3KiuT8J+LRqpFlflUvP4GAwJf8DXWV51SnKnLlkUncxb3RC8pktmVQ3JRuMfSiz0XypVkunUgHhR3PvWneXcFjayXNy4SKMZZjXkviDXrjWtQ89i0cMZ/cxg/cHr9a7KHtay5b2XczcIp3PYaK47xxrF7Y6bYJazNE1yCXdDhuAvAPbrXD/2zqn/AEErz/v+3+NRSwkqkea5blY9porzLwt4pubO9caleSy2pjYnzGLkEcjGe56Y96q634u1HVJGWKRrW27RxnBI9z3/AJU/qU+bl6dw5kerZB6Vk3+jefKZbdlVm5ZW6Vxfw6mkGvSxhzseFiwzwSCOa9Jd1jRndgqKMsxOABWc4yw9S0WJpTWpiW2iMrh7qRQg52qev41tsyRpuYqiKOpOAK8s8W+JH1m68i3YrZRH5R08w/3j/SrfiO5mbwfoSGRirqSwz12gAfzredCpPl53v+AopR2JfiNPDPd2RhlSQBGzsYHHI9K42iivRpQ9nBRE3c7P4cTwwXF+ZpY48qmN7AZ5PrXfxXEM+fJmjkx12MDivDa2fCM0kPiWy8tiu59rY7gjpXJiMLzt1LjUuh69SdKoazq9ro1kbm6Y+iIOrn0FeYa14l1DWXYSymO3zxChwv4+v41xUcNKrrsi27Hptz4g0i1cpNqFuGHUB9xH5VFF4n0SUgLqUAz/AHiV/nXj9Fdn1CHdkcx7Ddabb348+0lTLdSpyrflVX+wbj/nrH+teZWGo3mmzebZXDwt32ng/UdDXpHhbxVHrQ+zXCiK9UZwPuyD1Hv7VFSFajG8XdE8kZM19MsPsKPucM74zjoMVeoorz5ScndmqSSsgoooqRhRRRQAUUUUAFeJ17ZXidAHtMX+qT/dFPpkX+qT/dFPoAKKKKACiiigAooooAKKKKAEJwCT2rn11q4+0hjt8sn7mO31rff7jfSuOHUUHDjKkoOPKzZ8RdLf/gX9Kb4e+/P9F/rTvEXS3/4F/Sm+Hvvz/Rf60EP/AHv+uxFNrFwLltu3ygcbCOorTlsUmQSQ/ISM47Vzcv8ArX/3jXSXN4LKwjk27mIAA/CsqtGFVWmrl4TETi5Sk9jPkieFsOpU1qWDvJb5kycHAJ7ioNOvxf745Y1DKM+oIqhf6vIzNFbfu0BxuHU/4Vhg8tlCq3CWh6E8XCpTTLt+9jbtl+ZP+eaHr9fSsi71Ke6GzPlxdAi/1qCGGa5k2xIzsev/ANeteDS7e0Tzr6RTj+Ht/wDXr2adChhndL3mcsqlSrp0MOireo3ENxcboIwiAY6Yz71Urui21dowaswooopiCui0GUyWTIT/AKtsD6Gudre8OqRBM3YsB+n/ANeufFL92a0viNiuY+IP/Itn/rsn9a6euY+IP/Itn/rsn9a4aH8WPqdT2PL6vaH/AMh3T/8Ar5j/APQhVGr2h/8AId0//r5j/wDQhXuz+FmR1XxN/wBfp/8Auv8AzWuHruPib/r9P/3X/mtcPWGF/gxHLcKuWWlX+oAmztJplBwWVeB+PSrPhrTF1fW4LWT/AFXLyc4yo7fj0r1+GKOCJIoUVI0GFVRgAVGIxPsnypajUbni95pOoWC7ruzmhXONzIdv59Kp17pJGk0bRyorowwysMgivJPFmlJpGtyQRf6mQCWMegOePwINGHxXtXytag42MmKV4ZUliYpIhDKw6gjvXsWh6omp6LDfMyqSn73sFYfe/wAa8arr/DNy58H69b54jTcP+BKQf/QaMXSU4p+YRZR8W+I31q68mAlbKI/IOm8/3j/SueoorphBQjyxJ3O3+In/AB56P/uP/JK4iu3+In/Hno/+4/8AJK4iscL/AAl8/wAxy3CirWm2MupahDZwfflbGT0A7n8BXp+neENHsoVV7VbmTHzSTfNk/ToKdbERpb7glc5D4dKx8QuwBIWBsn05FWPG/iY3cr6ZZP8AuEOJnH8bDt9B+td3DZWtjDJ9jtoYMjJ8tAufyrxLqa56LjXquo1sN6KwV6E2gSa94O0pYJUjmhTK787SD1HH0Fee17B4U/5Fmw/65f1q8ZNwjGS7hHU8y1vQrvQ5Iku2iJlBK+WxPT8KzK7b4mf8flj/ANc2/mK4mt6E3OmpMT0Zp6JoV3rjzLaNEDEAW8xiOv4e1dV4e8F3mn6rFe300AjgO4LGxJJx7gYFQ/DP/j41D/cT+Zrq/FFy1p4cvpUOG8raD6bjt/rXHiK1T2jpLZ/qUkrXPNPE+sPrOrSTBj9nQ7IV9F9fx61kUVYsJYIb6GW5jMkKOGZB/EB2rvUVCNl0IOg0TwReanbrc3EotIXGUyu5mHrjjArSuvh0wiJtNQDOBwskeAfxB4/KrP8AwsW0/wCfCb/vsUf8LFtP+fCf/vsVwOWLbul+RfunB3tnPYXcltdRmOWM4IP8/pTLeeS2uI54XKSRsGVh2Irb8Va7a69JBLDbSQyxgqxYg7h2/Ln86wK7oNyj7ysyGe1aPqCappdveoMeauSPRhwR+YNXa5D4b3DSaPcQMciKbK+wIH9Qa6+vDrQ5JuJqtUFFFFZDCiiigAooooAK8Tr2yvE6APaYv9Un+6KfTIv9Un+6KfQAUUUUAFFFFABRRRQAUUUUANf7jfSuOHUV2L/cb6Vxw6ig87HbxNnxF0t/+Bf0pvh778/0X+tO8RdLf/gX9Kb4e+/P9F/rQD/3v+uxky/61/8AeNbOs/8AIPtvqP5VjS/61/8AeNbOs/8AIPtvqP5UGFP4JkHh/wD4+5P+uf8AUVcl0W2aZpWkZUJyV7fnWfo8ogknlIyEiJx68iq93fz3Z/eNhOyDpXTh4Tk7xdjpoSiqSuaU+qW9onk2ManH8Xb/AOvWRNNNcybpGZ2PT/61WLPTJ7vDAbI/77f09a091hpC4H7yf8z/APWrpThTdoq8jW0pavRFO00WWVd9w3lJ6d//AK1Z86LHO6I+9VOA3rVi81Ge7JDNtj/uL0/H1qOKzuJomkjiYovJPT/9dax5l71RkOz0iivRRRWpAV1GjxeVp0eer/Mfx/8ArVzUaGSRUXqxAFdiihEVF6KMCuPFy0UTeitWx1cx8Qf+RbP/AF2T+tdPXMfEH/kWz/12T+tctD+LH1Oh7Hl9XtD/AOQ7p/8A18x/+hCqNdF4L0abUdXiucFbe1cSM/qw5Cj/AD0r26slGDbM0a3xN/1+n/7r/wA1rh67j4m/6/T/APdf+a1w9ZYX+DEJbnReBJ44PE0Ikbb5iMi/Ujj+Veq14Sjsjq6MVZTkEHBBrtNM+IM8MKx6ha+eyjHmo20n6j1/KsMXh5TlzRKi7HoVeY/EK6SfxAscZB8iEI2OzZJx+oq7qPxCmlhaOwtPJY9JZG3EfhjGa4uWR5pXlkYu7kszHqSe9LC4aUJc8wk7ja6jwzGf+Ea8QydjCqj/AMe/+tXL16Fp2ntYfDu8aQYkuImmI9AQMfoAfxrpxErRS7tEo89oooroEdv8RP8Ajz0f/cf+SVxFdv8AET/jz0f/AHH/AJJXEVzYX+Evn+Y5bnReA/8AkaLf/cf/ANBNeq15r8PNPmm1dr7aRBApXce7EYwPwr0qvPxrTq6di47DJf8AVP8A7prwuvdJf9U/+6a8LrfL/tfIUwr2Dwp/yLNh/wBcv614/XsHhT/kWbD/AK5f1q8f8C9RR3OV+Jn/AB+WP/XNv5iuJrvPiZCcafOBwN6H9CP61wdbYR/uUKW52/wzI+1X477E/ma6TxpGZPCt8B2Ct+TA1554Z1s6Fqfnshkhddkijrj1HuK9Bg1/R/EEUunxXB8y4jZNjoQTkHOO1cmIhKNb2ltNCk9LHk1SW9vLdTpBAhklc4VR1NOu7aWzupbaddskTFWHuKZDNJbzxzRMVkjYMpHYjpXp3utCDS/4RrWv+gbcf980f8I1rX/QNuP++a7zRPGmn38KLeypaXOPmD8IfcH/ABrYk1nS4o976jahex85ef1rzpYqtF2cS+VHlf8AwjWtf9A24/75o/4RrWv+gbcf9812OqeP7S2mEdhAbsA/M5bYv4cZNbOieJNP1pQIJPLnxzDJw34ev4VUsRXjHmcdAsjO8CaPeaXZXLXsflNOwKxk8gAHk/n+ldTRRXm1JupJyZSVgoooqBhRRRQAUUUUAFeJ17ZXidAHtMX+qT/dFPpkX+qT/dFPoAKKKKACiiigAooooAoateSWkC+Vw7nGSOlULHWJFk23TbkP8WOVrWvLVLyAxvweqt6GuYubeS1mMcowR0PYj1oPPxMqtOfOnodYxDREqQQRkEVxw4NaGnakbcGGUkxHp/s//WrPoMMRWVVRaNLWL2G78nySTtBJyMYzj/Ck0e8htHl84kBgMEDPSs6igy9tL2ntOornc7N6nNaOpXsNxZwRxkll5YY6cVm0UERm4ppdTT0JVe4lRhlWjIIPfkVday06wPnS8/3Vc5/IVT0HP2qXHXyzj8xWfKZ57giQO8pOCMc59K6cPByvrZHfQklSWhevNZlmykAMSev8R/wqjBbzXMm2JC7dz6fWtK00b5fNvHCKOduf5ntUlxq0Fsnk2Ma8fxY4/wDr10qaj7tJXNmm9ZsWHTbWyTzr6RWPp2/LvVe91l5VMVsvlx4xnuR/Ss+SWW5l3SM0jmtGy0WSTD3JMa/3R1P+FDjGPvVXdgm3pBGbDDJO+yJC7egqW8tGs2RHYFyu4gdq6iCCK3TZEgVfbvXM6nL51/M2eAdo/DinSrOpOy2FOChHzJNFi83UEJHCAsa6esfw9FiKWYj7x2j8P/11sVyYmV6nobUlaIVzHxB/5Fs/9dk/rXT1R1nS4dY097OdmVWIIZeoIrOlJRmpM0ex5PoWj3GtX620A2qOZJMcIvrXrun2NvptlHa2qbY4x+JPcn3qDRtHtdFs/s9qp5OXdvvOfU1oVticQ6rsthJWOA+Jv+v0/wD3X/mtcPXsOvaBa67BGlwzo8RJSROoz1H04FYH/CurX/oITf8AfArqw+JpwpqMmJxdzz3Bor1bRvCGn6V5zMWumlTy280DG09Ris3Ufh9azOz2F01vn/lm43qPoev861WNpuVhcrPO6K7Nfh3elvmvrcL6hSTWvpngHT7VlkvZXu3HO3G1Py6n86qWLpJb3DlZzPhHw3Jq90tzcIRYxNlif+WhH8I/rXfeJgB4avwBgCBsAVpxxpFGqRoqIowFUYAFNuII7m3kgmXdHIpVl9QeteZUxDqTUnsi0rI8Mor0ST4d2RclL6dV7AqDj8afbfD2winV5rqaZFOSmAob2Nel9cpdyOVmf8RP+PTR/wDcf+SVzegaLPrl+IIsrGvMsmOEX/H0r0TxX4dfXorUQzJC0Bb7w4IOPT6CtDRtJt9GsFtbcZ7u5HLt6muWOKVOilHcfLdlixs4NPtI7W2QJFGMAf1PvViiiuBu7uyxkv8Aqn/3TXhde7VyN18PrCa4eSG5mhRjnywAQv09q7MJWhSvzdSZK55vXsHhT/kWrD/rl/WsNPh3ZhwXvp2XuAoGa662t4rS2jt4F2xRKFUegFVi68KkUoiirGd4m0n+2dGltkx5y/PFn+8O348j8a8hlieGVopUKSIcMrDBBr3SsfWfDOnayd9xGY5/+esXDH6+tThsT7L3ZbDkrnkFa3hb/kZdP/66iujm+HL7iYdSUjsHix+oNXtC8D/2bqUV5cXglMRyqImBn3Oa7J4qk4OzJUWP8ZeF21MfbrFR9rUYdOnmAf1FebujxuySKUdTgqwwQa91rL1bw9purgm6tx5v/PVPlcfj3/GuTD4vkXLPYpxueOUV3l18OgWzaagQv92WPJ/MH+lVV+Hd7u+a+twvqAxNdyxVF9SOVnG1paDpd7qmoxpZAq0bBml6CPnrn1rs7D4e2cRDXt1JcEfwoNi/1P8AKurtLS3soFgtYUhjHRUGKwq42KVoajUSalooryjQKKKKACiiigAooooAK8Tr2yvE6APaYv8AVJ/uin0yL/VJ/uin0AFFFFABRRRQAUUUUAFV7y0jvIdj8EfdbuDViigUoqSszkLm3ktZjHKMEdD2I9airrLy0jvIdj8EfdbuDXMXNvJazGOUYI6HsR60Hj16DpO62IqKKKDmCiiigDX8PJmaZ/RQPzP/ANatvau7dgZ9cVQ0SDyrLeR80h3fh2rRoPaw0eWkrmF4gM3mxjnydvHpmqllpc91hiPLj/vMOv0FdOQD1pa6Y4lxhyxRbpJyuyraWEFoP3a5fu561aoorncnJ3ZoklsNbO07euOK41gwchgd2eQeua7SozBEZPMMSF/720Z/OtqNb2V9CKkOch06E29jFGRhsZP1PNWqKKxk+Z3ZaVlYKKKhubmO1i8yXO3OOBmkDaSuyaioZriKGDznb5MA5HemyXkEVuk7thHAK8cnNAnOK3ZYoqta3sN0WWNjuXqrDBqH+17TcQS4wcZK8UE+1gle5foqtc3sNsiO5JV/u7RnNMGowGB5sOEQgHK+tA3UgnZsuUVVttQt7mTy42IfGcMMZp0F3DcRu8ZOEOGyOaAVSL2ZYoqBLqKS1+0gny8E8jniltrmO6i8yInbnHIoGpxeiZNRRUSXEbzNECdy9alyjGyb3LSbJaKjWZXlaMZ3L1pouYyrtnAQ4Oan2kO/9LcOVk1FV0u4nVmG75Rk8Ui3sTuFAbJOOlT9Ypae8tSuSXYs0VWa9iVivzEg4OBSy3cUT7G3ZHPAo+sUrX5kHJLsWKKjEyGHzQ2UxnNEMyTJvTpnHNWpxbST3JsySio55VghaV87VGTio5byGK1W4Yny2xjA55rVRb2JukWKKr3N7DahTIxy3RQMk0Q3sE8LyxsSEGWBHIo5JWvYOZXsWKKrpewvaG5UkxjrxyKZNqMEEcTvuxKMrgf59aOSTdrBzIt0VUXULc2zTksqKcfMMEmmrqlu0TSASYUgEbeeelP2cuwuZdy7RVK31O3uJVjjD7j6rxUkd7DLdPbqT5ideOKHCS3QcyZZoooqCgooooAKKKKACiiigArxOvbK8ToA9pi/1Sf7op9Mi/1Sf7op9ABRRRQAUUUUAFFFFABRRRQAVXvLSO8h2PwR91u4NWKKBSipKzORurWW0lKSr9D2NQ12EsMc6FJUDKexrNl0KFjmKVk9iM0HmVMHJP3NUYNXdNsGu5gzDEKn5j6+1aMOhQo2ZZGk9gMCtSNFjQIihVHQCgdHByveYoAAAAwBS0UUHphRRRQAUUUUAFFFFABRRRQAVm67/wAeK/8AXQf1rSqtfWv2yAR79mGBzjNBnVi5QaRk3MFwIJIJM+TbAsrf3s9Kl+9Ppat93ywfxx/+qtW5h+0W7xbtu8YzjOKry6esltDH5hV4QNsgFBzug03y67fg9iKb5det9vVozu/WoLBVbTL0N03N/KrtrYmGdp5pjNKRjcRjAquukuFeP7Wwic5ZQuM/jmgHCd+a29/xKbs/2DTioy4kO0HvzxVzUGnbSpTcRqjbhgKc8ZFT3OniWKBIpPK8k5U7c0j2MstpJBNdGQsQQxTGMfjQL2U0mvLy7FSzZp9TiM6eU0cXyL/eHrn8arWjNbIbj/llIzRv7ehrXey3XFvMsm1oRtPH3hSQ6eiWcls7b1ck5xjFAexn919fu/4YzjJs8PxJnBkbbn/gRNWdLkjW7uoYmDR5Drj9f6VImmAJbI8m5ISSQV+9k5p0mng3Bmgk8glChCr+tARp1E1K21vyLjMFUsegGazIXVZIZNw3s53D61f8lja+S0hLbcFyOtMezRoFjXCsMfNjmuLE0qk5JwW353/4B6VOUUteoy3/AOP+4/CoooTPFcIDg+ZkVYktWaUyxymNiMHA60La7INiSsrE5LDvWXsZt8so6Lm673K51un2C2nZnMMq7ZFHboRTLX/j7ufqP61LBbmORpHcu5GMkYpYoPLlkfdnec4x0rWEKj5HLo391nYluOtirbtMJpvKRWG/nJpJneO9lKJvOzn2HFTC0kV3aO4K7jkjbUogxctMWzuXbjFYqhVcFDVWfl57Fucb3KbFU0xFVs7z1qWyZBPNGhBXO4YpyWQXYDJuRGJ2kU57XMu+NvLyu3AH60Qo1oyjPl2srfLX8wcotNX3G6r/AMg2f/d/rWRdPdHSYlkiQQgLhgeTxxW1PbmazaBpDllxuxmop7DzrBLXzMbAPm29ce1e1RqKMVfucc4tt2IF+bXl3fww/L/n86jf5dUvwvQwEn64FXLqx8+SOWOVopkGA4GeKSDTxFHNulMkswIZyP6VSnG179LC5WY8bNbWJB5iuYyR7MKs3BcDSzEoZ9nAPQnAq82nK+nLaM+dvR8dD9KbPpzSJbBJzG0C4Dbc56e/tV+1g3f1/InkaQXNvc3tkFkVI5lfcoByDT7C8ednhnj8ueP7w7Gg2lwYNhvX8wNuDhcfhinWdl9meSR5TLLJ95iMVk3Hlab9C0ne5V0ZwlpcO3RZGJ/IVStJY0ntZ94MjyN5g7jPFakenGOznt1m/wBaxO7b0z+NJLpcT2iQptR1x+8C88VoqkLvzJ5ZWXkX6KgghkieVpJmkDnIBH3fap65XobIKKKKQBRRRQAUUUUAFeJ17ZXidAHtMX+qT/dFPpkX+qT/AHRT6ACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK8Tr2yvE6APaYv9Un+6KfTIv9Un+6KfQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABXide2V4nQB7TF/qk/3RT6ZF/qk/3RT6ACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK8Tr2yvE6APaYv8AVJ/uin0yL/VJ/uin0AFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAV4nXtleJ0AUqWiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACoKKKAP/2Q==" alt="Prefeitura de Ibirité">
     <div class="h-sep"></div>
     <div class="h-title">
       <h1>Dashboard · Gestão de Contratos &amp; Notas Fiscais</h1>
@@ -158,156 +567,653 @@ footer{background:var(--azul-dk);color:rgba(255,255,255,.5);text-align:center;pa
 </header>
 
 <main>
-  <div class="sec-label">Indicadores Gerenciais — Carteira de Contratos</div>
-  <div class="kpi-row">
-    <div class="kpi c-azul"><div class="kpi-icon">📋</div><div class="kpi-lbl">Total Contratos</div><div class="kpi-val" id="k-total-contratos"></div><div class="kpi-sub">Portfólio completo DTI</div></div>
-    <div class="kpi c-verde"><div class="kpi-icon">✅</div><div class="kpi-lbl">Contratos Ativos</div><div class="kpi-val" id="k-ativos"></div><div class="kpi-sub"><span class="pos" id="k-ativos-pct"></span> da carteira vigente</div></div>
-    <div class="kpi c-amarelo"><div class="kpi-icon">💰</div><div class="kpi-lbl">Valor Portfolio Ativo</div><div class="kpi-val sm" id="k-valor-ativo"></div><div class="kpi-sub">Exposição financeira corrente</div></div>
-    <div class="kpi c-azul"><div class="kpi-icon">📄</div><div class="kpi-lbl">NFs 2026 Emitidas</div><div class="kpi-val" id="k-nfs"></div><div class="kpi-sub">Total: <span style="font-family:var(--mono);font-weight:600" id="k-total-nf"></span></div></div>
-    <div class="kpi c-orange clickable" onclick="openModal('modal-nf-pend')"><div class="kpi-icon">⏳</div><div class="kpi-lbl">NFs Pendentes Pgto</div><div class="kpi-val" id="k-pendentes"></div><div class="kpi-sub"><span class="warn" id="k-valor-pendente"></span> em aberto</div><div class="kpi-hint">Ver detalhes →</div></div>
-    <div class="kpi c-red clickable" onclick="openModal('modal-venc')"><div class="kpi-icon">🚨</div><div class="kpi-lbl">Atenção Imediata</div><div class="kpi-val" id="k-atencao"></div><div class="kpi-sub"><span class="neg" id="k-atencao-sub"></span></div><div class="kpi-hint">Ver detalhes →</div></div>
-  </div>
 
-  <div class="sec-label">Controle de Notas Fiscais 2026 — Liquidação &amp; Pagamento</div>
-  <div class="nf-status-row">
-    <div class="nf-stat"><div class="nf-stat-icon" style="background:#EEF2FF">📑</div><div><div class="nf-stat-lbl">Total NFs Encaminhadas</div><div class="nf-stat-val" id="s-total-nfs"></div><div class="nf-stat-sub" id="s-total-nfs-sub"></div></div></div>
-    <div class="nf-stat"><div class="nf-stat-icon" style="background:#E8F5E9">✅</div><div><div class="nf-stat-lbl">Liquidadas</div><div class="nf-stat-val" id="s-liq"></div><div class="nf-stat-sub" id="s-liq-sub"></div></div></div>
-    <div class="nf-stat"><div class="nf-stat-icon" style="background:#E3F2FD">💳</div><div><div class="nf-stat-lbl">Efetivamente Pagas</div><div class="nf-stat-val" id="s-pago"></div><div class="nf-stat-sub" id="s-pago-sub"></div></div></div>
-    <div class="nf-stat"><div class="nf-stat-icon" style="background:#FFF3E0">⚠</div><div><div class="nf-stat-lbl">Pendentes Pagamento</div><div class="nf-stat-val" style="color:var(--red)" id="s-pend"></div><div class="nf-stat-sub" id="s-pend-sub"></div></div></div>
+<!-- ══ KPIs CONTRATOS ══ -->
+<div class="sec-label">Indicadores Gerenciais — Carteira de Contratos</div>
+<div class="kpi-row">
+  <div class="kpi c-azul">
+    <div class="kpi-icon">📋</div>
+    <div class="kpi-lbl">Total Contratos</div>
+    <div class="kpi-val">20</div>
+    <div class="kpi-sub">Portfólio completo DTI</div>
   </div>
-
-  <div class="sec-label">Análise Financeira — Desembolsos &amp; Fornecedores</div>
-  <div class="charts-2">
-    <div class="card"><div class="card-header"><div><h3>📊 Desembolso por Mês de Referência — 2026</h3><p>Clique em uma barra para filtrar a tabela de NFs · dados importados da planilha</p></div></div><div class="chart-wrap h260"><canvas id="cMensal"></canvas></div></div>
-    <div class="card"><div class="card-header"><div><h3>📋 Liquidação vs Pagamento</h3><p>Volume e valor por status</p></div></div><div class="chart-wrap h260"><canvas id="cLiqPago"></canvas></div></div>
+  <div class="kpi c-verde">
+    <div class="kpi-icon">✅</div>
+    <div class="kpi-lbl">Contratos Ativos</div>
+    <div class="kpi-val">15</div>
+    <div class="kpi-sub"><span class="pos">75%</span> da carteira vigente</div>
   </div>
-
-  <div class="charts-3">
-    <div class="card"><div class="card-header"><div><h3>🏢 Top Fornecedores — NFs 2026</h3><p>Clique para filtrar a tabela por fornecedor</p></div></div><div class="chart-wrap h300"><canvas id="cFornecedor"></canvas></div></div>
-    <div class="card"><div class="card-header"><div><h3>🔵 Status da Carteira</h3><p>Contratos ativos vs inativos</p></div></div><div class="chart-wrap h300"><canvas id="cStatus"></canvas></div></div>
-    <div class="card"><div class="card-header"><div><h3>📈 Evolução do Pagamento</h3><p>Pagas x pendentes por mês de referência</p></div></div><div class="chart-wrap h300"><canvas id="cEvolucao"></canvas></div></div>
+  <div class="kpi c-amarelo">
+    <div class="kpi-icon">💰</div>
+    <div class="kpi-lbl">Valor Portfolio Ativo</div>
+    <div class="kpi-val sm">R$ 19,73 M</div>
+    <div class="kpi-sub">Exposição financeira corrente</div>
   </div>
+  <div class="kpi c-azul">
+    <div class="kpi-icon">📄</div>
+    <div class="kpi-lbl">NFs 2026 Emitidas</div>
+    <div class="kpi-val">99</div>
+    <div class="kpi-sub">Total: <span style="font-family:var(--mono);font-weight:600">R$ 3,22 M</span></div>
+  </div>
+  <div class="kpi c-orange clickable" onclick="openModalNF()">
+    <div class="kpi-icon">⏳</div>
+    <div class="kpi-lbl">NFs Pendentes Pgto</div>
+    <div class="kpi-val">56</div>
+    <div class="kpi-sub"><span class="warn">R$ 937.667,26</span> em aberto <span class="delta down" style="font-size:.58rem">▲ +41 NFs</span></div>
+    <div class="kpi-hint">Ver detalhes →</div>
+  </div>
+  <div class="kpi c-red clickable" onclick="openModal()">
+    <div class="kpi-icon">🚨</div>
+    <div class="kpi-lbl">Atenção Imediata</div>
+    <div class="kpi-val">9</div>
+    <div class="kpi-sub"><span class="neg">3 vencidos · 6 ≤ 90 dias</span></div>
+    <div class="kpi-hint">Ver detalhes →</div>
+  </div>
+</div>
 
-  <div class="card" style="margin-bottom:22px">
-    <div class="card-header">
-      <div><h3>📄 Controle de Notas Fiscais 2026 — Detalhamento Completo</h3><p><span id="txt-table-nf"></span> · clique nos gráficos para filtrar</p></div>
+<!-- ══ KPIs NFs ══ -->
+<div class="sec-label" style="margin-top:4px">Controle de Notas Fiscais 2026 — Liquidação &amp; Pagamento</div>
+<div class="nf-status-row">
+  <div class="nf-stat">
+    <div class="nf-stat-icon" style="background:#EEF2FF">📑</div>
+    <div>
+      <div class="nf-stat-lbl">Total NFs Encaminhadas</div>
+      <div class="nf-stat-val">99 <span class="delta down" style="font-size:.6rem">+42 NFs</span></div>
+      <div class="nf-stat-sub">R$ 3.218.813,55 · Jan–Mai/2026</div>
     </div>
-    <div id="filter-bar"><span>🔍 Filtro ativo: <strong id="filter-label"></strong></span><button id="clear-filter" onclick="clearFilter()">✕ Limpar Filtro</button></div>
-    <div class="tbl-wrap">
-      <table id="tbl-nf">
-        <thead><tr><th>Fornecedor</th><th>Número NF</th><th>Emissão</th><th>Mês Ref.</th><th>Valor (R$)</th><th>Protocolo Adm.</th><th>Liquidado</th><th>Pago</th><th>Empenho</th></tr></thead>
-        <tbody id="tbody-nf"></tbody>
-      </table>
+  </div>
+  <div class="nf-stat">
+    <div class="nf-stat-icon" style="background:#E8F5E9">✅</div>
+    <div>
+      <div class="nf-stat-lbl">Liquidadas</div>
+      <div class="nf-stat-val">86 <span style="font-size:.7rem;color:var(--azul)">86,9%</span></div>
+      <div class="nf-stat-sub">R$ 1.986.130,70 liquidados</div>
     </div>
   </div>
+  <div class="nf-stat">
+    <div class="nf-stat-icon" style="background:#E3F2FD">💳</div>
+    <div>
+      <div class="nf-stat-lbl">Efetivamente Pagas</div>
+      <div class="nf-stat-val">36 <span style="font-size:.7rem;color:var(--orange)">66,7%</span> <span class="delta up" style="font-size:.6rem">▲ +1</span></div>
+      <div class="nf-stat-sub">R$ 1.981.513,78 pagos</div>
+    </div>
+  </div>
+  <div class="nf-stat">
+    <div class="nf-stat-icon" style="background:#FFF3E0">⚠</div>
+    <div>
+      <div class="nf-stat-lbl">Pendentes Pagamento</div>
+      <div class="nf-stat-val" style="color:var(--red)">56 <span class="delta down" style="font-size:.6rem">▲ +41</span></div>
+      <div class="nf-stat-sub">R$ 937.667,26 aguardando</div>
+    </div>
+  </div>
+</div>
 
-  <div class="card" style="margin-bottom:22px">
+<!-- ══ GRÁFICOS PRINCIPAIS ══ -->
+<div class="sec-label">Análise Financeira — Desembolsos &amp; Fornecedores</div>
+<div class="charts-2">
+  <div class="card">
     <div class="card-header">
-      <div><h3>🚨 Monitor de Vencimentos — Contratos Ativos</h3><p>Base: 10/06/2026 · contratos vencidos ou que requerem renovação/ação em até 90 dias</p></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <span style="font-size:.64rem;padding:3px 9px;border-radius:8px;background:#EDE7F6;color:var(--purple);font-weight:700">⬤ Vencidos</span>
-        <span style="font-size:.64rem;padding:3px 9px;border-radius:8px;background:#FFEBEE;color:var(--red);font-weight:700">⬤ Crítico ≤30d</span>
-        <span style="font-size:.64rem;padding:3px 9px;border-radius:8px;background:#FFF8E1;color:var(--orange);font-weight:700">⬤ Atenção ≤90d</span>
+      <div>
+        <h3>📊 Desembolso Mensal 2026 — NFs Encaminhadas</h3>
+        <p>Clique em uma barra para filtrar a tabela de NFs · Jan–Abr/2026</p>
       </div>
     </div>
-    <div class="venc-grid" id="venc-grid"></div>
+    <div class="chart-wrap h260"><canvas id="cMensal"></canvas></div>
   </div>
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <h3>📋 Liquidação vs Pagamento</h3>
+        <p>Volume e valor por status de NF</p>
+      </div>
+    </div>
+    <div class="chart-wrap h260"><canvas id="cLiqPago"></canvas></div>
+  </div>
+</div>
 
-  <div class="card" style="margin-bottom:28px">
-    <div class="card-header"><div><h3>📋 Relação Completa de Contratos — Carteira DTI</h3><p><span id="txt-contracts"></span> · Base 10/06/2026</p></div></div>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Status</th><th>Contrato</th><th>Fornecedor</th><th>Serviço</th><th>Assinatura</th><th>Vencimento</th><th>Prazo</th><th>Valor Contrato</th><th>Pagamento</th><th>Gestor</th><th>Fiscal</th></tr></thead>
-        <tbody id="tbody-contratos"></tbody>
-      </table>
+<div class="charts-3">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <h3>🏢 Top Fornecedores — NFs 2026</h3>
+        <p>Clique para filtrar a tabela por fornecedor</p>
+      </div>
+    </div>
+    <div class="chart-wrap h300"><canvas id="cFornecedor"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <h3>🔵 Status da Carteira</h3>
+        <p>Contratos ativos vs inativos</p>
+      </div>
+    </div>
+    <div class="chart-wrap h300"><canvas id="cStatus"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <h3>📈 Evolução Pgto 2026</h3>
+        <p>Tendência Jan–Abr</p>
+      </div>
+    </div>
+    <div class="chart-wrap h300"><canvas id="cEvolucao"></canvas></div>
+  </div>
+</div>
+
+<!-- ══ TABELA NFs ══ -->
+<div class="card" style="margin-bottom:22px">
+  <div class="card-header">
+    <div>
+      <h3>📄 Controle de Notas Fiscais 2026 — Detalhamento Completo</h3>
+      <p>39 notas fiscais · Clique nos gráficos para filtrar · Jan–Abr/2026</p>
     </div>
   </div>
+  <div id="filter-bar">
+    <span>🔍 Filtro ativo: <strong id="filter-label"></strong></span>
+    <button id="clear-filter" onclick="clearFilter()">✕ Limpar Filtro</button>
+  </div>
+  <div class="tbl-wrap">
+    <table id="tbl-nf">
+      <thead>
+        <tr>
+          <th>Fornecedor</th><th>Número NF</th><th>Emissão</th>
+          <th>Mês Ref.</th><th>Valor (R$)</th><th>Protocolo Adm.</th>
+          <th>Liquidado</th><th>Pago</th><th>Empenho</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-nf"></tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ══ INDICADORES LRF / FISCAIS ══ -->
+<div class="sec-label">Conformidade Fiscal — Demonstrativos LRF &amp; Constitucionais · Jan–Jun/2026 · Emissão: 10/06/2026</div>
+
+<!-- Cards resumo topo -->
+<div class="grid-lrf-3col">
+
+  <!-- ASPS / SAÚDE -->
+  <div class="card" style="border-top:4px solid var(--verde)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div>
+        <div style="font-size:.65rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.8px">ASPS — Saúde · LC 141/2012</div>
+        <div style="font-size:.92rem;font-weight:700;color:var(--txt-dark);margin-top:2px">Ações e Serviços Públicos de Saúde</div>
+        <div style="font-size:.68rem;color:var(--txt-lite)">RREO Anexo 12 · Jan–Jun/2026</div>
+      </div>
+      <span style="padding:5px 12px;border-radius:20px;background:#E6F9F1;color:#00644A;font-size:.7rem;font-weight:700;white-space:nowrap">✅ REGULAR</span>
+    </div>
+    <div style="position:relative;height:8px;background:var(--borda);border-radius:4px;margin-bottom:6px;overflow:hidden">
+      <div style="position:absolute;left:0;top:0;height:100%;width:22.75%;background:var(--verde);border-radius:4px;transition:width .8s ease"></div>
+      <div style="position:absolute;left:15%;top:-4px;height:16px;width:2px;background:var(--orange)"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.62rem;color:var(--txt-lite);margin-bottom:14px">
+      <span>0%</span><span style="color:var(--orange);font-weight:700">Mínimo 15%</span><span>Aplicado: 22,75%</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div style="background:#F0FBF5;border-radius:8px;padding:10px 12px">
+        <div style="font-size:.62rem;color:var(--txt-lite);font-weight:700;text-transform:uppercase">Base de Cálculo</div>
+        <div style="font-size:.88rem;font-weight:700;font-family:var(--mono);color:var(--txt-dark);margin-top:2px">R$ 185,71 M</div>
+      </div>
+      <div style="background:#F0FBF5;border-radius:8px;padding:10px 12px">
+        <div style="font-size:.62rem;color:var(--txt-lite);font-weight:700;text-transform:uppercase">Mínimo Exigido</div>
+        <div style="font-size:.88rem;font-weight:700;font-family:var(--mono);color:var(--txt-dark);margin-top:2px">R$ 27,86 M</div>
+      </div>
+      <div style="background:#E6F9F1;border-radius:8px;padding:10px 12px">
+        <div style="font-size:.62rem;color:var(--txt-lite);font-weight:700;text-transform:uppercase">Aplicado Liquidado</div>
+        <div style="font-size:.88rem;font-weight:700;font-family:var(--mono);color:var(--verde);margin-top:2px">R$ 42,25 M</div>
+      </div>
+      <div style="background:#E6F9F1;border-radius:8px;padding:10px 12px">
+        <div style="font-size:.62rem;color:var(--txt-lite);font-weight:700;text-transform:uppercase">Margem s/ Mínimo</div>
+        <div style="font-size:.88rem;font-weight:700;font-family:var(--mono);color:var(--verde);margin-top:2px">R$ 14,39 M</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;border-top:1px solid var(--borda);padding-top:10px">
+      <div style="font-size:.65rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">Despesas Totais com Saúde</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+        <div style="text-align:center;background:#EEF2FF;border-radius:6px;padding:6px">
+          <div style="font-size:.6rem;color:var(--txt-lite);font-weight:600">Empenhado</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--mono);color:var(--azul)">R$ 94,92 M</div>
+        </div>
+        <div style="text-align:center;background:#EEF2FF;border-radius:6px;padding:6px">
+          <div style="font-size:.6rem;color:var(--txt-lite);font-weight:600">Liquidado</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--mono);color:var(--azul)">R$ 76,78 M</div>
+        </div>
+        <div style="text-align:center;background:#EEF2FF;border-radius:6px;padding:6px">
+          <div style="font-size:.6rem;color:var(--txt-lite);font-weight:600">Pago</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--mono);color:var(--azul)">R$ 69,64 M</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PESSOAL / LRF -->
+  <div class="card" style="border-top:4px solid var(--azul)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div>
+        <div style="font-size:.65rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.8px">Despesa com Pessoal · LRF</div>
+        <div style="font-size:.92rem;font-weight:700;color:var(--txt-dark);margin-top:2px">RGF Anexo 1 · Jun/2025–Mai/2026</div>
+        <div style="font-size:.68rem;color:var(--txt-lite)">Consolidado · Ibirité/MG</div>
+      </div>
+      <span style="padding:5px 12px;border-radius:20px;background:#E6F9F1;color:#00644A;font-size:.7rem;font-weight:700;white-space:nowrap">✅ REGULAR</span>
+    </div>
+    <!-- Barra de progresso com os 3 limites -->
+    <div style="position:relative;height:8px;background:var(--borda);border-radius:4px;margin-bottom:6px;overflow:visible">
+      <div style="position:absolute;left:0;top:0;height:100%;width:41.03%;background:var(--azul);border-radius:4px"></div>
+      <!-- Limites verticais -->
+      <div style="position:absolute;left:54%;top:-8px;height:24px;width:2px;background:var(--amarelo);border-radius:1px" title="Alerta 54%"></div>
+      <div style="position:absolute;left:57%;top:-8px;height:24px;width:2px;background:var(--orange);border-radius:1px" title="Prudencial 57%"></div>
+      <div style="position:absolute;left:60%;top:-8px;height:24px;width:2px;background:var(--red);border-radius:1px" title="Máximo 60%"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.6rem;color:var(--txt-lite);margin-bottom:14px;gap:4px">
+      <span style="color:var(--azul);font-weight:700">DTP: 41,03%</span>
+      <span style="color:var(--amarelo);font-weight:700">Alerta 54%</span>
+      <span style="color:var(--orange);font-weight:700">Prud. 57%</span>
+      <span style="color:var(--red);font-weight:700">Máx. 60%</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+      <div style="background:#EEF2FF;border-radius:8px;padding:10px 12px">
+        <div style="font-size:.62rem;color:var(--txt-lite);font-weight:700;text-transform:uppercase">RCL Ajustada</div>
+        <div style="font-size:.88rem;font-weight:700;font-family:var(--mono);color:var(--txt-dark);margin-top:2px">R$ 626,68 M</div>
+      </div>
+      <div style="background:#EEF2FF;border-radius:8px;padding:10px 12px">
+        <div style="font-size:.62rem;color:var(--txt-lite);font-weight:700;text-transform:uppercase">DTP Apurada</div>
+        <div style="font-size:.88rem;font-weight:700;font-family:var(--mono);color:var(--azul);margin-top:2px">R$ 257,11 M</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--borda);padding-top:10px">
+      <div style="font-size:.65rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">Margens até os Limites LRF</div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:.74rem">
+          <span style="color:var(--txt-med)">⚠ Alerta (54%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:var(--verde)">+ R$ 81,30 M</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:.74rem">
+          <span style="color:var(--txt-med)">🔶 Prudencial (57%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:var(--verde)">+ R$ 100,10 M</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:.74rem">
+          <span style="color:var(--txt-med)">🔴 Máximo (60%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:var(--verde)">+ R$ 118,90 M</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MDE / EDUCAÇÃO -->
+  <div class="card" style="border-top:4px solid var(--red)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div>
+        <div style="font-size:.65rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.8px">MDE — Educação · CF/88 art. 212</div>
+        <div style="font-size:.92rem;font-weight:700;color:var(--txt-dark);margin-top:2px">Manutenção e Desenvolvimento do Ensino</div>
+        <div style="font-size:.68rem;color:var(--txt-lite)">RREO Anexo 8 · Jan–Jun/2026</div>
+      </div>
+      <span style="padding:5px 12px;border-radius:20px;background:#FFEBEE;color:#B71C1C;font-size:.7rem;font-weight:700;white-space:nowrap;animation:pulse 2s infinite">⚠ CRÍTICO</span>
+    </div>
+    <div style="position:relative;height:8px;background:var(--borda);border-radius:4px;margin-bottom:6px;overflow:hidden">
+      <div style="position:absolute;left:0;top:0;height:100%;width:17.96%;background:var(--red);border-radius:4px"></div>
+      <div style="position:absolute;left:25%;top:-4px;height:16px;width:2px;background:var(--orange)"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.62rem;color:var(--txt-lite);margin-bottom:14px">
+      <span style="color:var(--red);font-weight:700">Apurado: 17,96%</span>
+      <span style="color:var(--orange);font-weight:700">Mínimo anual: 25%</span>
+      <span style="color:var(--txt-lite)">Déficit: −7,16 p.p.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+      <div style="background:#FFF5F5;border-radius:8px;padding:10px 12px;border:1px solid #FFCDD2">
+        <div style="font-size:.62rem;color:var(--red);font-weight:700;text-transform:uppercase">Exigido (25%)</div>
+        <div style="font-size:.88rem;font-weight:700;font-family:var(--mono);color:var(--red);margin-top:2px">R$ 46,43 M</div>
+      </div>
+      <div style="background:#FFF5F5;border-radius:8px;padding:10px 12px;border:1px solid #FFCDD2">
+        <div style="font-size:.62rem;color:var(--red);font-weight:700;text-transform:uppercase">Aplicado Liq.</div>
+        <div style="font-size:.88rem;font-weight:700;font-family:var(--mono);color:var(--red);margin-top:2px">R$ 33,36 M</div>
+      </div>
+    </div>
+    <!-- Sub-indicadores FUNDEB -->
+    <div style="border-top:1px solid var(--borda);padding-top:10px">
+      <div style="font-size:.65rem;font-weight:700;color:var(--txt-lite);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">Indicadores FUNDEB</div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-radius:6px;background:#FFF5F5;border:1px solid #FFCDD2">
+          <span style="font-size:.72rem;color:var(--txt-med)">Remuneração prof. (mín. 70%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:var(--red);font-size:.72rem">61,96% ⚠</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-radius:6px;background:#FFF5F5;border:1px solid #FFCDD2">
+          <span style="font-size:.72rem;color:var(--txt-med)">Não aplicado (máx. 10%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:var(--red);font-size:.72rem">12,57% ⚠</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-radius:6px;background:#FFF5F5;border:1px solid #FFCDD2">
+          <span style="font-size:.72rem;color:var(--txt-med)">VAAT Educ. Infantil</span>
+          <span style="font-family:var(--mono);font-weight:700;color:var(--red);font-size:.72rem">R$ 0 ⚠</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-radius:6px;background:#FFF8E1;border:1px solid #FFE082">
+          <span style="font-size:.72rem;color:var(--txt-med)">Saldo financeiro FUNDEB</span>
+          <span style="font-family:var(--mono);font-weight:700;color:var(--orange);font-size:.72rem">R$ 18,78 M</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Linha de detalhe: gauge chart LRF pessoal + tabela sub-indicadores ASPS + alertas MDE -->
+<div class="grid-lrf-2col">
+
+  <!-- Gráfico gauge pessoal -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <h3>📊 Despesa com Pessoal — Posição vs. Limites LRF</h3>
+        <p>% sobre a RCL Ajustada de R$ 626,68 M · Consolidado Jun/2025–Mai/2026</p>
+      </div>
+    </div>
+    <div class="chart-wrap h220"><canvas id="cPessoal"></canvas></div>
+  </div>
+
+  <!-- Sub-indicadores ASPS por subfunção -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <h3>🏥 ASPS — Execução por Subfunção da Saúde (liquidado)</h3>
+        <p>Despesas computadas no mínimo constitucional · Jan–Jun/2026</p>
+      </div>
+    </div>
+    <div class="chart-wrap h220"><canvas id="cASPS"></canvas></div>
+  </div>
+
+</div>
+
+<!-- Tabela detalhada MDE -->
+<div class="card" style="margin-bottom:22px">
+  <div class="card-header">
+    <div>
+      <h3>🏫 MDE — Quadro Completo de Indicadores Constitucionais · 1º Semestre 2026</h3>
+      <p>Situação de conformidade com os limites da CF/88 e Lei 14.113/2020 · Atenção: limites são anuais</p>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Indicador</th><th>Base Legal</th>
+          <th>Parâmetro</th><th>Apurado</th><th>% / Índice</th><th>Status</th><th>Observação Técnica</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono-sm">01</td>
+          <td><strong>Receita base para MDE</strong></td>
+          <td class="mono-sm">CF/88, arts. 212 e 212-A</td>
+          <td>—</td>
+          <td class="mono">R$ 150.968.155,61</td>
+          <td>Base</td>
+          <td><span class="b b-sim"><span class="b-dot"></span>Base</span></td>
+          <td style="font-size:.7rem;color:var(--txt-lite)">Receita de impostos + transferências constitucionais</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">02</td>
+          <td><strong style="color:var(--red)">Mínimo constitucional MDE (25%)</strong></td>
+          <td class="mono-sm">CF/88, art. 212</td>
+          <td class="mono" style="color:var(--orange)">R$ 46.428.536,34</td>
+          <td class="mono" style="color:var(--red)">R$ 33.357.013,90</td>
+          <td style="color:var(--red);font-weight:700;font-family:var(--mono)">17,96%</td>
+          <td><span class="b b-nao"><span class="b-dot"></span>CRÍTICO</span></td>
+          <td style="font-size:.7rem;color:var(--red)">Deficit de −7,04 p.p. Melhorou levemente. Exige continuidade no 2º semestre.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">04</td>
+          <td><strong>Total destinado ao FUNDEB</strong></td>
+          <td class="mono-sm">CF/88, art. 212-A</td>
+          <td>20% transferências</td>
+          <td class="mono">R$ 22.899.961,67</td>
+          <td>—</td>
+          <td><span class="b b-sim"><span class="b-dot"></span>Controle</span></td>
+          <td style="font-size:.7rem;color:var(--txt-lite)">Valor transferido ao FUNDEB computado no limite MDE.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">05</td>
+          <td><strong>Receita total FUNDEB recebida</strong></td>
+          <td class="mono-sm">Lei 14.113/2020</td>
+          <td>—</td>
+          <td class="mono">R$ 50.819.810,28</td>
+          <td>100%</td>
+          <td><span class="b b-sim"><span class="b-dot"></span>Base</span></td>
+          <td style="font-size:.7rem;color:var(--txt-lite)">Receita FUNDEB disponível para execução vinculada no semestre.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">07</td>
+          <td><strong>FUNDEB aplicado no exercício</strong></td>
+          <td class="mono-sm">Lei 14.113/2020</td>
+          <td>Aplicação dos recursos</td>
+          <td class="mono">R$ 32.013.408,21</td>
+          <td style="color:var(--orange);font-weight:700;font-family:var(--mono)">87,44%</td>
+          <td><span class="b b-pend"><span class="b-dot"></span>Atenção</span></td>
+          <td style="font-size:.7rem;color:var(--txt-lite)">Execução de 62,99% — parcela significativa não aplicada no semestre.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">08</td>
+          <td><strong style="color:var(--red)">Remuneração profissionais educação (mín. 70%)</strong></td>
+          <td class="mono-sm">CF/88, art. 212-A, XI</td>
+          <td class="mono" style="color:var(--orange)">R$ 35.573.867,20</td>
+          <td class="mono" style="color:var(--red)">R$ 31.486.319,80</td>
+          <td style="color:var(--red);font-weight:700;font-family:var(--mono)">62,70%</td>
+          <td><span class="b b-nao"><span class="b-dot"></span>CRÍTICO</span></td>
+          <td style="font-size:.7rem;color:var(--red)">8,04 p.p. abaixo do mínimo de 70%. Evolução positiva — requer continuidade no 2º semestre.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">12</td>
+          <td><strong style="color:var(--red)">FUNDEB não aplicado (máx. 10%)</strong></td>
+          <td class="mono-sm">Lei 14.113/2020, art. 25</td>
+          <td class="mono" style="color:var(--orange)">Máx. R$ 5.081.981,03</td>
+          <td class="mono" style="color:var(--red)">R$ 7.337.243,59</td>
+          <td style="color:var(--red);font-weight:700;font-family:var(--mono)">12,57%</td>
+          <td><span class="b b-pend"><span class="b-dot"></span>ATENÇÃO</span></td>
+          <td style="font-size:.7rem;color:var(--orange)">Excedente de R$ 1.141.435,07 acima do máximo de 10%. Melhora significativa vs. semestre anterior.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">10</td>
+          <td><strong style="color:var(--red)">VAAT — Educação Infantil</strong></td>
+          <td class="mono-sm">CF/88, art. 212-A; Lei 14.113/2020</td>
+          <td class="mono" style="color:var(--orange)">R$ 1.440.501,71</td>
+          <td class="mono" style="color:var(--red)">R$ 0,00</td>
+          <td style="color:var(--red);font-weight:700;font-family:var(--mono)">0%</td>
+          <td><span class="b b-nao"><span class="b-dot"></span>CRÍTICO</span></td>
+          <td style="font-size:.7rem;color:var(--red)">Sem execução informada no semestre. Exige aplicação imediata.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">11</td>
+          <td><strong style="color:var(--red)">VAAT — Despesas de Capital (mín. 15%)</strong></td>
+          <td class="mono-sm">Lei 14.113/2020</td>
+          <td class="mono" style="color:var(--orange)">R$ 216.075,26</td>
+          <td class="mono" style="color:var(--red)">R$ 0,00</td>
+          <td style="color:var(--red);font-weight:700;font-family:var(--mono)">0%</td>
+          <td><span class="b b-nao"><span class="b-dot"></span>CRÍTICO</span></td>
+          <td style="font-size:.7rem;color:var(--red)">Sem execução em capital com VAAT. Acompanhar para cumprimento anual.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">20</td>
+          <td><strong>Disponibilidade financeira FUNDEB</strong></td>
+          <td class="mono-sm">Controle financeiro FUNDEB</td>
+          <td>—</td>
+          <td class="mono">R$ 18.776.646,03</td>
+          <td>—</td>
+          <td><span class="b b-pend"><span class="b-dot"></span>Atenção</span></td>
+          <td style="font-size:.7rem;color:var(--txt-lite)">Saldo relevante. Coerente com baixa aplicação. Requer plano de utilização.</td>
+        </tr>
+        <tr>
+          <td class="mono-sm">17</td>
+          <td><strong>Total geral despesas Educação</strong></td>
+          <td class="mono-sm">RREO Anexo 8</td>
+          <td>—</td>
+          <td class="mono">R$ 46.993.339,65</td>
+          <td>—</td>
+          <td><span class="b b-sim"><span class="b-dot"></span>Gerencial</span></td>
+          <td style="font-size:.7rem;color:var(--txt-lite)">Inclui despesas além do estritamente computado no limite constitucional.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ MONITOR VENCIMENTOS ══ -->
+<div class="card" style="margin-bottom:22px">
+  <div class="card-header">
+    <div>
+      <h3>🚨 Monitor de Vencimentos — Contratos Ativos</h3>
+      <p>Base: 11/05/2026 · Contratos que requerem ação imediata ou renovação</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span style="font-size:.64rem;padding:3px 9px;border-radius:8px;background:#EDE7F6;color:var(--purple);font-weight:700">⬤ Vencidos</span>
+      <span style="font-size:.64rem;padding:3px 9px;border-radius:8px;background:#FFEBEE;color:var(--red);font-weight:700">⬤ Crítico</span>
+      <span style="font-size:.64rem;padding:3px 9px;border-radius:8px;background:#FFF8E1;color:var(--orange);font-weight:700">⬤ ≤ 90 dias</span>
+      <span style="font-size:.64rem;padding:3px 9px;border-radius:8px;background:#E8F5E9;color:var(--verde);font-weight:700">⬤ OK</span>
+    </div>
+  </div>
+  <div class="venc-grid">
+    <div class="venc-item v-exp"><div class="venc-ct">069/2021</div><div class="venc-nm">METODO Telecom — Voz IP</div><div class="venc-dt">Vencido: 07/03/2026</div><div class="venc-val">R$ 196.105,92/mês</div><span class="venc-tag">−65 dias</span></div>
+    <div class="venc-item v-exp"><div class="venc-ct">070/2021</div><div class="venc-nm">METODO Telecom — Voz IP</div><div class="venc-dt">Vencido: 07/03/2026</div><div class="venc-val">R$ 112.776,16/mês</div><span class="venc-tag">−65 dias</span></div>
+    <div class="venc-item v-exp"><div class="venc-ct">071/2021</div><div class="venc-nm">METODO Telecom — Voz IP</div><div class="venc-dt">Vencido: 07/03/2026</div><div class="venc-val">R$ 76.040,25/mês</div><span class="venc-tag">−65 dias</span></div>
+    <div class="venc-item v-crit"><div class="venc-ct">042/2021</div><div class="venc-nm">ACTCON — E-mails Corporativos</div><div class="venc-dt">Vence: 11/05/2026</div><div class="venc-val">R$ 17.280,00/anual</div><span class="venc-tag">HOJE</span></div>
+    <div class="venc-item v-warn"><div class="venc-ct">034/2025</div><div class="venc-nm">TOTALCAD — Upgrade ZWCAD</div><div class="venc-dt">Vence: 03/07/2026</div><div class="venc-val">R$ 64.750,00</div><span class="venc-tag">53 dias</span></div>
+    <div class="venc-item v-warn"><div class="venc-ct">072/2021</div><div class="venc-nm">METODO Telecom — Voz IP</div><div class="venc-dt">Vence: 08/07/2026</div><div class="venc-val">R$ 112.305,60/mês</div><span class="venc-tag">58 dias</span></div>
+    <div class="venc-item v-warn"><div class="venc-ct">120/2022</div><div class="venc-nm">ENERGY SYSTEM — Serviços TI</div><div class="venc-dt">Vence: 16/07/2026</div><div class="venc-val">R$ 15,18 M total</div><span class="venc-tag">66 dias</span></div>
+    <div class="venc-item v-warn"><div class="venc-ct">045/2025</div><div class="venc-nm">VB INFORMÁTICA — Tela 86"</div><div class="venc-dt">Vence: 17/07/2026</div><div class="venc-val">R$ 13.988,00</div><span class="venc-tag">67 dias</span></div>
+    <div class="venc-item v-warn"><div class="venc-ct">052/2025</div><div class="venc-nm">T&amp;R Soluções — SQL Server+CAL</div><div class="venc-dt">Vence: 05/08/2026</div><div class="venc-val">R$ 15.799,00</div><span class="venc-tag">86 dias</span></div>
+    <div class="venc-item v-ok"><div class="venc-ct">056/2025</div><div class="venc-nm">XAVIER — Suporte Tela Interativa</div><div class="venc-dt">Vence: 13/08/2026</div><div class="venc-val">R$ 2.756,33</div><span class="venc-tag">94 dias</span></div>
+    <div class="venc-item v-ok"><div class="venc-ct">037/2022</div><div class="venc-nm">PORTAL Soluções — Site Prefeitura</div><div class="venc-dt">Vence: 07/10/2026</div><div class="venc-val">R$ 473.656,00</div><span class="venc-tag">149 dias</span></div>
+    <div class="venc-item v-ok"><div class="venc-ct">105/2025</div><div class="venc-nm">BETHA Sistemas — GRP</div><div class="venc-dt">Vence: 12/11/2026</div><div class="venc-val">R$ 2.800.000,00</div><span class="venc-tag">185 dias</span></div>
+  </div>
+</div>
+
+<!-- ══ TABELA CONTRATOS ══ -->
+<div class="card" style="margin-bottom:28px">
+  <div class="card-header">
+    <div><h3>📋 Relação Completa de Contratos — Carteira DTI</h3><p>20 contratos · Base 11/05/2026</p></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Status</th><th>Contrato</th><th>Fornecedor</th><th>Serviço</th><th>Assinatura</th><th>Vencimento</th><th>Prazo</th><th>Valor Contrato</th><th>Pagamento</th><th>Gestor</th><th>Fiscal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="sb sb-inativo"><span class="sb-dot"></span>Inativo</span></td><td class="mono-sm">010/2022</td><td>EMBRAS Tecnologia</td><td>GEOSIAP</td><td>07/02/2022</td><td>07/02/2026</td><td><span class="pb pb-venc">Vencido</span></td><td class="mono">R$ 6.925.148,71</td><td>Mensal</td><td>GUILHERME</td><td>FILIPE</td></tr>
+        <tr><td><span class="sb sb-inativo"><span class="sb-dot"></span>Inativo</span></td><td class="mono-sm">031/2019</td><td>CORPORATIVA Telecom</td><td>Telecomunicações</td><td>16/04/2019</td><td>15/04/2025</td><td><span class="pb pb-venc">Vencido</span></td><td class="mono">R$ 11.436.633,36</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">042/2021</td><td>ACTCON Soluções Web</td><td>E-Mails Corporativos</td><td>12/05/2021</td><td>11/05/2026</td><td><span class="pb pb-hoje">HOJE</span></td><td class="mono">R$ 17.280,00</td><td>Anual</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-inativo"><span class="sb-dot"></span>Inativo</span></td><td class="mono-sm">051/2021</td><td>BR INFOR Soluções TI</td><td>Antivírus Panda</td><td>08/06/2021</td><td>08/06/2025</td><td><span class="pb pb-venc">Vencido</span></td><td class="mono">R$ 17.580,00</td><td>Anual</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">069/2021</td><td>METODO Telecom</td><td>Solução de Voz IP</td><td>08/03/2021</td><td>07/03/2026</td><td><span class="pb pb-venc">Vencido</span></td><td class="mono">R$ 196.105,92</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">070/2021</td><td>METODO Telecom</td><td>Solução de Voz IP</td><td>01/02/2021</td><td>07/03/2026</td><td><span class="pb pb-venc">Vencido</span></td><td class="mono">R$ 112.776,16</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">071/2021</td><td>METODO Telecom</td><td>Solução de Voz IP</td><td>10/02/2021</td><td>07/03/2026</td><td><span class="pb pb-venc">Vencido</span></td><td class="mono">R$ 76.040,25</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">072/2021</td><td>METODO Telecom</td><td>Solução de Voz IP</td><td>09/07/2021</td><td>08/07/2026</td><td><span class="pb pb-atenc">58 dias</span></td><td class="mono">R$ 112.305,60</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">037/2022</td><td>PORTAL Soluções</td><td>Site da Prefeitura</td><td>08/04/2022</td><td>07/10/2026</td><td><span class="pb pb-ok">149 dias</span></td><td class="mono">R$ 473.656,00</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">120/2022</td><td>ENERGY SYSTEM Brasil</td><td>Serviços de TI</td><td>16/08/2022</td><td>16/07/2026</td><td><span class="pb pb-atenc">66 dias</span></td><td class="mono">R$ 15.183.281,54</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">082/2024</td><td>TOP CENTER Tecnologia</td><td>Impressoras Outsourcing</td><td>09/12/2024</td><td>09/12/2026</td><td><span class="pb pb-ok">212 dias</span></td><td class="mono">R$ 526.141,44</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-inativo"><span class="sb-dot"></span>Inativo</span></td><td class="mono-sm">021/2025</td><td>VIVA Consultoria</td><td>Consultoria Estratégica</td><td>31/03/2025</td><td>31/03/2026</td><td><span class="pb pb-venc">Vencido</span></td><td class="mono">R$ 599.920,00</td><td>Mensal</td><td>DIONEI MAIA</td><td>JOICE</td></tr>
+        <tr><td><span class="sb sb-inativo"><span class="sb-dot"></span>Inativo</span></td><td class="mono-sm">080/2021</td><td>TOTALCAD Comércio</td><td>Licenças ZWCAD</td><td>03/08/2021</td><td>03/08/2025</td><td><span class="pb pb-venc">Vencido</span></td><td class="mono">R$ 21.582,00</td><td>Anual</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">034/2025</td><td>TOTALCAD Comércio</td><td>Upgrade ZWCAD em Rede</td><td>03/07/2025</td><td>03/07/2026</td><td><span class="pb pb-atenc">53 dias</span></td><td class="mono">R$ 64.750,00</td><td>Unitária</td><td>GUILHERME</td><td>LUCAS</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">039/2025</td><td>AMPLA SERVICES</td><td>Locação Notebook</td><td>26/06/2025</td><td>26/06/2027</td><td><span class="pb pb-ok">411 dias</span></td><td class="mono">R$ 13.334,40</td><td>Mensal</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">045/2025</td><td>VB INFORMÁTICA</td><td>Tela Interativa 86"</td><td>17/07/2025</td><td>17/07/2026</td><td><span class="pb pb-atenc">67 dias</span></td><td class="mono">R$ 13.988,00</td><td>Unitária</td><td>GUILHERME</td><td>FILIPE</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">052/2025</td><td>T&amp;R Soluções</td><td>SQL Server + CAL</td><td>05/08/2025</td><td>05/08/2026</td><td><span class="pb pb-atenc">86 dias</span></td><td class="mono">R$ 15.799,00</td><td>—</td><td>GUILHERME</td><td>FILIPE</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">056/2025</td><td>XAVIER Dados e Redes</td><td>Suporte Tela Interativa</td><td>13/08/2025</td><td>13/08/2026</td><td><span class="pb pb-ok">94 dias</span></td><td class="mono">R$ 2.756,33</td><td>Unitária</td><td>GUILHERME</td><td>FILIPE</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">031/2026</td><td>TELEFÔNICA BRASIL</td><td>Solução de Voz IP</td><td>16/04/2026</td><td>16/04/2027</td><td><span class="pb pb-ok">340 dias</span></td><td class="mono">R$ 124.841,40</td><td>Mensal</td><td>GUILHERME</td><td>REINALDO</td></tr>
+        <tr><td><span class="sb sb-ativo"><span class="sb-dot"></span>Ativo</span></td><td class="mono-sm">105/2025</td><td>BETHA Sistemas</td><td>GRP — Gestão de Recursos</td><td>12/11/2025</td><td>12/11/2026</td><td><span class="pb pb-ok">185 dias</span></td><td class="mono">R$ 2.800.000,00</td><td>Mensal</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 </main>
 
 <footer>
-  Atualizado em <strong>10/06/2026</strong> · dados de NFs importados da planilha <strong>CONTROLE DE NOTAS FISCAIS.xlsx</strong> &nbsp;·&nbsp;
-  Prefeitura Municipal de Ibirité &nbsp;·&nbsp; DTI — Departamento de Tecnologia da Informação &nbsp;·&nbsp; Dir.: <strong>Reinaldo Rodrigues de Oliveira</strong>
+  Atualizado em <strong>11/05/2026</strong> · versão 3 &nbsp;·&nbsp;
+  Prefeitura Municipal de Ibirité &nbsp;·&nbsp;
+  DTI — Departamento de Tecnologia da Informação &nbsp;·&nbsp;
+  Dir.: <strong>Reinaldo Rodrigues de Oliveira</strong>
 </footer>
 
 <script>
-const NF_DATA=[{"f":"MÉTODO","nf":"2368","em":"02/02/2026","mes":"JANEIRO","val":17405.66,"prot":"09/02/2026","liq":"SIM","pago":"SIM","emp":"345"},{"f":"MÉTODO","nf":"3397","em":"03/03/2026","mes":"FEVEREIRO","val":17405.66,"prot":"04/03/2026","liq":"SIM","pago":"SIM","emp":"345"},{"f":"MÉTODO","nf":"5350","em":"17/04/2026","mes":"MARÇO","val":4061.32,"prot":"29/04/2026","liq":"SIM","pago":"SIM","emp":"345"},{"f":"PORTAL SOLUÇÕES","nf":"224/225/226/227","em":"30/01/2026","mes":"JANEIRO","val":8632.5,"prot":"09/02/2026","liq":"SIM","pago":"SIM","emp":"344"},{"f":"PORTAL SOLUÇÕES","nf":"326/327/328/329","em":"27/02/2026","mes":"FEVEREIRO","val":8632.5,"prot":"02/03/2026","liq":"SIM","pago":"SIM","emp":"344"},{"f":"PORTAL SOLUÇÕES","nf":"438/439/440/441","em":"30/03/2026","mes":"MARÇO","val":8632.5,"prot":"31/03/2026","liq":"SIM","pago":"SIM","emp":"344"},{"f":"PORTAL SOLUÇÕES","nf":"553/554/555/556","em":"29/04/2026","mes":"ABRIL","val":8632.5,"prot":"29/04/2026","liq":"SIM","pago":"SIM","emp":"344"},{"f":"PORTAL SOLUÇÕES","nf":"668/669/670/671","em":"29/05/2026","mes":"MAIO","val":8632.5,"prot":"01/06/2026","liq":"SIM","pago":"NÃO","emp":"344"},{"f":"TOP CENTER","nf":"15788/15789/15790/15791","em":"30/01/2026","mes":"JANEIRO","val":58081.62,"prot":"09/02/2026","liq":"SIM","pago":"SIM","emp":"704"},{"f":"TOP CENTER","nf":"15981/15983/15982/15984","em":"26/02/2026","mes":"FEVEREIRO","val":52134.6,"prot":"04/03/2026","liq":"SIM","pago":"SIM","emp":"704"},{"f":"TOP CENTER","nf":"16405/16406/16407/16408","em":"31/03/2026","mes":"MARÇO","val":91808.55,"prot":"01/04/2026","liq":"SIM","pago":"SIM","emp":"704"},{"f":"TOP CENTER","nf":"16710/16711/16712/16713","em":"29/04/2026","mes":"ABRIL","val":62496.23,"prot":"30/04/2026","liq":"SIM","pago":"SIM","emp":"704"},{"f":"TOP CENTER","nf":"17107/17108/17109/17110","em":"28/05/2026","mes":"MAIO","val":64085.7,"prot":"29/05/2026","liq":"NÃO","pago":"NÃO","emp":"704"},{"f":"ACTCON SOLUÇÕES WEB LTDA","nf":"255","em":"04/03/2026","mes":"PGTO ÚNICO","val":6168.96,"prot":"04/03/2026","liq":"SIM","pago":"SIM","emp":"329"},{"f":"EMBRAS","nf":"56","em":"30/01/2026","mes":"JANEIRO","val":75000.0,"prot":"09/02/2026","liq":"SIM","pago":"SIM","emp":"315"},{"f":"EMBRAS","nf":"137","em":"12/02/2026","mes":"FEVEREIRO","val":171814.2,"prot":"13/02/2026","liq":"SIM","pago":"SIM","emp":"697"},{"f":"EMBRAS","nf":"222","em":"27/02/2026","mes":"MARÇO","val":137451.36,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"697"},{"f":"EMBRAS - IPASI","nf":"55","em":"30/01/2026","mes":"JANEIRO","val":4700.0,"prot":"09/02/2026","liq":"SIM","pago":"SIM","emp":"314"},{"f":"EMBRAS - IPASI","nf":"139","em":"12/02/2026","mes":"FEVEREIRO","val":5011.64,"prot":"13/02/2026","liq":"SIM","pago":"SIM","emp":"698"},{"f":"EMBRAS - IPASI","nf":"221","em":"27/02/2026","mes":"MARÇO","val":4009.31,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"698"},{"f":"EMBRAS - CÂMARA","nf":"54","em":"30/01/2026","mes":"JANEIRO","val":7200.0,"prot":"09/02/2026","liq":"SIM","pago":"SIM","emp":"—"},{"f":"EMBRAS - CÂMARA","nf":"138","em":"12/02/2026","mes":"FEVEREIRO","val":7731.92,"prot":"13/02/2026","liq":"SIM","pago":"SIM","emp":"699"},{"f":"EMBRAS - CÂMARA","nf":"220","em":"27/02/2026","mes":"MARÇO","val":6185.53,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"699"},{"f":"ENERGY SYSTEM (SOCIAL)","nf":"40/43","em":"12/03/2026","mes":"JANEIRO","val":69438.66,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"90/91"},{"f":"ENERGY SYSTEM (SOCIAL)","nf":"38/32","em":"12/03/2026","mes":"FEVEREIRO","val":69438.66,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"90/91"},{"f":"ENERGY SYSTEM (SOCIAL)","nf":"53/54","em":"01/04/2026","mes":"MARÇO","val":69438.66,"prot":"07/04/2026","liq":"SIM","pago":"SIM","emp":"90/91"},{"f":"ENERGY SYSTEM (SOCIAL)","nf":"5/6","em":"15/05/2026","mes":"ABRIL","val":69438.66,"prot":"19/05/2026","liq":"SIM","pago":"SIM","emp":"90/91"},{"f":"ENERGY SYSTEM (SAÚDE)","nf":"45/47","em":"12/03/2026","mes":"JANEIRO","val":69438.66,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"336"},{"f":"ENERGY SYSTEM (SAÚDE)","nf":"41/44","em":"12/03/2026","mes":"FEVEREIRO","val":69438.66,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"336"},{"f":"ENERGY SYSTEM (SAÚDE)","nf":"49/50","em":"01/04/2026","mes":"MARÇO","val":69438.66,"prot":"07/04/2026","liq":"SIM","pago":"SIM","emp":"336"},{"f":"ENERGY SYSTEM (SAÚDE)","nf":"1/2","em":"15/05/2026","mes":"ABRIL","val":69438.66,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"336"},{"f":"ENERGY SYSTEM (EDUCAÇÃO)","nf":"39/34","em":"12/03/2026","mes":"JANEIRO","val":138873.33,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"521"},{"f":"ENERGY SYSTEM (EDUCAÇÃO)","nf":"41/44","em":"12/03/2026","mes":"FEVEREIRO","val":138873.33,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"521"},{"f":"ENERGY SYSTEM (EDUCAÇÃO)","nf":"55/56","em":"01/04/2026","mes":"MARÇO","val":138873.33,"prot":"07/04/2026","liq":"SIM","pago":"SIM","emp":"521"},{"f":"ENERGY SYSTEM (EDUCAÇÃO)","nf":"7/8","em":"15/05/2026","mes":"ABRIL","val":138873.33,"prot":"19/05/2026","liq":"SIM","pago":"SIM","emp":"521"},{"f":"ENERGY SYSTEM (PLANEJAMENTO)","nf":"37/30","em":"12/03/2026","mes":"JANEIRO","val":69438.59,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"542"},{"f":"ENERGY SYSTEM (PLANEJAMENTO)","nf":"36/42","em":"12/03/2026","mes":"FEVEREIRO","val":69438.59,"prot":"13/03/2026","liq":"SIM","pago":"SIM","emp":"542"},{"f":"ENERGY SYSTEM (PLANEJAMENTO)","nf":"51/52","em":"01/04/2026","mes":"MARÇO","val":69438.59,"prot":"07/04/2026","liq":"SIM","pago":"SIM","emp":"542"},{"f":"ENERGY SYSTEM (PLANEJAMENTO)","nf":"3/4","em":"15/05/2026","mes":"ABRIL","val":69438.6,"prot":"19/05/2026","liq":"SIM","pago":"SIM","emp":"542"},{"f":"AMPLA SERVICES LTDA","nf":"6123","em":"30/01/2026","mes":"JANEIRO","val":555.6,"prot":"20/02/2026","liq":"SIM","pago":"SIM","emp":"333"},{"f":"AMPLA SERVICES LTDA","nf":"6214","em":"26/02/2026","mes":"FEVEREIRO","val":550.6,"prot":"09/03/2026","liq":"SIM","pago":"SIM","emp":"333"},{"f":"AMPLA SERVICES LTDA","nf":"6341","em":"30/03/2026","mes":"MARÇO","val":555.6,"prot":"01/04/2026","liq":"SIM","pago":"SIM","emp":"333"},{"f":"AMPLA SERVICES LTDA","nf":"6474","em":"30/04/2026","mes":"ABRIL","val":555.6,"prot":"11/05/2026","liq":"SIM","pago":"SIM","emp":"333"},{"f":"AMPLA SERVICES LTDA","nf":"6636","em":"28/05/2026","mes":"MAIO","val":555.6,"prot":"01/06/2026","liq":"SIM","pago":"NÃO","emp":"333"},{"f":"BETHA PMI","nf":"7905","em":"18/05/2026","mes":"JANEIRO","val":79675.3,"prot":"19/05/2026","liq":"NÃO","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"3193","em":"25/02/2026","mes":"FEVEREIRO","val":79675.3,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"5445","em":"30/03/2026","mes":"MARÇO","val":101470.09,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"7614","em":"07/05/2026","mes":"IMPLANTAÇÃO","val":5236.0,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"7616","em":"07/05/2026","mes":"IMPLANTAÇÃO","val":1904.0,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"7617","em":"07/05/2026","mes":"IMPLANTAÇÃO","val":773.98,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"7618","em":"07/05/2026","mes":"IMPLANTAÇÃO","val":129.0,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"7622","em":"07/05/2026","mes":"IMPLANTAÇÃO","val":2192.93,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"7623","em":"07/05/2026","mes":"IMPLANTAÇÃO","val":5030.84,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"7628","em":"07/05/2026","mes":"IMPLANTAÇÃO","val":582.77,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"7075","em":"29/04/2026","mes":"ABRIL","val":178260.07,"prot":"19/05/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"9049","em":"29/05/2026","mes":"MAIO","val":187247.97,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"9352","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":7000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"9351","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":41350.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"9350","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":8006.05,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"9349","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":5000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"9343","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":1000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8951","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":20000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8957","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":21000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8956","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":1355.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8954","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":677.5,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8955","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":1000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8948","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":2000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8943","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":3500.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8939","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":948.5,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8936","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":20000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA PMI","nf":"8937","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":542.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"413"},{"f":"BETHA CÂMARA","nf":"9355","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":135.5,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"9344","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":4000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"9339","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":250.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"9338","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":301.5,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"9337","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":1000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8928","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":750.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8930","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":250.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8931","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":250.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8932","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":813.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8940","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":1000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8935","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":2000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8934","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":1000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8938","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":1500.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8942","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":700.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"BETHA CÂMARA","nf":"8933","em":"29/05/2026","mes":"IMPLANTAÇÃO","val":2000.0,"prot":"02/06/2026","liq":"SIM","pago":"NÃO","emp":"414"},{"f":"IGTECH","nf":"28","em":"27/02/2026","mes":"JANEIRO","val":93890.76,"prot":"02/03/2026","liq":"SIM","pago":"SIM","emp":"85"},{"f":"IGTECH","nf":"35","em":"27/02/2026","mes":"FEVEREIRO","val":93890.76,"prot":"02/03/2026","liq":"SIM","pago":"SIM","emp":"85"}];
-const CONTRACTS=[{"status":"Inativo","contrato":"010/2022","fornecedor":"EMBRAS Tecnologia","servico":"GEOSIAP","assinatura":"07/02/2022","vencimento":"07/02/2026","valor":6925148.71,"pagamento":"Mensal","gestor":"GUILHERME","fiscal":"FILIPE","dias":-123,"prazo":"Vencido há 123 dias","risco":"vencido"},{"status":"Inativo","contrato":"031/2019","fornecedor":"CORPORATIVA Telecom","servico":"Telecomunicações","assinatura":"16/04/2019","vencimento":"15/04/2025","valor":11436633.36,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":-421,"prazo":"Vencido há 421 dias","risco":"vencido"},{"status":"Ativo","contrato":"042/2021","fornecedor":"ACTCON Soluções Web","servico":"E-Mails Corporativos","assinatura":"12/05/2021","vencimento":"11/05/2026","valor":17280.0,"pagamento":"Anual","gestor":"—","fiscal":"—","dias":-30,"prazo":"Vencido há 30 dias","risco":"vencido"},{"status":"Inativo","contrato":"051/2021","fornecedor":"BR INFOR Soluções TI","servico":"Antivírus Panda","assinatura":"08/06/2021","vencimento":"08/06/2025","valor":17580.0,"pagamento":"Anual","gestor":"—","fiscal":"—","dias":-367,"prazo":"Vencido há 367 dias","risco":"vencido"},{"status":"Ativo","contrato":"069/2021","fornecedor":"MÉTODO Telecom","servico":"Solução de Voz IP","assinatura":"08/03/2021","vencimento":"07/03/2026","valor":196105.92,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":-95,"prazo":"Vencido há 95 dias","risco":"vencido"},{"status":"Ativo","contrato":"070/2021","fornecedor":"MÉTODO Telecom","servico":"Solução de Voz IP","assinatura":"01/02/2021","vencimento":"07/03/2026","valor":112776.16,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":-95,"prazo":"Vencido há 95 dias","risco":"vencido"},{"status":"Ativo","contrato":"071/2021","fornecedor":"MÉTODO Telecom","servico":"Solução de Voz IP","assinatura":"10/02/2021","vencimento":"07/03/2026","valor":76040.25,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":-95,"prazo":"Vencido há 95 dias","risco":"vencido"},{"status":"Ativo","contrato":"072/2021","fornecedor":"MÉTODO Telecom","servico":"Solução de Voz IP","assinatura":"09/07/2021","vencimento":"08/07/2026","valor":112305.6,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":28,"prazo":"28 dias","risco":"critico"},{"status":"Ativo","contrato":"037/2022","fornecedor":"PORTAL Soluções","servico":"Site da Prefeitura","assinatura":"08/04/2022","vencimento":"07/10/2026","valor":473656.0,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":119,"prazo":"119 dias","risco":"ok"},{"status":"Ativo","contrato":"120/2022","fornecedor":"ENERGY SYSTEM Brasil","servico":"Serviços de TI","assinatura":"16/08/2022","vencimento":"16/07/2026","valor":15183281.54,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":36,"prazo":"36 dias","risco":"atencao"},{"status":"Ativo","contrato":"082/2024","fornecedor":"TOP CENTER Tecnologia","servico":"Impressoras Outsourcing","assinatura":"09/12/2024","vencimento":"09/12/2026","valor":526141.44,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":182,"prazo":"182 dias","risco":"ok"},{"status":"Inativo","contrato":"021/2025","fornecedor":"VIVA Consultoria","servico":"Consultoria Estratégica","assinatura":"31/03/2025","vencimento":"31/03/2026","valor":599920.0,"pagamento":"Mensal","gestor":"DIONEI MAIA","fiscal":"JOICE","dias":-71,"prazo":"Vencido há 71 dias","risco":"vencido"},{"status":"Inativo","contrato":"080/2021","fornecedor":"TOTALCAD Comércio","servico":"Licenças ZWCAD","assinatura":"03/08/2021","vencimento":"03/08/2025","valor":21582.0,"pagamento":"Anual","gestor":"—","fiscal":"—","dias":-311,"prazo":"Vencido há 311 dias","risco":"vencido"},{"status":"Ativo","contrato":"034/2025","fornecedor":"TOTALCAD Comércio","servico":"Upgrade ZWCAD em Rede","assinatura":"03/07/2025","vencimento":"03/07/2026","valor":64750.0,"pagamento":"Unitária","gestor":"GUILHERME","fiscal":"LUCAS","dias":23,"prazo":"23 dias","risco":"critico"},{"status":"Ativo","contrato":"039/2025","fornecedor":"AMPLA SERVICES","servico":"Locação Notebook","assinatura":"26/06/2025","vencimento":"26/06/2027","valor":13334.4,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":381,"prazo":"381 dias","risco":"ok"},{"status":"Ativo","contrato":"045/2025","fornecedor":"VB INFORMÁTICA","servico":"Tela Interativa 86\"","assinatura":"17/07/2025","vencimento":"17/07/2026","valor":13988.0,"pagamento":"Unitária","gestor":"GUILHERME","fiscal":"FILIPE","dias":37,"prazo":"37 dias","risco":"atencao"},{"status":"Ativo","contrato":"052/2025","fornecedor":"T&R Soluções","servico":"SQL Server + CAL","assinatura":"05/08/2025","vencimento":"05/08/2026","valor":15799.0,"pagamento":"—","gestor":"GUILHERME","fiscal":"FILIPE","dias":56,"prazo":"56 dias","risco":"atencao"},{"status":"Ativo","contrato":"056/2025","fornecedor":"XAVIER Dados e Redes","servico":"Suporte Tela Interativa","assinatura":"13/08/2025","vencimento":"13/08/2026","valor":2756.33,"pagamento":"Unitária","gestor":"GUILHERME","fiscal":"FILIPE","dias":64,"prazo":"64 dias","risco":"atencao"},{"status":"Ativo","contrato":"031/2026","fornecedor":"TELEFÔNICA BRASIL","servico":"Solução de Voz IP","assinatura":"16/04/2026","vencimento":"16/04/2027","valor":124841.4,"pagamento":"Mensal","gestor":"GUILHERME","fiscal":"REINALDO","dias":310,"prazo":"310 dias","risco":"ok"},{"status":"Ativo","contrato":"105/2025","fornecedor":"BETHA Sistemas","servico":"GRP — Gestão de Recursos","assinatura":"12/11/2025","vencimento":"12/11/2026","valor":2800000.0,"pagamento":"Mensal","gestor":"—","fiscal":"—","dias":155,"prazo":"155 dias","risco":"ok"}];
-const BASE_DATE='2026-06-10';
 
-const AZ='#002FA7',AZM='#1A47C8',AZL='#4A6FD4',AM='#F5A800',VD='#00A86B',RD='#D32F2F',OR='#E65100',PP='#6A1B9A',BD='#D8E0F5';
-Chart.defaults.font.family="'IBM Plex Sans',sans-serif";
-Chart.defaults.color='#7080A8';
+// ── DADOS NFs (versão atualizada — 54 NFs) ─────────────────────
+const NF_DATA=[
+  {f:'MÉTODO',                  nf:'2368',              em:'02/02/2026',mes:'JANEIRO',      val:17405.66,  prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'345'},
+  {f:'MÉTODO',                  nf:'3397',              em:'03/03/2026',mes:'FEVEREIRO',    val:17405.66,  prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'345'},
+  {f:'MÉTODO',                  nf:'5350',              em:'17/04/2026',mes:'MARÇO',        val:4061.32,   prot:'29/04/2026',liq:'SIM', pago:'SIM',        emp:'345'},
+  {f:'PORTAL SOLUÇÕES',         nf:'224/225/226/227',   em:'30/01/2026',mes:'JANEIRO',      val:8632.50,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'344'},
+  {f:'PORTAL SOLUÇÕES',         nf:'326/327/328/329',   em:'27/02/2026',mes:'FEVEREIRO',    val:8632.50,   prot:'02/03/2026',liq:'SIM', pago:'SIM',       emp:'344'},
+  {f:'PORTAL SOLUÇÕES',         nf:'438/439/440/441',   em:'30/03/2026',mes:'MARÇO',        val:8632.50,   prot:'31/03/2026',liq:'SIM', pago:'SIM',       emp:'344'},
+  {f:'PORTAL SOLUÇÕES',         nf:'553/554/555/556',   em:'29/04/2026',mes:'ABRIL',        val:8632.50,   prot:'29/04/2026',liq:'N.CONSTA',pago:'N.CONSTA',emp:'344'},
+  {f:'TOP CENTER',              nf:'15788-15791',        em:'30/01/2026',mes:'JANEIRO',      val:58081.62,  prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'476'},
+  {f:'TOP CENTER',              nf:'15981-15984',        em:'26/02/2026',mes:'FEVEREIRO',    val:52134.60,  prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'476'},
+  {f:'TOP CENTER',              nf:'16405-16408',        em:'31/03/2026',mes:'MARÇO',        val:91808.55,  prot:'01/04/2026',liq:'SIM', pago:'SIM',       emp:'476'},
+  {f:'TOP CENTER',              nf:'16710-16713',        em:'29/04/2026',mes:'ABRIL',        val:62496.23,  prot:'30/04/2026',liq:'SIM', pago:'SIM',       emp:'476'},
+  {f:'ACTCON',                  nf:'255',                em:'04/03/2026',mes:'PGTO ÚNICO',   val:6168.96,   prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'329'},
+  {f:'EMBRAS',                  nf:'56',                 em:'30/01/2026',mes:'JANEIRO',      val:75000.00,  prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'315'},
+  {f:'EMBRAS',                  nf:'137',                em:'12/02/2026',mes:'FEVEREIRO',    val:171814.20, prot:'13/02/2026',liq:'SIM', pago:'SIM',       emp:'697'},
+  {f:'EMBRAS',                  nf:'222',                em:'27/02/2026',mes:'MARÇO',        val:137451.36, prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'697'},
+  {f:'EMBRAS - IPASI',          nf:'55',                 em:'30/01/2026',mes:'JANEIRO',      val:4700.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'313'},
+  {f:'EMBRAS - IPASI',          nf:'139',                em:'12/02/2026',mes:'FEVEREIRO',    val:5011.64,   prot:'13/02/2026',liq:'SIM', pago:'SIM',       emp:'698'},
+  {f:'EMBRAS - IPASI',          nf:'221',                em:'27/02/2026',mes:'MARÇO',        val:4009.31,   prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'698'},
+  {f:'EMBRAS - CÂMARA',         nf:'54',                 em:'30/01/2026',mes:'JANEIRO',      val:7200.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'314'},
+  {f:'EMBRAS - CÂMARA',         nf:'138',                em:'12/02/2026',mes:'FEVEREIRO',    val:7731.92,   prot:'13/02/2026',liq:'SIM', pago:'SIM',       emp:'699'},
+  {f:'EMBRAS - CÂMARA',         nf:'220',                em:'27/02/2026',mes:'MARÇO',        val:6185.53,   prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'699'},
+  {f:'ENERGY (SOCIAL)',         nf:'40/43',              em:'12/03/2026',mes:'JANEIRO',      val:69438.66,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'90/91'},
+  {f:'ENERGY (SOCIAL)',         nf:'38/32',              em:'12/03/2026',mes:'FEVEREIRO',    val:69438.66,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'90/91'},
+  {f:'ENERGY (SOCIAL)',         nf:'53/54',              em:'01/04/2026',mes:'MARÇO',        val:69438.66,  prot:'07/04/2026',liq:'SIM', pago:'SIM',       emp:'90/91'},
+  {f:'ENERGY (SOCIAL)',         nf:'5/6',                em:'15/05/2026',mes:'ABRIL',        val:69438.66,  prot:'19/05/2026',liq:'SIM', pago:'SIM',        emp:'90/91'},
+  {f:'ENERGY (SAÚDE)',          nf:'45/47',              em:'12/03/2026',mes:'JANEIRO',      val:69438.66,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'336'},
+  {f:'ENERGY (SAÚDE)',          nf:'41/44',              em:'12/03/2026',mes:'FEVEREIRO',    val:69438.66,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'336'},
+  {f:'ENERGY (SAÚDE)',          nf:'49/50',              em:'01/04/2026',mes:'MARÇO',        val:69438.66,  prot:'07/04/2026',liq:'SIM', pago:'SIM',       emp:'336'},
+  {f:'ENERGY (SAÚDE)',          nf:'1/2',                em:'15/05/2026',mes:'ABRIL',        val:69438.66,  prot:'19/05/2026',liq:'SIM', pago:'SIM',        emp:'336'},
+  {f:'ENERGY (EDUCAÇÃO)',       nf:'39/34',              em:'12/03/2026',mes:'JANEIRO',      val:138873.33, prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'521'},
+  {f:'ENERGY (EDUCAÇÃO)',       nf:'41/44',              em:'12/03/2026',mes:'FEVEREIRO',    val:138873.33, prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'521'},
+  {f:'ENERGY (EDUCAÇÃO)',       nf:'55/56',              em:'01/04/2026',mes:'MARÇO',        val:138873.33, prot:'07/04/2026',liq:'SIM', pago:'SIM',       emp:'521'},
+  {f:'ENERGY (EDUCAÇÃO)',       nf:'7/8',                em:'15/05/2026',mes:'ABRIL',        val:138873.33, prot:'19/05/2026',liq:'SIM', pago:'SIM',       emp:'521'},
+  {f:'ENERGY (PLANEJ.)',        nf:'37/30',              em:'12/03/2026',mes:'JANEIRO',      val:69438.59,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'542'},
+  {f:'ENERGY (PLANEJ.)',        nf:'36/42',              em:'12/03/2026',mes:'FEVEREIRO',    val:69438.59,  prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'542'},
+  {f:'ENERGY (PLANEJ.)',        nf:'51/52',              em:'01/04/2026',mes:'MARÇO',        val:69438.59,  prot:'07/04/2026',liq:'SIM', pago:'SIM',       emp:'542'},
+  {f:'ENERGY (PLANEJ.)',        nf:'3/4',                em:'15/05/2026',mes:'ABRIL',        val:69438.60,  prot:'19/05/2026',liq:'SIM', pago:'SIM',       emp:'542'},
+  {f:'AMPLA SERVICES',          nf:'6123',               em:'30/01/2026',mes:'JANEIRO',      val:555.60,    prot:'20/02/2026',liq:'SIM', pago:'SIM',       emp:'333'},
+  {f:'AMPLA SERVICES',          nf:'6214',               em:'26/02/2026',mes:'FEVEREIRO',    val:550.60,    prot:'09/03/2026',liq:'SIM', pago:'SIM',       emp:'333'},
+  {f:'AMPLA SERVICES',          nf:'6341',               em:'30/03/2026',mes:'MARÇO',        val:555.60,    prot:'01/04/2026',liq:'SIM', pago:'SIM',       emp:'333'},
+  {f:'AMPLA SERVICES',          nf:'6474',               em:'30/04/2026',mes:'ABRIL',        val:555.60,    prot:'11/05/2026',liq:'SIM', pago:'SIM',        emp:'333'},
+  {f:'BETHA',                   nf:'7905',               em:'18/05/2026',mes:'JANEIRO',      val:79675.30,  prot:'19/05/2026',liq:'NÃO', pago:'NÃO',       emp:'413'},
+  {f:'BETHA',                   nf:'3193',               em:'25/02/2026',mes:'FEVEREIRO',    val:79675.30,  prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'5445',               em:'30/03/2026',mes:'MARÇO',        val:101470.09, prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'7614',               em:'07/05/2026',mes:'IMPLANTAÇÃO',  val:5236.00,   prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'7616',               em:'07/05/2026',mes:'IMPLANTAÇÃO',  val:1904.00,   prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'7617',               em:'07/05/2026',mes:'IMPLANTAÇÃO',  val:773.98,    prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'7618',               em:'07/05/2026',mes:'IMPLANTAÇÃO',  val:129.00,    prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'7622',               em:'07/05/2026',mes:'IMPLANTAÇÃO',  val:2192.93,   prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'7623',               em:'07/05/2026',mes:'IMPLANTAÇÃO',  val:5030.84,   prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'7628',               em:'07/05/2026',mes:'IMPLANTAÇÃO',  val:582.77,    prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA',                   nf:'7075',               em:'29/04/2026',mes:'ABRIL',        val:178260.07, prot:'19/05/2026',liq:'SIM', pago:'NÃO',        emp:'413'},
+  {f:'BETHA PMI',              nf:'9049',               em:'29/05/2026',mes:'MAIO',         val:187247.97, prot:'02/06/2026',liq:'SIM', pago:'NÃO',       emp:'413'},
+  {f:'BETHA PMI',              nf:'Implant. Lote2(15)', em:'29/05/2026',mes:'IMPLANTAÇÃO',  val:133379.05, prot:'02/06/2026',liq:'SIM', pago:'NÃO',       emp:'413'},
+  {f:'BETHA CÂMARA',           nf:'Implantação (15)',   em:'29/05/2026',mes:'IMPLANTAÇÃO',  val:15950.00,  prot:'02/06/2026',liq:'SIM', pago:'NÃO',       emp:'414'},
+  {f:'BETHA IPASI',            nf:'Implantação (11)',   em:'29/05/2026',mes:'IMPLANTAÇÃO',  val:12080.00,  prot:'10/06/2026',liq:'NÃO', pago:'NÃO',       emp:'415'},
+  {f:'TOP CENTER',              nf:'17107-17110',       em:'28/05/2026',mes:'MAIO',         val:64085.70,  prot:'29/05/2026',liq:'NÃO', pago:'NÃO',       emp:'476'},
+  {f:'PORTAL SOLUÇÕES',         nf:'668/669/670/671',    em:'29/05/2026',mes:'MAIO',         val:8632.50,   prot:'29/05/2026',liq:'SIM', pago:'NÃO',        emp:'344'},
+  {f:'AMPLA SERVICES',          nf:'6636',               em:'29/05/2026',mes:'MAIO',         val:555.60,    prot:'29/05/2026',liq:'NÃO', pago:'NÃO',       emp:'333'},
+  {f:'IGTECH',                  nf:'28',                 em:'27/02/2026',mes:'JANEIRO',      val:93890.76,  prot:'02/03/2026',liq:'SIM', pago:'SIM',       emp:'85'},
+  {f:'IGTECH',                  nf:'35',                 em:'27/02/2026',mes:'FEVEREIRO',    val:93890.76,  prot:'02/03/2026',liq:'SIM', pago:'SIM',       emp:'85'},
+];
 
-const brl=v=>'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const brlShort=v=>{
-  v=Number(v||0);
-  if(v>=1000000) return 'R$ '+(v/1000000).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' M';
-  if(v>=1000) return 'R$ '+(v/1000).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+' k';
-  return brl(v);
-};
-const pct=(a,b)=>b?((a/b)*100).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%':'0,0%';
-const sum=(arr,fn)=>arr.reduce((acc,x)=>acc+Number(fn(x)||0),0);
-const isSim=v=>String(v||'').trim().toUpperCase()==='SIM';
-const isNao=v=>String(v||'').trim().toUpperCase()==='NÃO';
-
+// ── RENDER TABELA ────────────────────────────────────────────────
 function badge(v,type){
-  const val=String(v||'').trim().toUpperCase();
-  if(val==='SIM') return '<span class="b b-sim"><span class="b-dot"></span>SIM</span>';
-  if(val==='NÃO') return '<span class="b b-nao"><span class="b-dot"></span>NÃO</span>';
-  return '<span class="b b-nc"><span class="b-dot"></span>N.CONSTA</span>';
+  const isPend=!v||v==='—'||v==='nan';
+  if(type==='liq'){
+    if(v==='SIM') return '<span class="b b-sim"><span class="b-dot"></span>SIM</span>';
+    if(v==='NÃO') return '<span class="b b-nao"><span class="b-dot"></span>NÃO</span>';
+    if(v&&v!=='—') return '<span class="b b-nc"><span class="b-dot"></span>N.CONSTA</span>';
+    return '<span class="b b-pend"><span class="b-dot"></span>Pendente</span>';
+  }
+  if(type==='pago'){
+    if(v==='SIM') return '<span class="b b-sim"><span class="b-dot"></span>SIM</span>';
+    if(v==='NÃO') return '<span class="b b-nao"><span class="b-dot"></span>NÃO</span>';
+    if(v&&v!=='—') return '<span class="b b-nc"><span class="b-dot"></span>N.CONSTA</span>';
+    return '<span class="b b-pend"><span class="b-dot"></span>Pendente</span>';
+  }
 }
-function prazoBadge(c){
-  if(c.risco==='vencido') return '<span class="pb pb-venc">'+c.prazo+'</span>';
-  if(c.risco==='critico') return '<span class="pb pb-crit">'+c.prazo+'</span>';
-  if(c.risco==='atencao') return '<span class="pb pb-atenc">'+c.prazo+'</span>';
-  return '<span class="pb pb-ok">'+c.prazo+'</span>';
-}
-function rowClassByContract(c){
-  if(c.risco==='vencido') return 'v-exp';
-  if(c.risco==='critico') return 'v-crit';
-  if(c.risco==='atencao') return 'v-warn';
-  return 'v-ok';
-}
-function openModal(id){document.getElementById(id).classList.add('open')}
-function closeModal(id){document.getElementById(id).classList.remove('open')}
-document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===e.currentTarget)m.classList.remove('open')}));
-
-function groupBy(arr,keyFn){
-  const m=new Map();
-  arr.forEach(x=>{const k=keyFn(x); if(!m.has(k))m.set(k,[]); m.get(k).push(x);});
-  return m;
-}
-
-const totalNf=NF_DATA.length, totalVal=sum(NF_DATA,r=>r.val);
-const liq=NF_DATA.filter(r=>isSim(r.liq)), pagas=NF_DATA.filter(r=>isSim(r.pago)), pendentes=NF_DATA.filter(r=>!isSim(r.pago));
-const activeContracts=CONTRACTS.filter(c=>c.status==='Ativo');
-const inactiveContracts=CONTRACTS.filter(c=>c.status!=='Ativo');
-const atencao=activeContracts.filter(c=>Number(c.dias)<=90).sort((a,b)=>a.dias-b.dias);
-const vencidos=atencao.filter(c=>c.dias<0);
-const vencer90=atencao.filter(c=>c.dias>=0);
-
-document.getElementById('data-hdr').textContent=new Date(BASE_DATE+'T00:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
-document.getElementById('k-total-contratos').textContent=CONTRACTS.length;
-document.getElementById('k-ativos').textContent=activeContracts.length;
-document.getElementById('k-ativos-pct').textContent=pct(activeContracts.length,CONTRACTS.length);
-document.getElementById('k-valor-ativo').textContent=brlShort(sum(activeContracts,c=>c.valor));
-document.getElementById('k-nfs').textContent=totalNf;
-document.getElementById('k-total-nf').textContent=brlShort(totalVal);
-document.getElementById('k-pendentes').textContent=pendentes.length;
-document.getElementById('k-valor-pendente').textContent=brl(sum(pendentes,r=>r.val));
-document.getElementById('k-atencao').textContent=atencao.length;
-document.getElementById('k-atencao-sub').textContent=`${vencidos.length} vencidos · ${vencer90.length} ≤ 90 dias`;
-
-document.getElementById('s-total-nfs').innerHTML=`${totalNf}`;
-document.getElementById('s-total-nfs-sub').textContent=`${brl(totalVal)} · Jan–Jun/2026`;
-document.getElementById('s-liq').innerHTML=`${liq.length} <span style="font-size:.7rem;color:var(--azul)">${pct(liq.length,totalNf)}</span>`;
-document.getElementById('s-liq-sub').textContent=`${brl(sum(liq,r=>r.val))} liquidados`;
-document.getElementById('s-pago').innerHTML=`${pagas.length} <span style="font-size:.7rem;color:var(--verde)">${pct(pagas.length,totalNf)}</span>`;
-document.getElementById('s-pago-sub').textContent=`${brl(sum(pagas,r=>r.val))} pagos`;
-document.getElementById('s-pend').innerHTML=`${pendentes.length} <span style="font-size:.7rem;color:var(--red)">${pct(pendentes.length,totalNf)}</span>`;
-document.getElementById('s-pend-sub').textContent=`${brl(sum(pendentes,r=>r.val))} aguardando`;
-document.getElementById('txt-table-nf').textContent=`${totalNf} registros · ${brl(totalVal)}`;
-document.getElementById('txt-contracts').textContent=`${CONTRACTS.length} contratos · ${activeContracts.length} ativos · ${inactiveContracts.length} inativos`;
+function fmtVal(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2})}
 
 function renderTable(){
   document.getElementById('tbody-nf').innerHTML=NF_DATA.map(r=>`
@@ -316,142 +1222,251 @@ function renderTable(){
       <td class="mono-sm">${r.nf}</td>
       <td class="mono-sm">${r.em}</td>
       <td style="font-weight:600;color:var(--azul)">${r.mes}</td>
-      <td class="mono">${brl(r.val)}</td>
+      <td class="mono">${fmtVal(r.val)}</td>
       <td class="mono-sm">${r.prot}</td>
       <td>${badge(r.liq,'liq')}</td>
       <td>${badge(r.pago,'pago')}</td>
       <td class="mono-sm">${r.emp}</td>
     </tr>`).join('');
 }
-function renderContracts(){
-  document.getElementById('tbody-contratos').innerHTML=CONTRACTS.map(c=>`
-    <tr>
-      <td><span class="sb ${c.status==='Ativo'?'sb-ativo':'sb-inativo'}"><span class="sb-dot"></span>${c.status}</span></td>
-      <td class="mono-sm">${c.contrato}</td>
-      <td>${c.fornecedor}</td><td>${c.servico}</td>
-      <td class="mono-sm">${c.assinatura}</td><td class="mono-sm">${c.vencimento}</td>
-      <td>${prazoBadge(c)}</td><td class="mono">${brl(c.valor)}</td>
-      <td>${c.pagamento}</td><td>${c.gestor}</td><td>${c.fiscal}</td>
-    </tr>`).join('');
-  document.getElementById('venc-grid').innerHTML=activeContracts.slice().sort((a,b)=>a.dias-b.dias).slice(0,12).map(c=>`
-    <div class="venc-item ${rowClassByContract(c)}">
-      <div class="venc-ct">${c.contrato}</div><div class="venc-nm">${c.fornecedor} — ${c.servico}</div>
-      <div class="venc-dt">Vence: ${c.vencimento}</div><div class="venc-val">${brl(c.valor)} · ${c.pagamento}</div>
-      <span class="venc-tag">${c.dias<0?'−'+Math.abs(c.dias)+' dias':c.dias+' dias'}</span>
-    </div>`).join('');
-  document.getElementById('modal-venc-body').innerHTML=atencao.map(c=>`
-    <div class="modal-row ${c.risco==='vencido'?'exp':c.risco==='critico'?'crit':'warn'}">
-      <div class="mr-left"><span>${c.contrato}</span><strong>${c.fornecedor} — ${c.servico}</strong></div>
-      <div class="mr-mid">Vencimento: ${c.vencimento}</div>
-      <div class="mr-right">${prazoBadge(c)}<br>${brl(c.valor)}</div>
-    </div>`).join('');
-}
-function renderModalNF(){
-  document.getElementById('modal-nf-summary').innerHTML=`
-    <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
-      <div style="flex:1;min-width:160px;background:#FFF8E1;border:1px solid #FFE082;border-radius:8px;padding:10px 14px;text-align:center">
-        <div style="font-size:.62rem;font-weight:700;color:#7A4F00;text-transform:uppercase;letter-spacing:.6px">Total Pendente</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--orange);margin-top:3px">${brl(sum(pendentes,r=>r.val))}</div>
-      </div>
-      <div style="flex:1;min-width:160px;background:#FFEBEE;border:1px solid #FFCDD2;border-radius:8px;padding:10px 14px;text-align:center">
-        <div style="font-size:.62rem;font-weight:700;color:#7A0000;text-transform:uppercase;letter-spacing:.6px">NFs Pendentes</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--red);margin-top:3px">${pendentes.length} registros</div>
-      </div>
-      <div style="flex:1;min-width:160px;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:10px 14px;text-align:center">
-        <div style="font-size:.62rem;font-weight:700;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px">Pagas Confirmadas</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--verde);margin-top:3px">${pagas.length} registros</div>
-      </div>
-    </div>
-    <div style="background:#FFF8E1;border:1px solid #FFE082;border-radius:8px;padding:9px 14px;font-size:.74rem;color:#7A4F00;font-weight:600;margin-bottom:16px;line-height:1.6">
-      ⚠ Dados atualizados pela planilha: pendências concentram-se em BETHA PMI/BETHA Câmara, TOP CENTER, ENERGY SYSTEM Saúde, PORTAL SOLUÇÕES e AMPLA SERVICES.
-    </div>`;
-  document.getElementById('modal-nf-body').innerHTML=pendentes
-    .slice().sort((a,b)=>b.val-a.val)
-    .map(r=>`<tr><td><strong>${r.f}</strong></td><td class="mono-sm">${r.nf}</td><td class="mono-sm">${r.em}</td><td>${r.mes}</td><td class="mono">${brl(r.val)}</td><td class="mono-sm">${r.prot}</td><td>${badge(r.liq,'liq')}</td><td class="mono-sm">${r.emp}</td></tr>`)
-    .join('');
-}
-renderTable(); renderContracts(); renderModalNF();
+renderTable();
 
+// ── FILTRO ───────────────────────────────────────────────────────
 function applyFilter(type,val){
   document.getElementById('filter-bar').classList.add('active');
   document.getElementById('filter-label').textContent=(type==='forn'?'Fornecedor: ':'Mês: ')+val;
   document.querySelectorAll('#tbody-nf tr').forEach(tr=>{
-    const match=type==='forn'?tr.dataset.forn.toUpperCase().includes(val.toUpperCase()):tr.dataset.mes===val;
+    const match=type==='forn'
+      ?tr.dataset.forn.toUpperCase().includes(val.toUpperCase())
+      :tr.dataset.mes===val;
     tr.classList.toggle('hidden',!match);
   });
 }
 function clearFilter(){
   document.getElementById('filter-bar').classList.remove('active');
   document.querySelectorAll('#tbody-nf tr').forEach(tr=>tr.classList.remove('hidden'));
-  if(chartMensal){chartMensal.data.datasets[0].backgroundColor=chartMensal._orig;chartMensal.update();}
-  if(chartForn){chartForn.data.datasets[0].backgroundColor=chartForn._orig;chartForn.update();}
+  [chartMensal,chartForn].forEach(c=>{if(c){c.data.datasets[0].backgroundColor=c._orig;c.update();}});
 }
 
-let chartMensal,chartForn;
-const monthOrder=['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','IMPLANTAÇÃO','PGTO ÚNICO'];
-const monthLabels={'JANEIRO':'Jan/26','FEVEREIRO':'Fev/26','MARÇO':'Mar/26','ABRIL':'Abr/26','MAIO':'Mai/26','IMPLANTAÇÃO':'Implantação','PGTO ÚNICO':'Pgto Único'};
-const byMonth=monthOrder.map(m=>({m,rows:NF_DATA.filter(r=>r.mes===m),val:sum(NF_DATA.filter(r=>r.mes===m),r=>r.val)})).filter(x=>x.rows.length);
-const byFornecedor=Array.from(groupBy(NF_DATA,r=>r.f)).map(([f,rows])=>({f,rows,val:sum(rows,r=>r.val)})).sort((a,b)=>b.val-a.val).slice(0,12);
+// ── MODAL ────────────────────────────────────────────────────────
+function openModal(){document.getElementById('modal-venc').classList.add('open')}
+function closeModal(){document.getElementById('modal-venc').classList.remove('open')}
+document.getElementById('modal-venc').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
+function openModalNF(){document.getElementById('modal-nf-pend').classList.add('open')}
+function closeModalNF(){document.getElementById('modal-nf-pend').classList.remove('open')}
+document.getElementById('modal-nf-pend').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModalNF()});
 
+// ── DATA ─────────────────────────────────────────────────────────
+document.getElementById('data-hdr').textContent=
+  new Date('2026-05-11').toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+const AZ='#002FA7',AZM='#1A47C8',AZL='#4A6FD4',AM='#F5A800',
+      VD='#00A86B',RD='#D32F2F',OR='#E65100',PP='#6A1B9A',BD='#D8E0F5';
+Chart.defaults.font.family="'IBM Plex Sans',sans-serif";
+Chart.defaults.color='#7080A8';
+
+let chartMensal,chartForn;
+// 6 & 7 — LRF Pessoal + ASPS subfunções
 (()=>{
-  const baseColors=[AZ,AZ,AZ,AZ,OR,PP,VD].slice(0,byMonth.length);
-  chartMensal=new Chart(document.getElementById('cMensal').getContext('2d'),{
+  const ctx=document.getElementById('cPessoal').getContext('2d');
+  new Chart(ctx,{
     type:'bar',
-    data:{labels:byMonth.map(x=>monthLabels[x.m]||x.m),datasets:[{label:'NFs (R$)',data:byMonth.map(x=>x.val),backgroundColor:[...baseColors],borderRadius:7,borderSkipped:false}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+brl(c.raw)}}},
-      onClick(e,els){if(!els.length)return;const idx=els[0].index;applyFilter('mes',byMonth[idx].m);chartMensal.data.datasets[0].backgroundColor=baseColors.map((c,i)=>i===idx?AM:'rgba(0,47,167,.2)');chartMensal.update();if(chartForn){chartForn.data.datasets[0].backgroundColor=chartForn._orig;chartForn.update();}},
-      scales:{x:{grid:{display:false},border:{display:false}},y:{border:{display:false},grid:{color:BD},ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'k'}}}
+    data:{
+      labels:['DTP Apurada','Limite Alerta','Limite Prudencial','Limite Máximo'],
+      datasets:[{
+        label:'% da RCL Ajustada',
+        data:[41.03,54,57,60],
+        backgroundColor:['#002FA7','rgba(245,168,0,.7)','rgba(230,81,0,.7)','rgba(211,47,47,.7)'],
+        borderRadius:6,borderSkipped:false,
+      }]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>' '+c.raw.toFixed(2)+'% da RCL Ajustada'}}
+      },
+      scales:{
+        x:{
+          border:{display:false},grid:{color:BD},
+          min:0,max:65,
+          ticks:{callback:v=>v+'%'}
+        },
+        y:{grid:{display:false},border:{display:false}}
+      }
+    }
+  });
+})();
+
+// 7 — ASPS por subfunção (liquidado)
+(()=>{
+  const ctx=document.getElementById('cASPS').getContext('2d');
+  new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['At. Básica','Hosp. e Amb.','Sup. Profilát.','Vig. Sanitária','Vig. Epidem.','Outras'],
+      datasets:[
+        {label:'Empenhado',data:[14677118.22,23288694.41,756369.19,345068.26,1552129.27,8620232.40],backgroundColor:AZ+'99',borderRadius:[4,4,4,4],stack:'s'},
+        {label:'Liquidado', data:[12280235.90,21452091.69,89988.99,222190.65,1419213.88,6788170.64],backgroundColor:VD,borderRadius:[4,4,4,4],stack:'s2'},
+        {label:'Pago',      data:[10455453.50,19824650.31,74575.88,188237.37,1365002.39,5602263.07],backgroundColor:AM+'CC',borderRadius:[4,4,4,4],stack:'s3'},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyleWidth:8,font:{size:11}}},
+        tooltip:{callbacks:{label:c=>' '+c.dataset.label+': R$ '+c.raw.toLocaleString('pt-BR',{minimumFractionDigits:2})}}
+      },
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{font:{size:10}}},
+        y:{border:{display:false},grid:{color:BD},ticks:{callback:v=>'R$'+(v/1000000).toFixed(1)+'M'}}
+      }
+    }
+  });
+})();
+
+
+// 1 — Desembolso mensal (atualizado: Abril=71.684,33)
+(()=>{
+  const vals=[692330.68,784036.42,701363.50,597133.65,73273.80];
+  const baseColors=[AZ,AZ,AZ,OR];
+  const ctx=document.getElementById('cMensal').getContext('2d');
+  chartMensal=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['Jan/26','Fev/26','Mar/26','Abr/26'],
+      datasets:[{label:'NFs (R$)',data:vals,backgroundColor:[...baseColors],borderRadius:7,borderSkipped:false}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>' R$ '+c.raw.toLocaleString('pt-BR',{minimumFractionDigits:2})}}
+      },
+      onClick(e,els){
+        if(!els.length)return;
+        const meses=['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','IMPLANTAÇÃO','PGTO ÚNICO'];
+        applyFilter('mes',meses[els[0].index]);
+        chartMensal.data.datasets[0].backgroundColor=baseColors.map((_,i)=>i===els[0].index?AM:'rgba(0,47,167,.2)');
+        chartMensal.update();
+        chartForn.data.datasets[0].backgroundColor=chartForn._orig;
+        chartForn.update();
+      },
+      scales:{
+        x:{grid:{display:false},border:{display:false}},
+        y:{border:{display:false},grid:{color:BD},ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'k'}}
+      }
     }
   });
   chartMensal._orig=[...baseColors];
 })();
 
+// 2 — Liq vs Pago (atualizado: 38 liq, 35 pago, 4 pend)
 (()=>{
   new Chart(document.getElementById('cLiqPago').getContext('2d'),{
     type:'bar',
-    data:{labels:['Liquidadas','Pagas','Pendentes'],datasets:[
-      {label:'Qtd NFs',data:[liq.length,pagas.length,pendentes.length],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
-      {label:'Valor (R$ mil)',data:[sum(liq,r=>r.val)/1000,sum(pagas,r=>r.val)/1000,sum(pendentes,r=>r.val)/1000],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyleWidth:8,font:{size:11}}},tooltip:{callbacks:{label:c=>c.datasetIndex===0?' Qtd: '+c.raw+' registros':' Valor: R$ '+c.raw.toLocaleString('pt-BR',{minimumFractionDigits:2})+' mil'}}},
-      scales:{x:{grid:{display:false},border:{display:false}},y1:{position:'left',border:{display:false},grid:{color:BD}},y2:{position:'right',border:{display:false},grid:{display:false},ticks:{callback:v=>'R$'+v+'k'}}}
+    data:{
+      labels:['Liquidadas','Pagas','Pendentes'],
+      datasets:[
+        {label:'Qtd NFs',data:[43,43,13],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
+        {label:'Valor (R$ k)',data:[2281.15,781.83,155.84],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyleWidth:8,font:{size:11}}},
+        tooltip:{callbacks:{label:c=>c.datasetIndex===0?' Qtd: '+c.raw+' NFs':' Valor: R$ '+c.raw.toFixed(2)+'k'}}
+      },
+      scales:{
+        x:{grid:{display:false},border:{display:false}},
+        y1:{position:'left',border:{display:false},grid:{color:BD}},
+        y2:{position:'right',border:{display:false},grid:{display:false},ticks:{callback:v=>'R$'+v+'k'}}
+      }
     }
   });
 })();
 
+// 3 — Fornecedores (atualizado: Abr incluído com TOP CENTER pago)
 (()=>{
-  const colors=[AZ,AZM,AZL,'#5070D0','#7090E0',AM,'#7B1FA2',VD,OR,PP,RD,'#5D6D7E'];
-  chartForn=new Chart(document.getElementById('cFornecedor').getContext('2d'),{
+  const labels=['ENERGY (EDU)','EMBRAS (TOT)','ENERGY (SOC)','ENERGY (SAÚ)','ENERGY (PLA)','TOP CENTER','BETHA','IGTECH','MÉTODO','PORTAL SOL.','AMPLA SERV.'];
+  const vals=[416619.99,419103.96,347192.64,347192.64,347192.37,264520.00,374954.98,187781.52,38872.64,34530.00,2217.40];
+  const filterKeys=['ENERGY (EDUCAÇÃO)','EMBRAS','ENERGY (SOCIAL)','ENERGY (SAÚDE)','ENERGY (PLANEJ.)','TOP CENTER','BETHA','IGTECH','MÉTODO','PORTAL SOLUÇÕES','AMPLA SERVICES'];
+  const baseColors=[AZ,AZM,AZL,'#5070D0','#7090E0',AM,'#7B1FA2',VD,OR,PP,RD];
+  const ctx=document.getElementById('cFornecedor').getContext('2d');
+  chartForn=new Chart(ctx,{
     type:'bar',
-    data:{labels:byFornecedor.map(x=>x.f),datasets:[{label:'Valor NFs (R$)',data:byFornecedor.map(x=>x.val),backgroundColor:colors.slice(0,byFornecedor.length),borderRadius:6,borderSkipped:false}]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+brl(c.raw)}}},
-      onClick(e,els){if(!els.length)return;const idx=els[0].index;applyFilter('forn',byFornecedor[idx].f);chartForn.data.datasets[0].backgroundColor=colors.slice(0,byFornecedor.length).map((c,i)=>i===idx?c:'rgba(0,47,167,.18)');chartForn.update();if(chartMensal){chartMensal.data.datasets[0].backgroundColor=chartMensal._orig;chartMensal.update();}},
-      scales:{x:{border:{display:false},grid:{color:BD},ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'k'}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:10}}}}
+    data:{labels,datasets:[{label:'Valor NFs (R$)',data:vals,backgroundColor:[...baseColors],borderRadius:6,borderSkipped:false}]},
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>' R$ '+c.raw.toLocaleString('pt-BR',{minimumFractionDigits:2})}}
+      },
+      onClick(e,els){
+        if(!els.length)return;
+        applyFilter('forn',filterKeys[els[0].index]);
+        chartForn.data.datasets[0].backgroundColor=baseColors.map((_,i)=>i===els[0].index?baseColors[i]:'rgba(0,47,167,.18)');
+        chartForn.update();
+        chartMensal.data.datasets[0].backgroundColor=chartMensal._orig;
+        chartMensal.update();
+      },
+      scales:{
+        x:{border:{display:false},grid:{color:BD},ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'k'}},
+        y:{grid:{display:false},border:{display:false},ticks:{font:{size:10}}}
+      }
     }
   });
-  chartForn._orig=colors.slice(0,byFornecedor.length);
+  chartForn._orig=[...baseColors];
 })();
 
+// 4 — Status donut
 (()=>{
   new Chart(document.getElementById('cStatus').getContext('2d'),{
     type:'doughnut',
-    data:{labels:[`Ativos (${activeContracts.length})`,`Inativos (${inactiveContracts.length})`],datasets:[{data:[activeContracts.length,inactiveContracts.length],backgroundColor:[VD,'#E0E0E0'],borderWidth:0,hoverOffset:8}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'70%',plugins:{legend:{position:'bottom',labels:{padding:16,usePointStyle:true,pointStyleWidth:10,font:{size:12}}},tooltip:{callbacks:{label:c=>' '+c.label}}}}
-  });
-})();
-
-(()=>{
-  new Chart(document.getElementById('cEvolucao').getContext('2d'),{
-    type:'line',
-    data:{labels:byMonth.map(x=>monthLabels[x.m]||x.m),datasets:[
-      {label:'Pagas',data:byMonth.map(x=>sum(x.rows.filter(r=>isSim(r.pago)),r=>r.val)),borderColor:VD,backgroundColor:'rgba(0,168,107,.12)',fill:true,tension:.35,pointRadius:5,borderWidth:2.5},
-      {label:'Pendentes',data:byMonth.map(x=>sum(x.rows.filter(r=>!isSim(r.pago)),r=>r.val)),borderColor:OR,backgroundColor:'rgba(230,81,0,.08)',fill:true,tension:.35,pointRadius:5,borderWidth:2.5}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyleWidth:8,font:{size:11}}},tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+brl(c.raw)}}},
-      scales:{x:{grid:{display:false},border:{display:false}},y:{border:{display:false},grid:{color:BD},ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'k'}}}
+    data:{
+      labels:['Ativos (15)','Inativos (5)'],
+      datasets:[{data:[15,5],backgroundColor:[VD,'#E0E0E0'],borderWidth:0,hoverOffset:8}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'70%',
+      plugins:{
+        legend:{position:'bottom',labels:{padding:16,usePointStyle:true,pointStyleWidth:10,font:{size:12}}},
+        tooltip:{callbacks:{label:c=>' '+c.label}}
+      }
     }
   });
 })();
+
+// 5 — Evolução linha (Abr atualizado: 71.684,33)
+(()=>{
+  const ctx=document.getElementById('cEvolucao').getContext('2d');
+  const g=ctx.createLinearGradient(0,0,0,300);
+  g.addColorStop(0,'rgba(0,168,107,.3)');g.addColorStop(1,'rgba(0,168,107,.01)');
+  new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:['Jan','Fev','Mar','Abr'],
+      datasets:[{
+        label:'NFs Encaminhadas (R$)',
+        data:[692330.68,784036.42,701363.50,597133.65,73273.80],
+        borderColor:VD,backgroundColor:g,fill:true,tension:.4,
+        pointBackgroundColor:VD,pointRadius:6,pointHoverRadius:9,borderWidth:2.5
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>' R$ '+c.raw.toLocaleString('pt-BR',{minimumFractionDigits:2})}}
+      },
+      scales:{
+        x:{grid:{display:false},border:{display:false}},
+        y:{border:{display:false},grid:{color:BD},ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'k'}}
+      }
+    }
+  });
+})();
+
 </script>
 </body>
 </html>
