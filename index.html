@@ -1258,7 +1258,12 @@ document.getElementById('modal-nf-pend').addEventListener('click',e=>{if(e.targe
 
 // ── DATA ─────────────────────────────────────────────────────────
 document.getElementById('data-hdr').textContent=
-  new Date('2026-05-11').toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+document.getElementById('data-hdr').textContent =
+  new Date().toLocaleDateString('pt-BR',{
+    day:'2-digit',
+    month:'short',
+    year:'numeric'
+  }).replace('.', '').toUpperCase();
 const AZ='#002FA7',AZM='#1A47C8',AZL='#4A6FD4',AM='#F5A800',
       VD='#00A86B',RD='#D32F2F',OR='#E65100',PP='#6A1B9A',BD='#D8E0F5';
 Chart.defaults.font.family="'IBM Plex Sans',sans-serif";
