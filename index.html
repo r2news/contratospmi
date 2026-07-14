@@ -593,7 +593,7 @@ footer strong{color:var(--amarelo)}
     <div class="nf-stat-icon" style="background:#E8F5E9">✅</div>
     <div>
       <div class="nf-stat-lbl">Liquidadas</div>
-      <div class="nf-stat-val">113 <span style="font-size:.7rem;color:var(--azul)">91,9%</span></div>
+      <div class="nf-stat-val">115 <span style="font-size:.7rem;color:var(--azul)">93,5%</span></div>
       <div class="nf-stat-sub">R$ 1.986.130,70 liquidados</div>
     </div>
   </div>
@@ -1161,9 +1161,9 @@ const NF_DATA=[
   {f:'BETHA IPASI',            nf:'Implantação (11)',   em:'29/05/2026',mes:'IMPLANTAÇÃO',  val:12080.00,  prot:'10/06/2026',liq:'SIM', pago:'SIM',        emp:'415'},
   {f:'ACTCON',                   nf:'255',                em:'04/03/2026',mes:'PGTO ÚNICO',    val:6168.96,   prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'329'},
   {f:'ENERGY (EDUCAÇÃO)',       nf:'17/18',              em:'17/06/2026',mes:'MAIO',         val:138873.33, prot:'18/06/2026',liq:'SIM', pago:'NÃO',       emp:'521'},
-  {f:'ENERGY (SOCIAL)',         nf:'011/12',             em:'17/06/2026',mes:'MAIO',         val:69438.66,  prot:'18/06/2026',liq:'NÃO', pago:'NÃO',       emp:'90/91'},
+  {f:'ENERGY (SOCIAL)',         nf:'011/12',             em:'17/06/2026',mes:'MAIO',         val:69438.66,  prot:'18/06/2026',liq:'SIM', pago:'NÃO',       emp:'90/91'},
   {f:'ENERGY (SAÚDE)',          nf:'15/16',              em:'17/06/2026',mes:'MAIO',         val:69438.66,  prot:'18/06/2026',liq:'SIM', pago:'SIM',       emp:'336'},
-  {f:'ENERGY (PLANEJ.)',        nf:'13/14',              em:'17/06/2026',mes:'MAIO',         val:69438.66,  prot:'18/06/2026',liq:'NÃO', pago:'NÃO',       emp:'542'},
+  {f:'ENERGY (PLANEJ.)',        nf:'13/14',              em:'17/06/2026',mes:'MAIO',         val:69438.66,  prot:'18/06/2026',liq:'SIM', pago:'NÃO',       emp:'542'},
   {f:'BETHA PMI',              nf:'10808', em:'24/06/2026',mes:'IMPLANTAÇÃO',  val:23500.00, prot:'29/06/2026',liq:'SIM',pago:'N.CONSTA',emp:'413'},
   {f:'BETHA PMI',              nf:'10809', em:'24/06/2026',mes:'IMPLANTAÇÃO',  val:3500.00,  prot:'29/06/2026',liq:'SIM',pago:'N.CONSTA',emp:'413'},
   {f:'BETHA PMI',              nf:'10811', em:'24/06/2026',mes:'IMPLANTAÇÃO',  val:3500.00,  prot:'29/06/2026',liq:'SIM',pago:'N.CONSTA',emp:'413'},
@@ -1361,8 +1361,8 @@ let chartMensal,chartForn;
     data:{
       labels:['Liquidadas','Pagas','Pendentes'],
       datasets:[
-        {label:'Qtd NFs',data:[98,13,12],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
-        {label:'Valor (R$ k)',data:[3154.73,547.78,425.46],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
+        {label:'Qtd NFs',data:[98,15,10],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
+        {label:'Valor (R$ k)',data:[3154.73,686.66,286.58],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
       ]
     },
     options:{
