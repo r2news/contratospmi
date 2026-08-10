@@ -419,6 +419,7 @@ footer strong{color:var(--amarelo)}
       &nbsp;&nbsp;• <strong>BETHA CÂMARA — 11 NFs Implantação:</strong> Pagas — R$ 14.263,00 quitado<br>
       &nbsp;&nbsp;• <strong>ENERGY (EDUCAÇÃO) NF 17/18 — Emp. 521:</strong> Pago em 17/06/2026 — R$ 138.873,33 quitado<br>
       &nbsp;&nbsp;• <strong>PORTAL SOLUÇÕES — NF 553-556 (Abril) e 668-671 (Maio):</strong> Pagas — R$ 17.265,00 quitado
+      &nbsp;&nbsp;• <strong>AMPLA SERVICES — NF 6636 (Maio):</strong> Paga — R$ 555,60 quitado<br>
     </div>
 
     <div class="modal-section">
@@ -1118,7 +1119,7 @@ const NF_DATA=[
   {f:'EMBRAS',                  nf:'56',                 em:'30/01/2026',mes:'JANEIRO',      val:75000.00,  prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'315'},
   {f:'EMBRAS',                  nf:'137',                em:'12/02/2026',mes:'FEVEREIRO',    val:171814.20, prot:'13/02/2026',liq:'SIM', pago:'SIM',       emp:'697'},
   {f:'EMBRAS',                  nf:'222',                em:'27/02/2026',mes:'MARÇO',        val:137451.36, prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'697'},
-  {f:'EMBRAS - IPASI',          nf:'55',                 em:'30/01/2026',mes:'JANEIRO',      val:4700.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'313'},
+  {f:'EMBRAS - IPASI',          nf:'55',                 em:'30/01/2026',mes:'JANEIRO',      val:4700.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'314'},
   {f:'EMBRAS - IPASI',          nf:'139',                em:'12/02/2026',mes:'FEVEREIRO',    val:5011.64,   prot:'13/02/2026',liq:'SIM', pago:'SIM',       emp:'698'},
   {f:'EMBRAS - IPASI',          nf:'221',                em:'27/02/2026',mes:'MARÇO',        val:4009.31,   prot:'13/03/2026',liq:'SIM', pago:'SIM',       emp:'698'},
   {f:'EMBRAS - CÂMARA',         nf:'54',                 em:'30/01/2026',mes:'JANEIRO',      val:7200.00,   prot:'09/02/2026',liq:'SIM', pago:'SIM',       emp:'314'},
@@ -1180,21 +1181,21 @@ const NF_DATA=[
   {f:'BETHA CÂMARA',           nf:'10812', em:'24/06/2026',mes:'IMPLANTAÇÃO',  val:13000.00, prot:'29/06/2026',liq:'N.CONSTA',pago:'N.CONSTA',emp:'414'},
   {f:'BETHA CÂMARA',           nf:'10810', em:'24/06/2026',mes:'IMPLANTAÇÃO',  val:1529.23,  prot:'29/06/2026',liq:'N.CONSTA',pago:'N.CONSTA',emp:'414'},
   {f:'PORTAL SOLUÇÕES',         nf:'793/794/795/796', em:'30/06/2026',mes:'JUNHO',val:8632.50,prot:'03/07/2026',liq:'SIM',pago:'SIM'     ,emp:'344'},
-  {f:'AMPLA SERVICES',          nf:'6810',               em:'30/06/2026',mes:'JUNHO',         val:555.60,    prot:'—',           liq:'NÃO', pago:'NÃO',       emp:'333'},
-  {f:'AMPLA SERVICES',          nf:'6905',               em:'30/07/2026',mes:'JULHO',         val:555.60,    prot:'—',           liq:'NÃO', pago:'NÃO',       emp:'333'},
-  {f:'BETHA PMI',              nf:'13081',               em:'31/07/2026',mes:'JULHO',         val:187247.97, prot:'—',           liq:'NÃO', pago:'NÃO',       emp:'413'},
-  {f:'ENERGY (EDUCAÇÃO)',       nf:'26/27',              em:'08/07/2026',mes:'JUNHO',         val:138873.33, prot:'—',           liq:'SIM', pago:'NÃO',       emp:'521'},
-  {f:'ENERGY (PLANEJ.)',        nf:'22/23',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'—',           liq:'SIM', pago:'NÃO',       emp:'542'},
-  {f:'ENERGY (SAÚDE)',          nf:'20/21',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'—',           liq:'SIM', pago:'NÃO',       emp:'336'},
-  {f:'ENERGY (SOCIAL)',         nf:'24/25',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'—',           liq:'NÃO', pago:'NÃO',       emp:'90/91'},
-  {f:'PORTAL SOLUÇÕES',         nf:'891/892/893/894',    em:'30/07/2026',mes:'JULHO',         val:8632.50,   prot:'—',           liq:'NÃO', pago:'NÃO',       emp:'344'},
-  {f:'TOP CENTER',              nf:'15790',              em:'15/07/2026',mes:'JAN.(SAÚDE)',   val:19297.29,  prot:'—',           liq:'NÃO', pago:'NÃO',       emp:'704'},
-  {f:'TOP CENTER',              nf:'15169',              em:'15/07/2026',mes:'2025(SET-DEZ)', val:58774.67,  prot:'—',           liq:'SIM', pago:'SIM',        emp:'—'},
-  {f:'TOP CENTER',              nf:'17494/17493/17495/17496',em:'30/06/2026',mes:'JUNHO',     val:69994.20,  prot:'—',           liq:'NÃO', pago:'NÃO',       emp:'704'},
-  {f:'TOP CENTER',              nf:'17761/17763/17764/17762',em:'30/07/2026',mes:'JULHO',     val:80772.39,  prot:'—',           liq:'NÃO', pago:'NÃO',       emp:'704'},
+  {f:'AMPLA SERVICES',          nf:'6810',               em:'30/06/2026',mes:'JUNHO',         val:555.60,    prot:'22/07/2026',           liq:'NÃO', pago:'NÃO',       emp:'333'},
+  {f:'AMPLA SERVICES',          nf:'6905',               em:'30/07/2026',mes:'JULHO',         val:555.60,    prot:'05/08/2026',           liq:'NÃO', pago:'NÃO',       emp:'333'},
+  {f:'BETHA PMI',              nf:'13081',               em:'31/07/2026',mes:'JULHO',         val:187247.97, prot:'06/08/2026',           liq:'NÃO', pago:'NÃO',       emp:'413'},
+  {f:'ENERGY (EDUCAÇÃO)',       nf:'26/27',              em:'08/07/2026',mes:'JUNHO',         val:138873.33, prot:'15/07/2026',           liq:'SIM', pago:'NÃO',       emp:'521'},
+  {f:'ENERGY (PLANEJ.)',        nf:'22/23',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'SIM', pago:'NÃO',       emp:'542'},
+  {f:'ENERGY (SAÚDE)',          nf:'20/21',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'SIM', pago:'NÃO',       emp:'336'},
+  {f:'ENERGY (SOCIAL)',         nf:'24/25',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'NÃO', pago:'NÃO',       emp:'90/91'},
+  {f:'PORTAL SOLUÇÕES',         nf:'891/892/893/894',    em:'30/07/2026',mes:'JULHO',         val:8632.50,   prot:'05/08/2026',           liq:'NÃO', pago:'NÃO',       emp:'344'},
+  {f:'TOP CENTER',              nf:'15790',              em:'15/07/2026',mes:'JAN.(SAÚDE)',   val:19297.29,  prot:'17/07/2026',           liq:'NÃO', pago:'NÃO',       emp:'704'},
+  {f:'TOP CENTER',              nf:'15169',              em:'15/07/2026',mes:'2025(SET-DEZ)', val:58774.67,  prot:'18/07/2026',           liq:'SIM', pago:'SIM',        emp:'—'},
+  {f:'TOP CENTER',              nf:'17494/17493/17495/17496',em:'30/06/2026',mes:'JUNHO',     val:69994.20,  prot:'17/07/2026',           liq:'NÃO', pago:'NÃO',       emp:'704'},
+  {f:'TOP CENTER',              nf:'17761/17763/17764/17762',em:'30/07/2026',mes:'JULHO',     val:80772.39,  prot:'05/08/2026',           liq:'NÃO', pago:'NÃO',       emp:'704'},
   {f:'TOP CENTER',              nf:'17107-17110',       em:'28/05/2026',mes:'MAIO',         val:64085.70,  prot:'29/05/2026',liq:'NÃO', pago:'NÃO',       emp:'704'},
-  {f:'PORTAL SOLUÇÕES',         nf:'668/669/670/671',    em:'29/05/2026',mes:'MAIO',         val:8632.50,   prot:'29/05/2026',liq:'SIM', pago:'SIM',        emp:'344'},
-  {f:'AMPLA SERVICES',          nf:'6636',               em:'29/05/2026',mes:'MAIO',         val:555.60,    prot:'29/05/2026',liq:'NÃO', pago:'NÃO',       emp:'333'},
+  {f:'PORTAL SOLUÇÕES',         nf:'668/669/670/671',    em:'29/05/2026',mes:'MAIO',         val:8632.50,   prot:'01/06/2026',liq:'SIM', pago:'SIM',        emp:'344'},
+  {f:'AMPLA SERVICES',          nf:'6636',               em:'28/05/2026',mes:'MAIO',         val:555.60,    prot:'01/06/2026',liq:'SIM', pago:'SIM',       emp:'333'},
   {f:'IGTECH',                  nf:'69',                 em:'11/06/2026',mes:'MARÇO',         val:93890.76,  prot:'25/06/2026',liq:'SIM',    pago:'SIM'     ,emp:'—'},
   {f:'IGTECH',                  nf:'70',                 em:'11/06/2026',mes:'ABRIL',         val:93890.76,  prot:'25/06/2026',liq:'SIM',    pago:'SIM'     ,emp:'—'},
   {f:'IGTECH',                  nf:'71',                 em:'11/06/2026',mes:'MAIO',          val:93890.76,  prot:'25/06/2026',liq:'SIM',    pago:'SIM'     ,emp:'—'},
