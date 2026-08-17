@@ -394,15 +394,15 @@ footer strong{color:var(--amarelo)}
     <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
       <div style="flex:1;min-width:120px;background:#FFF8E1;border:1px solid #FFE082;border-radius:8px;padding:10px 14px;text-align:center">
         <div style="font-size:.62rem;font-weight:700;color:#7A4F00;text-transform:uppercase;letter-spacing:.6px">Total Pendente</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--orange);margin-top:3px">R$ 1.160.198,26</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--orange);margin-top:3px">R$ 674.135,62</div>
       </div>
       <div style="flex:1;min-width:120px;background:#FFEBEE;border:1px solid #FFCDD2;border-radius:8px;padding:10px 14px;text-align:center">
         <div style="font-size:.62rem;font-weight:700;color:#7A0000;text-transform:uppercase;letter-spacing:.6px">NFs Pendentes</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--red);margin-top:3px">22 notas</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--red);margin-top:3px">17 notas</div>
       </div>
       <div style="flex:1;min-width:120px;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:8px;padding:10px 14px;text-align:center">
         <div style="font-size:.62rem;font-weight:700;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px">Pagas (conf.)</div>
-        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--verde);margin-top:3px">125 notas</div>
+        <div style="font-size:1.2rem;font-weight:700;font-family:var(--mono);color:var(--verde);margin-top:3px">118 notas</div>
       </div>
     </div>
 
@@ -512,7 +512,7 @@ footer strong{color:var(--amarelo)}
     </div>
 
     <div style="padding:10px 14px;background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-radius:8px;border:1px solid #FFE082;font-size:.76rem;color:#7A4F00;display:flex;align-items:center;justify-content:space-between;gap:12px">
-      <span>💰 <strong>Total a regularizar: R$ 1.160.198,26</strong> &nbsp;·&nbsp; TOP CENTER R$ 170k · ENERGY R$ 486k · BETHA R$ 280k · AMPLA R$ 1k</span>
+      <span>💰 <strong>Total a regularizar: R$ 674.135,62</strong> &nbsp;·&nbsp; BETHA R$ 430k · TOP CENTER R$ 170k · PORTAL R$ 9k · AMPLA R$ 1k</span>
       <span class="delta up" style="font-size:.68rem;white-space:nowrap">▼ −R$ 69.438,66 vs. versão anterior</span>
     </div>
   </div>
@@ -566,8 +566,8 @@ footer strong{color:var(--amarelo)}
   <div class="kpi c-orange clickable" onclick="openModalNF()">
     <div class="kpi-icon">⏳</div>
     <div class="kpi-lbl">NFs Pendentes Pgto</div>
-    <div class="kpi-val">22</div>
-    <div class="kpi-sub"><span class="warn">R$ 1.160.198,26</span> em aberto <span class="delta down" style="font-size:.58rem">▲ −3 NFs</span></div>
+    <div class="kpi-val">17</div>
+    <div class="kpi-sub"><span class="warn">R$ 674.135,62</span> em aberto <span class="delta up" style="font-size:.58rem">▼ −5 NFs</span></div>
     <div class="kpi-hint">Ver detalhes →</div>
   </div>
   <div class="kpi c-red clickable" onclick="openModal()">
@@ -594,7 +594,7 @@ footer strong{color:var(--amarelo)}
     <div class="nf-stat-icon" style="background:#E8F5E9">✅</div>
     <div>
       <div class="nf-stat-lbl">Liquidadas</div>
-      <div class="nf-stat-val">130 <span style="font-size:.7rem;color:var(--azul)">96,3%</span></div>
+      <div class="nf-stat-val">131 <span style="font-size:.7rem;color:var(--azul)">97,0%</span></div>
       <div class="nf-stat-sub">R$ 1.986.130,70 liquidados</div>
     </div>
   </div>
@@ -610,8 +610,8 @@ footer strong{color:var(--amarelo)}
     <div class="nf-stat-icon" style="background:#FFF3E0">⚠</div>
     <div>
       <div class="nf-stat-lbl">Pendentes Pagamento</div>
-      <div class="nf-stat-val" style="color:var(--red)">22 <span class="delta up" style="font-size:.6rem">▼ −3</span></div>
-      <div class="nf-stat-sub">R$ 1.160.198,26 aguardando</div>
+      <div class="nf-stat-val" style="color:var(--red)">17 <span class="delta up" style="font-size:.6rem">▼ −5</span></div>
+      <div class="nf-stat-sub">R$ 674.135,62 aguardando</div>
     </div>
   </div>
 </div>
@@ -1161,7 +1161,7 @@ const NF_DATA=[
   {f:'BETHA CÂMARA',           nf:'Implantação (4)',    em:'29/05/2026',mes:'IMPLANTAÇÃO',  val:1687.00,   prot:'02/06/2026',liq:'SIM', pago:'SIM',        emp:'414'},
   {f:'BETHA IPASI',            nf:'Implantação (11)',   em:'29/05/2026',mes:'IMPLANTAÇÃO',  val:12080.00,  prot:'10/06/2026',liq:'SIM', pago:'SIM',        emp:'415'},
   {f:'ACTCON',                   nf:'255',                em:'04/03/2026',mes:'PGTO ÚNICO',    val:6168.96,   prot:'04/03/2026',liq:'SIM', pago:'SIM',       emp:'329'},
-  {f:'ENERGY (EDUCAÇÃO)',       nf:'17/18',              em:'17/06/2026',mes:'MAIO',         val:138873.33, prot:'18/06/2026',liq:'SIM', pago:'NÃO',       emp:'521'},
+  {f:'ENERGY (EDUCAÇÃO)',       nf:'17/18',              em:'17/06/2026',mes:'MAIO',         val:138873.33, prot:'18/06/2026',liq:'SIM', pago:'SIM',        emp:'521'},
   {f:'ENERGY (SOCIAL)',         nf:'011/12',             em:'17/06/2026',mes:'MAIO',         val:69438.66,  prot:'18/06/2026',liq:'SIM', pago:'SIM',       emp:'90/91'},
   {f:'ENERGY (SAÚDE)',          nf:'15/16',              em:'17/06/2026',mes:'MAIO',         val:69438.66,  prot:'18/06/2026',liq:'SIM', pago:'SIM',       emp:'336'},
   {f:'ENERGY (PLANEJ.)',        nf:'13/14',              em:'17/06/2026',mes:'MAIO',         val:69438.66,  prot:'18/06/2026',liq:'SIM', pago:'SIM',       emp:'542'},
@@ -1184,10 +1184,10 @@ const NF_DATA=[
   {f:'AMPLA SERVICES',          nf:'6810',               em:'30/06/2026',mes:'JUNHO',         val:555.60,    prot:'22/07/2026',           liq:'NÃO', pago:'NÃO',       emp:'333'},
   {f:'AMPLA SERVICES',          nf:'6905',               em:'30/07/2026',mes:'JULHO',         val:555.60,    prot:'05/08/2026',           liq:'NÃO', pago:'NÃO',       emp:'333'},
   {f:'BETHA PMI',              nf:'13081',               em:'31/07/2026',mes:'JULHO',         val:187247.97, prot:'06/08/2026',           liq:'NÃO', pago:'NÃO',       emp:'413'},
-  {f:'ENERGY (EDUCAÇÃO)',       nf:'26/27',              em:'08/07/2026',mes:'JUNHO',         val:138873.33, prot:'15/07/2026',           liq:'SIM', pago:'NÃO',       emp:'521'},
-  {f:'ENERGY (PLANEJ.)',        nf:'22/23',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'SIM', pago:'NÃO',       emp:'542'},
-  {f:'ENERGY (SAÚDE)',          nf:'20/21',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'SIM', pago:'NÃO',       emp:'336'},
-  {f:'ENERGY (SOCIAL)',         nf:'24/25',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'NÃO', pago:'NÃO',       emp:'90/91'},
+  {f:'ENERGY (EDUCAÇÃO)',       nf:'26/27',              em:'08/07/2026',mes:'JUNHO',         val:138873.33, prot:'15/07/2026',           liq:'SIM', pago:'SIM',        emp:'521'},
+  {f:'ENERGY (PLANEJ.)',        nf:'22/23',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'SIM', pago:'SIM',        emp:'542'},
+  {f:'ENERGY (SAÚDE)',          nf:'20/21',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'SIM', pago:'SIM',        emp:'336'},
+  {f:'ENERGY (SOCIAL)',         nf:'24/25',              em:'08/07/2026',mes:'JUNHO',         val:69438.66,  prot:'15/07/2026',           liq:'SIM', pago:'SIM',        emp:'90/91'},
   {f:'PORTAL SOLUÇÕES',         nf:'891/892/893/894',    em:'30/07/2026',mes:'JULHO',         val:8632.50,   prot:'05/08/2026',           liq:'NÃO', pago:'NÃO',       emp:'344'},
   {f:'TOP CENTER',              nf:'15790',              em:'15/07/2026',mes:'JAN.(SAÚDE)',   val:19297.29,  prot:'17/07/2026',           liq:'NÃO', pago:'NÃO',       emp:'704'},
   {f:'TOP CENTER',              nf:'15169',              em:'15/07/2026',mes:'2025(SET-DEZ)', val:58774.67,  prot:'18/07/2026',           liq:'SIM', pago:'SIM',        emp:'—'},
@@ -1374,7 +1374,7 @@ let chartMensal,chartForn;
     data:{
       labels:['Liquidadas','Pagas','Pendentes'],
       datasets:[
-        {label:'Qtd NFs',data:[125,7,3],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
+        {label:'Qtd NFs',data:[118,1,16],backgroundColor:[VD,AZ,OR],borderRadius:7,borderSkipped:false,yAxisID:'y1'},
         {label:'Valor (R$ k)',data:[3154.73,686.66,286.58],backgroundColor:[VD+'55',AZ+'55',OR+'55'],borderRadius:7,borderSkipped:false,yAxisID:'y2'}
       ]
     },
